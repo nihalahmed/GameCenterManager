@@ -20,6 +20,7 @@
 		65969A06151572D800724EBE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65969A05151572D800724EBE /* GameKit.framework */; };
 		65969A091515742600724EBE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 65969A081515742600724EBE /* Reachability.m */; };
 		65969A0B1515748900724EBE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65969A0A1515748900724EBE /* SystemConfiguration.framework */; };
+		65CE18B11539D764001D6C58 /* NSDataAES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CE18B01539D764001D6C58 /* NSDataAES256.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,8 @@
 		65969A071515742600724EBE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		65969A081515742600724EBE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		65969A0A1515748900724EBE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		65CE18AF1539D764001D6C58 /* NSDataAES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAES256.h; sourceTree = "<group>"; };
+		65CE18B01539D764001D6C58 /* NSDataAES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAES256.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				659699FF151571E700724EBE /* GameCenterManager.m */,
 				65969A071515742600724EBE /* Reachability.h */,
 				65969A081515742600724EBE /* Reachability.m */,
+				65CE18AF1539D764001D6C58 /* NSDataAES256.h */,
+				65CE18B01539D764001D6C58 /* NSDataAES256.m */,
 				659699EF1515718800724EBE /* ViewController_iPhone.xib */,
 				659699F21515718800724EBE /* ViewController_iPad.xib */,
 				659699E11515718800724EBE /* Supporting Files */,
@@ -188,6 +193,7 @@
 				659699EE1515718800724EBE /* ViewController.m in Sources */,
 				65969A00151571E700724EBE /* GameCenterManager.m in Sources */,
 				65969A091515742600724EBE /* Reachability.m in Sources */,
+				65CE18B11539D764001D6C58 /* NSDataAES256.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

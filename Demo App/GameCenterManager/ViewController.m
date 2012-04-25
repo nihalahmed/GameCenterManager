@@ -18,13 +18,13 @@
         
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callback:)
-                                                 name:kGameCenterReportScoreNotification object:nil];
+                                                 name:kGameCenterManagerReportScoreNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callback:)
-                                                 name:kGameCenterReportAchievementNotification object:nil];
+                                                 name:kGameCenterManagerReportAchievementNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(callback:)
-                                                 name:kGameCenterResetAchievementNotification object:nil];
+                                                 name:kGameCenterManagerResetAchievementNotification object:nil];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btn setFrame:CGRectMake(0, 0, 175, 40)];
@@ -80,15 +80,15 @@
 }
 
 - (void)reportScore {
-    [[GameCenterManager defaultManager] reportScore:1000 leaderboard:@"HighScores"];
+    [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"HighScores"];
 }
 
 - (void)reportAchievement {
-    [[GameCenterManager defaultManager] reportAchievement:@"1000Points" percentComplete:50];
+    [[GameCenterManager sharedManager] saveAndReportAchievement:@"1000Points" percentComplete:50];
 }
 
 - (void)showLeaderboard {
-    if([[GameCenterManager defaultManager] isGameCenterAvailable]) {
+    if([[GameCenterManager sharedManager] isGameCenterAvailable]) {
         GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
         leaderboardViewController.timeScope = GKLeaderboardTimeScopeAllTime;
         leaderboardViewController.leaderboardDelegate = self;
@@ -105,7 +105,7 @@
 }
 
 - (void)showAchievements {
-    if([[GameCenterManager defaultManager] isGameCenterAvailable]) {
+    if([[GameCenterManager sharedManager] isGameCenterAvailable]) {
         GKAchievementViewController *achievementViewController = [[GKAchievementViewController alloc] init];
         achievementViewController.achievementDelegate = self;
         [self presentModalViewController:achievementViewController animated:YES];
@@ -121,7 +121,7 @@
 }
 
 - (void)resetAchievements {
-    [[GameCenterManager defaultManager] resetAchievements];
+    [[GameCenterManager sharedManager] resetAchievements];
 }
 
 - (void)callback:(NSNotification *)notification {
