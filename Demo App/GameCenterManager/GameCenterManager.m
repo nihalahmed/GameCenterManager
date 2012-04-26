@@ -91,7 +91,9 @@ static GameCenterManager *sharedManager = nil;
                     [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
                 }
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerAvailabilityNotification object:[NSDictionary dictionary]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerAvailabilityNotification
+                                                                object:[GameCenterManager sharedManager]
+                                                              userInfo:[NSDictionary dictionary]];
         }];
     }
 }
@@ -187,7 +189,7 @@ static GameCenterManager *sharedManager = nil;
                         [[GameCenterManager sharedManager] saveScoreToReportLater:gkScore];
                     }
                     [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerReportScoreNotification
-                                                                        object:self
+                                                                        object:[GameCenterManager sharedManager]
                                                                       userInfo:dict];
                 }];
             }
@@ -234,7 +236,7 @@ static GameCenterManager *sharedManager = nil;
                         [[GameCenterManager sharedManager] saveAchievementToReportLater:identifier percentComplete:percentComplete];
                     }
                     [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerReportAchievementNotification
-                                                                        object:self
+                                                                        object:[GameCenterManager sharedManager]
                                                                       userInfo:dict];
                 }];
             }
@@ -438,7 +440,7 @@ static GameCenterManager *sharedManager = nil;
                 dict = [NSDictionary dictionaryWithObject:error.localizedDescription forKey:@"error"];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerResetAchievementNotification
-                                                                object:self
+                                                                object:[GameCenterManager sharedManager]
                                                               userInfo:dict];
         }];
     }
