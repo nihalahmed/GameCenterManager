@@ -20,7 +20,9 @@
 #import "Reachability.h"
 #import "NSDataAES256.h"
 
-@interface GameCenterManager : NSObject
+@interface GameCenterManager : NSObject {
+    NSMutableArray *_leaderboards;
+}
 
 // Returns the shared instance of GameCenterManager.
 + (GameCenterManager *)sharedManager;
