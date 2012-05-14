@@ -116,21 +116,23 @@ static GameCenterManager *sharedManager = nil;
                 [leaderboardRequest setCategory:[_leaderboards objectAtIndex:0]];
                 [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if(error == nil) {
-                        NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
-                        NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-                        NSMutableDictionary *playerDict = [plistDict objectForKey:[[GameCenterManager sharedManager] localPlayerId]];
-                        if(playerDict == nil) {
-                            playerDict = [NSMutableDictionary dictionary];
+                        if(scores.count > 0) {
+                            NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
+                            NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
+                            NSMutableDictionary *playerDict = [plistDict objectForKey:[[GameCenterManager sharedManager] localPlayerId]];
+                            if(playerDict == nil) {
+                                playerDict = [NSMutableDictionary dictionary];
+                            }
+                            int savedHighScoreValue = 0;
+                            NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.category];
+                            if(savedHighScore != nil) {
+                                savedHighScoreValue = [savedHighScore intValue];
+                            }
+                            [playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.category];
+                            [plistDict setObject:playerDict forKey:[[GameCenterManager sharedManager] localPlayerId]];
+                            NSData *saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:kGameCenterManagerKey];
+                            [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
                         }
-                        int savedHighScoreValue = 0;
-                        NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.category];
-                        if(savedHighScore != nil) {
-                            savedHighScoreValue = [savedHighScore intValue];
-                        }
-                        [playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.category];
-                        [plistDict setObject:playerDict forKey:[[GameCenterManager sharedManager] localPlayerId]];
-                        NSData *saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:kGameCenterManagerKey];
-                        [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
                         
                         [_leaderboards removeObjectAtIndex:0];
                         [[GameCenterManager sharedManager] syncGameCenter];
@@ -145,7 +147,7 @@ static GameCenterManager *sharedManager = nil;
         else if(![[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]]) {
             [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
                 if(error == nil) {
-                    if([achievements count] > 0) {
+                    if(achievements.count > 0) {
                         NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
                         NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
                         NSMutableDictionary *playerDict = [plistDict objectForKey:[[GameCenterManager sharedManager] localPlayerId]];
@@ -383,7 +385,7 @@ static GameCenterManager *sharedManager = nil;
         NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
         NSMutableArray *savedScores = [plistDict objectForKey:@"SavedScores"];
         if(savedScores != nil) {
-            if([savedScores count] > 0) {
+            if(savedScores.count > 0) {
                 gkScore = [NSKeyedUnarchiver unarchiveObjectWithData:[savedScores objectAtIndex:0]];
                 [savedScores removeObjectAtIndex:0];
                 [plistDict setObject:savedScores forKey:@"SavedScores"];
@@ -413,7 +415,7 @@ static GameCenterManager *sharedManager = nil;
                 if(playerDict != nil) {
                     NSMutableDictionary *savedAchievements = [playerDict objectForKey:@"SavedAchievements"];
                     if(savedAchievements != nil) {
-                        if([savedAchievements count] > 0) {
+                        if(savedAchievements.count > 0) {
                             identifier = [[savedAchievements allKeys] objectAtIndex:0];
                             percentComplete = [[savedAchievements objectForKey:identifier] doubleValue];
                             [savedAchievements removeObjectForKey:identifier];
