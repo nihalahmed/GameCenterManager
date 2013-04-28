@@ -66,7 +66,7 @@ To get the high scores for the current player, you can call
     NSArray *leaderboardIDs = [NSArray arrayWithObjects:@"Leaderboard1", @"Leaderboard2", nil];
 
     //Returns a dictionary with leaderboard ID's as keys and high scores as values
-    [[GameCenterManager defaultManager] highScoreForLeaderboards:leaderboardIDs];  
+    [[GameCenterManager sharedManager] highScoreForLeaderboards:leaderboardIDs];  
 
 ###Get Achievement Progress
 To get achievement progress for the current player, you can call
@@ -75,12 +75,18 @@ To get achievement progress for the current player, you can call
     NSArray *achievementIDs = [NSArray arrayWithObjects:@"Achievement1", @"Achievement2", nil];
 
     //Returns a dictionary with achievement ID's as keys and progress as values
-    [[GameCenterManager defaultManager] progressForAchievements:achievementIDs];  
+    [[GameCenterManager sharedManager] progressForAchievements:achievementIDs];  
+
+###Get Challenges
+To get challenges for the current game and player, you can call
+
+    //Returns an array with challenges. If there is an error retrieving the challenges, an array containing the error is returned. Returns `nil` if it was unable to connect to GameCenter.
+    NSArray *challenges = [[GameCenterManager sharedManager] getChallenges]; 
 
 ###Notifications
 Notifications are posted at certain events mentioned below. The `userInfo` dictionary contains an error string for the key `error` if an error occured.
 
-1. kGameCenterManagerAvailabilityNotification - When unsupported devices attempt to authenticate the player (should no longer be an issue if you are building for iOS 4.x or higher), the player or game is not valid, or there was an error from GameCenter (all error descriptions here: http://bit.ly/10LsFNa), the `isGameCenterAvailable` property is set to `NO`
+1. kGameCenterManagerAvailabilityNotification - When unsupported devices attempt to authenticate the player (should no longer be an issue if you are building for iOS 4.x or higher), the player or game is not valid, or there was an error from GameCenter (all error descriptions here: http://bit.ly/10LsFNa), the `isGameCenterAvailable` property is set to `NO`.
 2. kGameCenterManagerErrorNotification - When a GameCenter or authentication error occurs. Contains a dictionary with error information.
 3. kGameCenterManagerReportScoreNotification - When a score is reported to Game Center
 4. kGameCenterManagerReportAchievementNotification - When an achievement is reported to Game Center
@@ -96,7 +102,7 @@ Changelog
 -----
 
 ###Version 3.1
-Improved error reporting and reorganized files to remove duplicates.
+Improved error reporting and reorganized files to remove duplicates. Added a way to retrieve challenges. Converted old demo app files to support iOS 5+ - now using storyboards intead of XIB.
 
 ###Version 3.0
 Added ARC compatibility. All files are now ready to be used with ARC. Many methods have been updated that were depreciated in iOS 6.0. The demo app has undergone massive improvements, including many interface improvements, iPhone 5 support, a new icon, and better GC status reporting. 
