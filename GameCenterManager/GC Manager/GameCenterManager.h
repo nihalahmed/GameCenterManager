@@ -12,6 +12,7 @@
 #define kGameCenterManagerDataFile @"GameCenterManager.plist"
 #define kGameCenterManagerDataPath [LIBRARY_FOLDER stringByAppendingPathComponent:kGameCenterManagerDataFile]
 #define kGameCenterManagerAvailabilityNotification @"GameCenterManagerAvailabilityNotification"
+#define kGameCenterManagerErrorNotification @"GameCenterManagerErrorNotification"
 #define kGameCenterManagerReportScoreNotification @"GameCenterManagerReportScoreNotification"
 #define kGameCenterManagerReportAchievementNotification @"GameCenterManagerReportAchievementNotification"
 #define kGameCenterManagerResetAchievementNotification @"GameCenterManagerResetAchievementNotification"
@@ -60,6 +61,9 @@
 
 // Returns local player's percent completed for multiple achievements.
 - (NSDictionary *)progressForAchievements:(NSArray *)identifiers;
+
+// Returns a list of challenges for the current player and game. If GameCenter is not available it will return nil. If there is an error connecting to GameCenter, the first object in the array will be an NSError detailing the error.
+- (NSArray *)getChallenges;
 
 // Resets local player's achievements
 - (void)resetAchievements;

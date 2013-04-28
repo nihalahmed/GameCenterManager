@@ -17,7 +17,7 @@ Installation
 
 1. Add the `GameKit` and `SystemConfiguration` frameworks to your Xcode project
 
-2. Add the following files to your Xcode project (make sure to select Copy Items in the dialog):
+2. Add the following files (can be found in the *GC Manager* folder) to your Xcode project (make sure to select Copy Items in the dialog):
  - GameCenterManager.h  
  - GameCenterManager.m
  - Reachability.h

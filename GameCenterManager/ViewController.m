@@ -2,7 +2,7 @@
 //  ViewController.m
 //  GameCenterManager
 //
-//  Created by Nihal Ahmed on 12-03-17.
+//  Created by Nihal Ahmed on March 17, 2012. Edited and updated by iRare Media on April 28, 2013.
 //  Copyright (c) 2012 NABZ Software. All rights reserved.
 //
 
@@ -13,22 +13,23 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
+    //Setup ViewController
     self.view.backgroundColor = [UIColor underPageBackgroundColor];
-        
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:)
-                                                 name:kGameCenterManagerReportScoreNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:)
-                                                 name:kGameCenterManagerReportAchievementNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:)
-                                                 name:kGameCenterManagerResetAchievementNotification object:nil];
+    
+    //Register for GC Availability and Error Notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerAvailabilityNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerErrorNotification object:nil];
+    
+    //Register for GC Score / Achievement Notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerReportScoreNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerReportAchievementNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerResetAchievementNotification object:nil];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
@@ -38,6 +39,16 @@
 
 - (IBAction)reportAchievement {
     [[GameCenterManager sharedManager] saveAndReportAchievement:@"1000Points" percentComplete:50];
+}
+
+- (IBAction)loadChallenges {
+    NSArray *challenges = [[GameCenterManager sharedManager] getChallenges];
+    if (challenges == nil) {
+        statusLabel.Text = @"Status: GameCenter Unavailable";
+    } else {
+        statusLabel.Text = @"Status: GameCenter Challenges printed in log";
+        NSLog(@"GC Challenges: %@", challenges);
+    }
 }
 
 - (IBAction)showLeaderboard {
@@ -77,7 +88,7 @@
 
 - (void)callback:(NSNotification *)notification {
     if([notification.userInfo objectForKey:@"error"] == nil) {
-        statusLabel.Text = @"Status: Success";
+        statusLabel.Text = @"Status: GameCenter Available";
     } else {
         statusLabel.Text = [NSString stringWithFormat:@"Status: GameCenter Error %@", [notification.userInfo objectForKey:@"error"]];
     }

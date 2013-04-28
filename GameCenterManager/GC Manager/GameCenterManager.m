@@ -48,38 +48,53 @@ static GameCenterManager *sharedManager = nil;
 #pragma mark - Methods
 
 - (void)initGameCenter {
-    // Check for presence of GKLocalPlayer class.
+    //Check for presence of GKLocalPlayer class.
     BOOL localPlayerClassAvailable = (NSClassFromString(@"GKLocalPlayer")) != nil;
     
-    // The device must be running iOS 4.1 or later.
+    //Check for existance of GameKit. The device must be running iOS 4.1 or later.
     NSString *reqSysVer = @"4.1";
     NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
     BOOL osVersionSupported = ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending);
-    
     BOOL isGameCenterAPIAvailable = (localPlayerClassAvailable && osVersionSupported);
     
+    //Check for existance of GameKit
     if(isGameCenterAPIAvailable) {
+        //Set GameCenter as available
         [[GameCenterManager sharedManager] setIsGameCenterAvailable:YES];
         
+        //Check if the local player is authenticated
         [[GKLocalPlayer localPlayer] setAuthenticateHandler:^(UIViewController *view, NSError *error) {
-            if(error == nil) {
+            if (error == nil) {
                 if(![[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]] ||
                    ![[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]]) {
                     [[GameCenterManager sharedManager] syncGameCenter];
-                }
-                else {
+                } else {
                     [[GameCenterManager sharedManager] reportSavedScoresAndAchievements];
                 }
-            }
-            else {
-                if(error.code == GKErrorNotSupported) {
+            } else {
+                if (error.code == GKErrorNotSupported) {
                     [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
+                } else {
+                    [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
+                    NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
+                    NSLog(@"%@", error);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
                 }
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerAvailabilityNotification
-                                                                object:[GameCenterManager sharedManager]
-                                                              userInfo:[NSDictionary dictionary]];
+                                                                object:[GameCenterManager sharedManager] userInfo:[NSDictionary dictionary]];
         }];
+        
+        if (![GKLocalPlayer localPlayer].authenticated) {
+            [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
+            NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:@"GKErrorNotAuthenticated, the local player has not been authenticated." forKey:@"error"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
+        } else {
+            NSLog(@"Player Authenticated");
+        }
+        
+    } else {
+        [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
     }
 }
 
@@ -91,6 +106,11 @@ static GameCenterManager *sharedManager = nil;
                     if(error == nil) {
                         _leaderboards = [[NSMutableArray alloc] initWithArray:leaderboards];
                         [[GameCenterManager sharedManager] syncGameCenter];
+                    } else {
+                        [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
+                        NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
+                        NSLog(@"%@", error);
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
                     }
                 }];
                 return;
@@ -121,15 +141,18 @@ static GameCenterManager *sharedManager = nil;
                         
                         [_leaderboards removeObjectAtIndex:0];
                         [[GameCenterManager sharedManager] syncGameCenter];
+                    } else {
+                        [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
+                        NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
+                        NSLog(@"%@", error);
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
                     }
                 }];
-            }
-            else {
+            } else {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[@"scoresSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]];
                 [[GameCenterManager sharedManager] syncGameCenter];
             }
-        }
-        else if(![[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]]) {
+        } else if(![[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]]) {
             [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
                 if(error == nil) {
                     if(achievements.count > 0) {
@@ -149,12 +172,24 @@ static GameCenterManager *sharedManager = nil;
                     
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[@"achievementsSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]];
                     [[GameCenterManager sharedManager] syncGameCenter];
+                } else {
+                    [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
+                    NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
+                    NSLog(@"%@", error);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
                 }
             }];
         }
+    } else {
+        [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
+        NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:@"Internet unavailable. Could not connect to the internet." forKey:@"error"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification
+                                                            object:[GameCenterManager sharedManager]
+                                                          userInfo:errorDictionary];
     }
 }
 
+//Save score and report it to GameCenter
 - (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier {
     NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
@@ -183,14 +218,13 @@ static GameCenterManager *sharedManager = nil;
                     NSDictionary *dict = nil;
                     if(error == nil) {
                         dict = [NSDictionary dictionary];
-                    }
-                    else {
+                    } else {
                         dict = [NSDictionary dictionaryWithObject:error.localizedDescription forKey:@"error"];
                         [[GameCenterManager sharedManager] saveScoreToReportLater:gkScore];
                     }
+                    
                     [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerReportScoreNotification
-                                                                        object:[GameCenterManager sharedManager]
-                                                                      userInfo:dict];
+                                                                        object:[GameCenterManager sharedManager] userInfo:dict];
                 }];
             }
             else {
@@ -201,6 +235,7 @@ static GameCenterManager *sharedManager = nil;
     }
 }
 
+//Save achievement and report it to GameCenter
 - (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete {
     NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
@@ -229,8 +264,7 @@ static GameCenterManager *sharedManager = nil;
                     NSDictionary *dict = nil;
                     if(error == nil) {
                         dict = [NSDictionary dictionary];
-                    }
-                    else {
+                    } else {
                         dict = [NSDictionary dictionaryWithObject:error.localizedDescription forKey:@"error"];
                         [[GameCenterManager sharedManager] saveAchievementToReportLater:identifier percentComplete:percentComplete];
                     }
@@ -238,14 +272,14 @@ static GameCenterManager *sharedManager = nil;
                                                                         object:[GameCenterManager sharedManager]
                                                                       userInfo:dict];
                 }];
-            }
-            else {
+            } else {
                 [[GameCenterManager sharedManager] saveAchievementToReportLater:identifier percentComplete:percentComplete];
             }
         }
     }
 }
 
+//Save score to report later
 - (void)saveScoreToReportLater:(GKScore *)score {
     NSData *scoreData = [NSKeyedArchiver archivedDataWithRootObject:score];
     NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
@@ -304,6 +338,7 @@ static GameCenterManager *sharedManager = nil;
     return 0;
 }
 
+//Get leaderboard high scores
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers {
     NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
@@ -325,6 +360,7 @@ static GameCenterManager *sharedManager = nil;
     return highScoreDict;
 }
 
+//Get achievement progress
 - (double)progressForAchievement:(NSString *)identifier {
     NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
@@ -338,6 +374,7 @@ static GameCenterManager *sharedManager = nil;
     return 0;
 }
 
+//Returns local player's percent completed for multiple achievements.
 - (NSDictionary *)progressForAchievements:(NSArray *)identifiers {
     NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
@@ -359,6 +396,24 @@ static GameCenterManager *sharedManager = nil;
     return percentDict;
 }
 
+//Returns local player's challenges for this game
+- (NSArray *)getChallenges {
+    if([[GameCenterManager sharedManager] isGameCenterAvailable]) {
+        __block NSArray *challengesList = nil;
+        [GKChallenge loadReceivedChallengesWithCompletionHandler:^(NSArray *challenges, NSError *error) {
+            if (error == nil) {
+                challengesList = [NSArray arrayWithArray:challenges];
+            } else {
+                challengesList = [NSArray arrayWithObject:error];
+            }
+        }];
+        return challengesList;
+    } else {
+        return nil;
+    }
+}
+
+//Report data when the internet is available again
 - (void)reportSavedScoresAndAchievements {    
     if([[GameCenterManager sharedManager] isInternetAvailable]) {
         GKScore *gkScore = nil;
@@ -426,14 +481,14 @@ static GameCenterManager *sharedManager = nil;
     }
 }
 
+//Reset all achievements and progress
 - (void)resetAchievements {
     if([[GameCenterManager sharedManager] isGameCenterAvailable]) {
         [GKAchievement resetAchievementsWithCompletionHandler:^(NSError *error) {
             NSDictionary *dict = nil;
             if(error == nil) {
                 dict = [NSDictionary dictionary];
-            }
-            else {
+            } else {
                 dict = [NSDictionary dictionaryWithObject:error.localizedDescription forKey:@"error"];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerResetAchievementNotification
@@ -443,15 +498,17 @@ static GameCenterManager *sharedManager = nil;
     }
 }
 
+//Checks if player is authenticated and gets his / her ID
 - (NSString *)localPlayerId {
     if([[GameCenterManager sharedManager] isGameCenterAvailable]) {
-        if([GKLocalPlayer localPlayer].authenticated) {
+        if ([GKLocalPlayer localPlayer].authenticated) {
             return [GKLocalPlayer localPlayer].playerID;
         }
     }
     return @"unknownPlayer";
 }
 
+//Check for internet with Reachability
 - (BOOL)isInternetAvailable {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];    
     NetworkStatus internetStatus = [reachability currentReachabilityStatus];

@@ -46,8 +46,16 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIMainStoryboardFile</key>
+	<string>Storyboard_iPhone</string>
+	<key>UIMainStoryboardFile~ipad</key>
+	<string>Storyboard_iPad</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>gamekit</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
