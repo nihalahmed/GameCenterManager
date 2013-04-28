@@ -80,10 +80,11 @@ To get achievement progress for the current player, you can call
 ###Notifications
 Notifications are posted at certain events mentioned below. The `userInfo` dictionary contains an error string for the key `error` if an error occured.
 
-1. kGameCenterManagerAvailabilityNotification - When unsupported devices attempt to authenticate the player, the `isGameCenterAvailable` property is set to `NO`
-2. kGameCenterManagerReportScoreNotification - When a score is reported to Game Center
-3. kGameCenterManagerReportAchievementNotification - When an achievement is reported to Game Center
-4. kGameCenterManagerResetAchievementNotification - When achievements are reset
+1. kGameCenterManagerAvailabilityNotification - When unsupported devices attempt to authenticate the player (should no longer be an issue if you are building for iOS 4.x or higher), the player or game is not valid, or there was an error from GameCenter (all error descriptions here: http://bit.ly/10LsFNa), the `isGameCenterAvailable` property is set to `NO`
+2. kGameCenterManagerErrorNotification - When a GameCenter or authentication error occurs. Contains a dictionary with error information.
+3. kGameCenterManagerReportScoreNotification - When a score is reported to Game Center
+4. kGameCenterManagerReportAchievementNotification - When an achievement is reported to Game Center
+5. kGameCenterManagerResetAchievementNotification - When achievements are reset
 
 Attribution
 -----
@@ -93,6 +94,9 @@ The GameCenter Icon is a registered Apple Trademark
 
 Changelog
 -----
+
+###Version 3.1
+Improved error reporting and reorganized files to remove duplicates.
 
 ###Version 3.0
 Added ARC compatibility. All files are now ready to be used with ARC. Many methods have been updated that were depreciated in iOS 6.0. The demo app has undergone massive improvements, including many interface improvements, iPhone 5 support, a new icon, and better GC status reporting. 
