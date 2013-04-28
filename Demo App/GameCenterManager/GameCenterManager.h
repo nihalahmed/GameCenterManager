@@ -5,8 +5,9 @@
 //  Copyright (c) 2012 NABZ Software. All rights reserved.
 //
 
-// Change this value to your own secret key
+#warning Definition of kGameCenterManagerKey is required. Change this value to your own secret key.
 #define kGameCenterManagerKey [@"MyKey" dataUsingEncoding:NSUTF8StringEncoding]
+
 #define LIBRARY_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
 #define kGameCenterManagerDataFile @"GameCenterManager.plist"
 #define kGameCenterManagerDataPath [LIBRARY_FOLDER stringByAppendingPathComponent:kGameCenterManagerDataFile]

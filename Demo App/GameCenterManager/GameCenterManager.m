@@ -38,26 +38,11 @@ static GameCenterManager *sharedManager = nil;
 }
 
 + (id)allocWithZone:(NSZone *)zone {
-    return [[self sharedManager] retain];
+    return [self sharedManager];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
     return self;    
-}
-
-- (id)retain {
-    return self;    
-}
-
-- (NSUInteger)retainCount {
-    return NSUIntegerMax;
-}
-
-- (oneway void)release {
-}
-
-- (id)autorelease {
-    return self;
 }
 
 #pragma mark - Methods
@@ -76,7 +61,7 @@ static GameCenterManager *sharedManager = nil;
     if(isGameCenterAPIAvailable) {
         [[GameCenterManager sharedManager] setIsGameCenterAvailable:YES];
         
-        [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:^(NSError *error) {        
+        [[GKLocalPlayer localPlayer] setAuthenticateHandler:^(UIViewController *view, NSError *error) {
             if(error == nil) {
                 if(![[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]] ||
                    ![[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]]) {
@@ -102,9 +87,9 @@ static GameCenterManager *sharedManager = nil;
     if([[GameCenterManager sharedManager] isInternetAvailable]) {
         if(![[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]]) {
             if(_leaderboards == nil) {
-                [GKLeaderboard loadCategoriesWithCompletionHandler:^(NSArray *categories, NSArray *titles, NSError *error) {
+                [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
                     if(error == nil) {
-                        _leaderboards = [[NSMutableArray alloc] initWithArray:categories];
+                        _leaderboards = [[NSMutableArray alloc] initWithArray:leaderboards];
                         [[GameCenterManager sharedManager] syncGameCenter];
                     }
                 }];
@@ -112,7 +97,7 @@ static GameCenterManager *sharedManager = nil;
             }
             
             if(_leaderboards.count > 0) {
-                GKLeaderboard *leaderboardRequest = [[[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[[GameCenterManager sharedManager] localPlayerId]]] autorelease];
+                GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[[GameCenterManager sharedManager] localPlayerId]]];
                 [leaderboardRequest setCategory:[_leaderboards objectAtIndex:0]];
                 [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if(error == nil) {
@@ -192,7 +177,7 @@ static GameCenterManager *sharedManager = nil;
     if([[GameCenterManager sharedManager] isGameCenterAvailable]) {
         if([GKLocalPlayer localPlayer].authenticated) {
             if([[GameCenterManager sharedManager] isInternetAvailable]) {
-                GKScore *gkScore = [[[GKScore alloc] initWithCategory:identifier] autorelease];
+                GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
                 gkScore.value = score;
                 [gkScore reportScoreWithCompletionHandler:^(NSError *error) {
                     NSDictionary *dict = nil;
@@ -211,7 +196,6 @@ static GameCenterManager *sharedManager = nil;
             else {
                 GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
                 [[GameCenterManager sharedManager] saveScoreToReportLater:gkScore];
-                [gkScore release];
             }
         }
     }
@@ -239,7 +223,7 @@ static GameCenterManager *sharedManager = nil;
     if([[GameCenterManager sharedManager] isGameCenterAvailable]) {
         if([GKLocalPlayer localPlayer].authenticated) {
             if([[GameCenterManager sharedManager] isInternetAvailable]) {
-                GKAchievement *achievement = [[[GKAchievement alloc] initWithIdentifier:identifier] autorelease];
+                GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
                 achievement.percentComplete = percentComplete;
                 [achievement reportAchievementWithCompletionHandler:^(NSError *error) {
                     NSDictionary *dict = nil;
@@ -337,7 +321,6 @@ static GameCenterManager *sharedManager = nil;
     }
     
     NSDictionary *highScoreDict = [NSDictionary dictionaryWithDictionary:highScores];
-    [highScores release];
     
     return highScoreDict;
 }
@@ -372,7 +355,6 @@ static GameCenterManager *sharedManager = nil;
     }
     
     NSDictionary *percentDict = [NSDictionary dictionaryWithDictionary:percent];
-    [percent release];
     
     return percentDict;
 }
@@ -428,7 +410,7 @@ static GameCenterManager *sharedManager = nil;
                 }
                 
                 if(identifier != nil) {
-                    GKAchievement *achievement = [[[GKAchievement alloc] initWithIdentifier:identifier] autorelease];
+                    GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
                     achievement.percentComplete = percentComplete;
                     [achievement reportAchievementWithCompletionHandler:^(NSError *error) {
                         if(error == nil) {

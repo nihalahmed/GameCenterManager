@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "GameCenterManager.h"
 
-@interface ViewController : UIViewController <GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate> {
-    UILabel *_lbl;
-}
+@interface ViewController : UIViewController <GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate>
+
+@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
 
 @end
