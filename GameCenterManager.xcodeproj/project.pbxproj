@@ -358,11 +358,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: iRare Media (4N75L7CCKZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: iRare Media (4N75L7CCKZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GameCenterManager/GameCenterManager-Prefix.pch";
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0F0199EC-A3F6-480F-B17B-9C6C78CE8F23";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F0199EC-A3F6-480F-B17B-9C6C78CE8F23";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -371,11 +375,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: iRare Media (4N75L7CCKZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: iRare Media (4N75L7CCKZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GameCenterManager/GameCenterManager-Prefix.pch";
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0F0199EC-A3F6-480F-B17B-9C6C78CE8F23";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F0199EC-A3F6-480F-B17B-9C6C78CE8F23";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

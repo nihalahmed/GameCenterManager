@@ -49,7 +49,7 @@ static GameCenterManager *sharedManager = nil;
 
 - (void)initGameCenter {
     //Check for presence of GKLocalPlayer class.
-    BOOL localPlayerClassAvailable = (NSClassFromString(@"GKLocalPlayer")) != nil;
+    BOOL localPlayerClassAvailable = (NSClassFromString(@"GKLocalPlayer"));
     
     //Check for existance of GameKit. The device must be running iOS 4.1 or later.
     NSString *reqSysVer = @"4.1";
@@ -72,14 +72,10 @@ static GameCenterManager *sharedManager = nil;
                     [[GameCenterManager sharedManager] reportSavedScoresAndAchievements];
                 }
             } else {
-                if (error.code == GKErrorNotSupported) {
-                    [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
-                } else {
-                    [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
-                    NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
-                    NSLog(@"%@", error);
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
-                }
+                [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
+                NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
+                NSLog(@"%@", error);
+                [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerAvailabilityNotification
                                                                 object:[GameCenterManager sharedManager] userInfo:[NSDictionary dictionary]];
@@ -107,7 +103,6 @@ static GameCenterManager *sharedManager = nil;
                         _leaderboards = [[NSMutableArray alloc] initWithArray:leaderboards];
                         [[GameCenterManager sharedManager] syncGameCenter];
                     } else {
-                        [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
                         NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
                         NSLog(@"%@", error);
                         [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
@@ -142,7 +137,6 @@ static GameCenterManager *sharedManager = nil;
                         [_leaderboards removeObjectAtIndex:0];
                         [[GameCenterManager sharedManager] syncGameCenter];
                     } else {
-                        [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
                         NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
                         NSLog(@"%@", error);
                         [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
@@ -173,7 +167,6 @@ static GameCenterManager *sharedManager = nil;
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[@"achievementsSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]];
                     [[GameCenterManager sharedManager] syncGameCenter];
                 } else {
-                    [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
                     NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
                     NSLog(@"%@", error);
                     [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager] userInfo:errorDictionary];
@@ -181,7 +174,6 @@ static GameCenterManager *sharedManager = nil;
             }];
         }
     } else {
-        [[GameCenterManager sharedManager] setIsGameCenterAvailable:NO];
         NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:@"Internet unavailable. Could not connect to the internet." forKey:@"error"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterManagerErrorNotification
                                                             object:[GameCenterManager sharedManager]

@@ -20,8 +20,8 @@
     self.view.backgroundColor = [UIColor underPageBackgroundColor];
     
     //Register for GC Availability and Error Notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerAvailabilityNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerErrorNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerAvailabilityNotification object:[GameCenterManager sharedManager]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerErrorNotification object:[GameCenterManager sharedManager]];
     
     //Register for GC Score / Achievement Notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callback:) name:kGameCenterManagerReportScoreNotification object:nil];
@@ -74,7 +74,7 @@
         achievementViewController.achievementDelegate = self;
         [self presentViewController:achievementViewController animated:YES completion:nil];
     } else {
-        statusLabel.Text = @"Status: Game Center Unavailable";
+        statusLabel.Text = @"Status: GameCenter Unavailable";
     }
 }
 
@@ -90,7 +90,7 @@
     if([notification.userInfo objectForKey:@"error"] == nil) {
         statusLabel.Text = @"Status: GameCenter Available";
     } else {
-        statusLabel.Text = [NSString stringWithFormat:@"Status: GameCenter Error %@", [notification.userInfo objectForKey:@"error"]];
+        statusLabel.Text = [NSString stringWithFormat:@"Status: GameCenter %@", [notification.userInfo objectForKey:@"error"]];
     }
 }
 
