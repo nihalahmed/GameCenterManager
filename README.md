@@ -200,10 +200,6 @@ Changelog
   <tr>
     <td>Added ARC compatibility. All files are now ready to be used with ARC. Many methods have been updated that were depreciated in iOS 6.0. The demo app has undergone massive improvements, including many interface improvements, iPhone 5 support, a new icon, and better GC status reporting. </td>
   </tr>
-</table>
-
-
-<table>
   <tr><th colspan="2" style="text-align:center;">Version 2.3</th></tr>
   <tr>
     <td>Fixed leaderboard synchronization bug where it would crash if user didn't submit a score previously.</td>
