@@ -16,21 +16,22 @@
 		659699EE1515718800724EBE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 659699ED1515718800724EBE /* ViewController.m */; };
 		65969A06151572D800724EBE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65969A05151572D800724EBE /* GameKit.framework */; };
 		65969A0B1515748900724EBE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65969A0A1515748900724EBE /* SystemConfiguration.framework */; };
-		9942A4F7172CB72100554A22 /* GameCenterIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4F5172CB72100554A22 /* GameCenterIcon.png */; };
-		9942A4F8172CB72100554A22 /* GameCenterIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4F6172CB72100554A22 /* GameCenterIcon@2x.png */; };
 		9942A500172CBA2300554A22 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4F9172CBA2300554A22 /* Default-568h@2x.png */; };
-		9942A501172CBA2300554A22 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4FA172CBA2300554A22 /* Default-Landscape@2x~ipad.png */; };
-		9942A502172CBA2300554A22 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4FB172CBA2300554A22 /* Default-Landscape~ipad.png */; };
-		9942A503172CBA2300554A22 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4FC172CBA2300554A22 /* Default-Portrait@2x~ipad.png */; };
-		9942A504172CBA2300554A22 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4FD172CBA2300554A22 /* Default-Portrait~ipad.png */; };
 		9942A505172CBA2300554A22 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4FE172CBA2300554A22 /* Default.png */; };
 		9942A506172CBA2300554A22 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A4FF172CBA2300554A22 /* Default@2x.png */; };
 		9942A510172CBBE100554A22 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A50F172CBBE100554A22 /* Icon.png */; };
 		9942A512172CBBE400554A22 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A511172CBBE400554A22 /* Icon@2x.png */; };
 		9942A514172CBBF200554A22 /* iPadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A513172CBBF200554A22 /* iPadIcon.png */; };
 		9942A516172CBBF600554A22 /* iPadIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9942A515172CBBF600554A22 /* iPadIcon@2x.png */; };
+		99B01641175515C000F56A5C /* GCBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B01640175515C000F56A5C /* GCBar.png */; };
+		99B016451755178700F56A5C /* Felt-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B016421755178700F56A5C /* Felt-568h@2x.png */; };
+		99B016461755178700F56A5C /* Felt.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B016431755178700F56A5C /* Felt.png */; };
+		99B016471755178700F56A5C /* Felt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B016441755178700F56A5C /* Felt@2x.png */; };
+		99B0164A17551A7A00F56A5C /* Header.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B0164817551A7A00F56A5C /* Header.png */; };
+		99B0164B17551A7A00F56A5C /* Header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B0164917551A7A00F56A5C /* Header@2x.png */; };
+		99B0164E17553C8700F56A5C /* Content.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B0164C17553C8700F56A5C /* Content.png */; };
+		99B0164F17553C8700F56A5C /* Content@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B0164D17553C8700F56A5C /* Content@2x.png */; };
 		99B16C18172D46180091618D /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C16172D46180091618D /* Storyboard_iPhone.storyboard */; };
-		99B16C1B172D46AE0091618D /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C19172D46AE0091618D /* Storyboard_iPad.storyboard */; };
 		99B16C1E172D70AB0091618D /* License.md in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C1C172D70AB0091618D /* License.md */; };
 		99B16C1F172D70AB0091618D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C1D172D70AB0091618D /* README.md */; };
 		99B16C27172D71130091618D /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C22172D71130091618D /* GameCenterManager.m */; };
@@ -53,21 +54,22 @@
 		659699ED1515718800724EBE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		65969A05151572D800724EBE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		65969A0A1515748900724EBE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		9942A4F5172CB72100554A22 /* GameCenterIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GameCenterIcon.png; path = Images/GameCenterIcon.png; sourceTree = "<group>"; };
-		9942A4F6172CB72100554A22 /* GameCenterIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "GameCenterIcon@2x.png"; path = "Images/GameCenterIcon@2x.png"; sourceTree = "<group>"; };
 		9942A4F9172CBA2300554A22 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Images/Default-568h@2x.png"; sourceTree = "<group>"; };
-		9942A4FA172CBA2300554A22 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "Images/Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
-		9942A4FB172CBA2300554A22 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "Images/Default-Landscape~ipad.png"; sourceTree = "<group>"; };
-		9942A4FC172CBA2300554A22 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "Images/Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
-		9942A4FD172CBA2300554A22 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Images/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		9942A4FE172CBA2300554A22 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
 		9942A4FF172CBA2300554A22 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
 		9942A50F172CBBE100554A22 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		9942A511172CBBE400554A22 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		9942A513172CBBF200554A22 /* iPadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadIcon.png; sourceTree = "<group>"; };
 		9942A515172CBBF600554A22 /* iPadIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPadIcon@2x.png"; sourceTree = "<group>"; };
+		99B01640175515C000F56A5C /* GCBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GCBar.png; path = Images/GCBar.png; sourceTree = "<group>"; };
+		99B016421755178700F56A5C /* Felt-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Felt-568h@2x.png"; path = "Images/Felt-568h@2x.png"; sourceTree = "<group>"; };
+		99B016431755178700F56A5C /* Felt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Felt.png; path = Images/Felt.png; sourceTree = "<group>"; };
+		99B016441755178700F56A5C /* Felt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Felt@2x.png"; path = "Images/Felt@2x.png"; sourceTree = "<group>"; };
+		99B0164817551A7A00F56A5C /* Header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Header.png; path = Images/Header.png; sourceTree = "<group>"; };
+		99B0164917551A7A00F56A5C /* Header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Header@2x.png"; path = "Images/Header@2x.png"; sourceTree = "<group>"; };
+		99B0164C17553C8700F56A5C /* Content.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Content.png; path = Images/Content.png; sourceTree = "<group>"; };
+		99B0164D17553C8700F56A5C /* Content@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Content@2x.png"; path = "Images/Content@2x.png"; sourceTree = "<group>"; };
 		99B16C17172D46180091618D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
-		99B16C1A172D46AE0091618D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		99B16C1C172D70AB0091618D /* License.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.md; sourceTree = "<group>"; };
 		99B16C1D172D70AB0091618D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		99B16C21172D71130091618D /* GameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameCenterManager.h; path = "GC Manager/GameCenterManager.h"; sourceTree = "<group>"; };
@@ -139,7 +141,6 @@
 				659699EC1515718800724EBE /* ViewController.h */,
 				659699ED1515718800724EBE /* ViewController.m */,
 				99B16C16172D46180091618D /* Storyboard_iPhone.storyboard */,
-				99B16C19172D46AE0091618D /* Storyboard_iPad.storyboard */,
 				659699E11515718800724EBE /* Supporting Files */,
 			);
 			path = GameCenterManager;
@@ -160,27 +161,53 @@
 			isa = PBXGroup;
 			children = (
 				9942A4F9172CBA2300554A22 /* Default-568h@2x.png */,
-				9942A4FA172CBA2300554A22 /* Default-Landscape@2x~ipad.png */,
-				9942A4FB172CBA2300554A22 /* Default-Landscape~ipad.png */,
-				9942A4FC172CBA2300554A22 /* Default-Portrait@2x~ipad.png */,
-				9942A4FD172CBA2300554A22 /* Default-Portrait~ipad.png */,
 				9942A4FE172CBA2300554A22 /* Default.png */,
 				9942A4FF172CBA2300554A22 /* Default@2x.png */,
-				9942A4F5172CB72100554A22 /* GameCenterIcon.png */,
-				9942A4F6172CB72100554A22 /* GameCenterIcon@2x.png */,
+				99B016421755178700F56A5C /* Felt-568h@2x.png */,
+				99B016431755178700F56A5C /* Felt.png */,
+				99B016441755178700F56A5C /* Felt@2x.png */,
+				99B01640175515C000F56A5C /* GCBar.png */,
+				99B0164817551A7A00F56A5C /* Header.png */,
+				99B0164917551A7A00F56A5C /* Header@2x.png */,
+				99B0164C17553C8700F56A5C /* Content.png */,
+				99B0164D17553C8700F56A5C /* Content@2x.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		99B0162C1754FD7700F56A5C /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				99B0162D1754FD8800F56A5C /* Security */,
+				99B0162E1754FD9100F56A5C /* Internet */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		99B0162D1754FD8800F56A5C /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				99B16C23172D71130091618D /* NSDataAES256.h */,
+				99B16C24172D71130091618D /* NSDataAES256.m */,
+			);
+			name = Security;
+			sourceTree = "<group>";
+		};
+		99B0162E1754FD9100F56A5C /* Internet */ = {
+			isa = PBXGroup;
+			children = (
+				99B16C25172D71130091618D /* Reachability.h */,
+				99B16C26172D71130091618D /* Reachability.m */,
+			);
+			name = Internet;
 			sourceTree = "<group>";
 		};
 		99B16C20172D71090091618D /* GC Manager */ = {
 			isa = PBXGroup;
 			children = (
+				99B0162C1754FD7700F56A5C /* Dependencies */,
 				99B16C21172D71130091618D /* GameCenterManager.h */,
 				99B16C22172D71130091618D /* GameCenterManager.m */,
-				99B16C23172D71130091618D /* NSDataAES256.h */,
-				99B16C24172D71130091618D /* NSDataAES256.m */,
-				99B16C25172D71130091618D /* Reachability.h */,
-				99B16C26172D71130091618D /* Reachability.m */,
 			);
 			name = "GC Manager";
 			sourceTree = "<group>";
@@ -211,7 +238,7 @@
 		659699CD1515718700724EBE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "NABZ Software";
 			};
 			buildConfigurationList = 659699D01515718700724EBE /* Build configuration list for PBXProject "GameCenterManager" */;
@@ -237,13 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				659699E51515718800724EBE /* InfoPlist.strings in Resources */,
-				9942A4F7172CB72100554A22 /* GameCenterIcon.png in Resources */,
-				9942A4F8172CB72100554A22 /* GameCenterIcon@2x.png in Resources */,
 				9942A500172CBA2300554A22 /* Default-568h@2x.png in Resources */,
-				9942A501172CBA2300554A22 /* Default-Landscape@2x~ipad.png in Resources */,
-				9942A502172CBA2300554A22 /* Default-Landscape~ipad.png in Resources */,
-				9942A503172CBA2300554A22 /* Default-Portrait@2x~ipad.png in Resources */,
-				9942A504172CBA2300554A22 /* Default-Portrait~ipad.png in Resources */,
 				9942A505172CBA2300554A22 /* Default.png in Resources */,
 				9942A506172CBA2300554A22 /* Default@2x.png in Resources */,
 				9942A510172CBBE100554A22 /* Icon.png in Resources */,
@@ -251,9 +272,16 @@
 				9942A514172CBBF200554A22 /* iPadIcon.png in Resources */,
 				9942A516172CBBF600554A22 /* iPadIcon@2x.png in Resources */,
 				99B16C18172D46180091618D /* Storyboard_iPhone.storyboard in Resources */,
-				99B16C1B172D46AE0091618D /* Storyboard_iPad.storyboard in Resources */,
 				99B16C1E172D70AB0091618D /* License.md in Resources */,
 				99B16C1F172D70AB0091618D /* README.md in Resources */,
+				99B01641175515C000F56A5C /* GCBar.png in Resources */,
+				99B016451755178700F56A5C /* Felt-568h@2x.png in Resources */,
+				99B016461755178700F56A5C /* Felt.png in Resources */,
+				99B016471755178700F56A5C /* Felt@2x.png in Resources */,
+				99B0164A17551A7A00F56A5C /* Header.png in Resources */,
+				99B0164B17551A7A00F56A5C /* Header@2x.png in Resources */,
+				99B0164E17553C8700F56A5C /* Content.png in Resources */,
+				99B0164F17553C8700F56A5C /* Content@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,14 +320,6 @@
 			name = Storyboard_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
-		99B16C19172D46AE0091618D /* Storyboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				99B16C1A172D46AE0091618D /* en */,
-			);
-			name = Storyboard_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -311,6 +331,10 @@
 					armv6,
 					armv7,
 				);
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -321,11 +345,13 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -339,14 +365,20 @@
 					armv6,
 					armv7,
 				);
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -362,11 +394,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: iRare Media (4N75L7CCKZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GameCenterManager/GameCenterManager-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0F0199EC-A3F6-480F-B17B-9C6C78CE8F23";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F0199EC-A3F6-480F-B17B-9C6C78CE8F23";
+				PROVISIONING_PROFILE = "C8421D7B-DF7B-4EBD-9821-15664A1F017B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C8421D7B-DF7B-4EBD-9821-15664A1F017B";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -379,11 +413,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: iRare Media (4N75L7CCKZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GameCenterManager/GameCenterManager-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0F0199EC-A3F6-480F-B17B-9C6C78CE8F23";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F0199EC-A3F6-480F-B17B-9C6C78CE8F23";
+				PROVISIONING_PROFILE = "C8421D7B-DF7B-4EBD-9821-15664A1F017B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C8421D7B-DF7B-4EBD-9821-15664A1F017B";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

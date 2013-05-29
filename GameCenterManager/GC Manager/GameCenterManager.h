@@ -1,30 +1,29 @@
 //
 //  GameCenterManager.h
 //
-//  Created by Nihal Ahmed on 12-03-16.
+//  Created by Nihal Ahmed on 12-03-16. Updated by iRare Media on 5-27-13.
 //  Copyright (c) 2012 NABZ Software. All rights reserved.
 //
 
-#warning Definition of kGameCenterManagerKey is required. Change this value to your own secret key.
+#warning Definition of GameCenterManagerKey is required. Change this value to your own secret key.
 #define kGameCenterManagerKey [@"MyKey" dataUsingEncoding:NSUTF8StringEncoding]
 
 #define LIBRARY_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
 #define kGameCenterManagerDataFile @"GameCenterManager.plist"
 #define kGameCenterManagerDataPath [LIBRARY_FOLDER stringByAppendingPathComponent:kGameCenterManagerDataFile]
-#define kGameCenterManagerAvailabilityNotification @"GameCenterManagerAvailabilityNotification"
-#define kGameCenterManagerErrorNotification @"GameCenterManagerErrorNotification"
-#define kGameCenterManagerReportScoreNotification @"GameCenterManagerReportScoreNotification"
-#define kGameCenterManagerReportAchievementNotification @"GameCenterManagerReportAchievementNotification"
-#define kGameCenterManagerResetAchievementNotification @"GameCenterManagerResetAchievementNotification"
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
 #import "Reachability.h"
 #import "NSDataAES256.h"
 
+@protocol GameCenterManagerDelegate;
 @interface GameCenterManager : NSObject {
     NSMutableArray *_leaderboards;
 }
+
+// Sets up the Delegate
+@property (nonatomic, weak) id <GameCenterManagerDelegate> delegate;
 
 // Returns the shared instance of GameCenterManager.
 + (GameCenterManager *)sharedManager;
@@ -39,7 +38,7 @@
 - (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier;
 
 // Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
-- (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete;
+- (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete shouldDisplayNotification:(BOOL)displayNotification;
 
 // Reports scores and achievements which could not be reported earlier.
 - (void)reportSavedScoresAndAchievements;
@@ -70,11 +69,33 @@
 
 // Returns currently authenticated local player. If no player is authenticated, "unknownPlayer" is returned.
 - (NSString *)localPlayerId;
+- (GKLocalPlayer *)localPlayerData;
 
 // Returns YES if an active internet connection is available.
 - (BOOL)isInternetAvailable;
+
+// Check if GameCenter is supported
+- (BOOL)checkGameCenterAvailability;
 
 // Use this property to check if Game Center is available and supported on the current device.
 @property (nonatomic, assign) BOOL isGameCenterAvailable;
 
 @end
+
+
+//GameCenterManager Delegate
+@protocol GameCenterManagerDelegate <NSObject>
+@required
+- (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController;
+@optional
+- (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation;
+- (void)gameCenterManager:(GameCenterManager *)manager error:(NSDictionary *)error;
+- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation;
+- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(NSDictionary *)achievementInformation;
+- (void)gameCenterManager:(GameCenterManager *)manager savedScore:(GKScore *)score;
+- (void)gameCenterManager:(GameCenterManager *)manager savedAchievement:(NSDictionary *)achievementInformation;
+- (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error;
+@end
+
+
+

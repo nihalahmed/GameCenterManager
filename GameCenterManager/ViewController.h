@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "GameCenterManager.h"
 
-@interface ViewController : UIViewController <GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate>
+@interface ViewController : UIViewController <GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate, UIActionSheetDelegate, GameCenterManagerDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *actionLabel;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (weak, nonatomic) IBOutlet UIImageView *header;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

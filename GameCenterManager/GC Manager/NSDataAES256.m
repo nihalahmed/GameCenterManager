@@ -10,7 +10,7 @@
 
 @implementation NSData (AES256)
 
-- (NSData*) makeCryptedVersionWithKeyData:(const void*) keyData ofLength:(int) keyLength decrypt:(bool) decrypt
+- (NSData*)makeCryptedVersionWithKeyData:(const void*) keyData ofLength:(int) keyLength decrypt:(bool) decrypt
 {
 	// Copy the key data, padding with zeroes if needed
 	char key[kKeySize];
