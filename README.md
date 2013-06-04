@@ -105,7 +105,7 @@ Delegates
     <td>Authenticate User</td>
     <td> If the user is not logged into GameCenter, you'll need to present the GameCenter login view controller. This method is required because the user must be logged in for Game Center to work. If the user does not login, an error will be returned.  
      <br /><br />
-           <pre><code> - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController</code></pre></td>
+           <tt> - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController</tt></td>
   </tr>
     <tr><th colspan="2" style="text-align:center;">Optional Delegate Methods</th></tr>
   <tr>
@@ -120,7 +120,7 @@ Delegates
   <br />
     The NSDictionary object, <tt>availabilityInformation</tt>, contains two objects, a <tt>message</tt> and a <tt>title</tt>. The `message` object is an NSString describing the availability issue. The <tt>title</tt> is a shorter description of the error; it is also an NSString.
        <br /><br />
-            <pre><code>- (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation</code></pre></td>
+            <tt>- (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation</tt></td>
   </tr>
   <tr>
     <td>Game Center Error</td>
@@ -128,7 +128,7 @@ Delegates
   <br />
     The <tt>error</tt> NSDictionary contains one NSError object, <tt>error</tt>.
        <br /><br />
-           <pre><code> - (void)gameCenterManager:(GameCenterManager *)manager error:(NSDictionary *)error</code></pre></td>
+           <tt> - (void)gameCenterManager:(GameCenterManager *)manager error:(NSDictionary *)error</tt></td>
   </tr>
   <tr>
     <td>Reported Score</td>
@@ -136,7 +136,7 @@ Delegates
   <br />
     The NSDictionary, <tt>scoreInformation</tt>, contains one NSError object, <tt>error</tt>, which may be nil if there is no error. It also contains a GKScore object, <tt>score</tt>, which contains information about the submitted score.
        <br /><br />
-            <pre><code>- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation</code></pre></td>
+            <tt>- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation</tt></td>
   </tr>
   <tr>
     <td>Saved Score</td>
@@ -144,7 +144,7 @@ Delegates
   <br />
     The GKScore object, <tt>score</tt> contains information about the submitted score.
        <br /><br />
-          <pre><code> - (void)gameCenterManager:(GameCenterManager *)manager savedScore:(GKScore *)score</code></pre></td>
+          <tt> - (void)gameCenterManager:(GameCenterManager *)manager savedScore:(GKScore *)score</tt></td>
   </tr>
     <tr>
     <td>Reported Achievement</td>
@@ -152,7 +152,7 @@ Delegates
   <br />
     The NSDictionary, <tt>achievementInformation</tt>, contains one NSError object, <tt>error</tt>, which may be nil if there is no error. It also contains a GKAchievement object, <tt>achievement</tt>, which contains information about the submitted achievement.
        <br /><br />
-            <pre><code>- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(NSDictionary *)achievementInformation</code></pre></td>
+            <tt>- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(NSDictionary *)achievementInformation</tt></td>
   </tr>
   <tr>
     <td>Saved Achievement</td>
@@ -160,13 +160,13 @@ Delegates
   <br />
     The NSDictionary object, <tt>achievementInformation</tt> contains a double, <tt>percent complete</tt>, which is the percent completed on the specified and saved achievement. It also contains a GKAchievement object, <tt>achievement</tt>, which contains information about the submitted achievement.
        <br /><br />
-          <pre><code>- (void)gameCenterManager:(GameCenterManager *)manager savedAchievement:(NSDictionary *)achievementInformation</code></pre></td>
+          <tt>- (void)gameCenterManager:(GameCenterManager *)manager savedAchievement:(NSDictionary *)achievementInformation</tt></td>
   </tr>
     <tr>
     <td>Reset All Achievements</td>
     <td>When the <tt>resetAchievements</tt> method is called and resets all achievements successfully, this delegate method is fired. This method may be useful for updating user interface elements (ex. updating a table view listing completed achievements). Be warned though, the <tt>resetAchievements</tt> method does not prompt the user before resetting - you must do this on your own. 
        <br /><br />
-        <pre><code> - (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error</code></pre></td>
+        <tt> - (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error</tt></td>
   </tr>
 </table>
 
