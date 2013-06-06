@@ -167,7 +167,7 @@ static GameCenterManager *sharedManager = nil;
 #pragma mark - GameCenter Syncing
 
 - (void)syncGameCenter {
-    if ([[GameCenterManager sharedManager] isInternetAvailable]) {
+    if ([[GameCenterManager sharedManager] checkGameCenterAvailability] == YES) {
         if (![[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]]) {
             if (_leaderboards == nil) {
                 [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
@@ -356,34 +356,25 @@ static GameCenterManager *sharedManager = nil;
         [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
     }
     
-    if ([[GameCenterManager sharedManager] isGameCenterAvailable]) {
-        if ([GKLocalPlayer localPlayer].authenticated) {
-            if ([[GameCenterManager sharedManager] isInternetAvailable]) {
-                GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
-                gkScore.value = score;
-                [gkScore reportScoreWithCompletionHandler:^(NSError *error) {
-                NSDictionary *dict = nil;
+    if ([[GameCenterManager sharedManager] checkGameCenterAvailability] == YES) {
+            GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+            gkScore.value = score;
+        
+        [gkScore reportScoreWithCompletionHandler:^(NSError *error) {
+            NSDictionary *dict = nil;
                     
-                if (error == nil) {
-                    dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:gkScore, nil] forKeys:[NSArray arrayWithObjects:@"score", nil]];
-                } else {
-                    dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:error.localizedDescription, gkScore, nil] forKeys:[NSArray arrayWithObjects:@"error", @"score", nil]];
-                    [[GameCenterManager sharedManager] saveScoreToReportLater:gkScore];
-                }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:reportedScore:)])
-                            [[self delegate] gameCenterManager:self reportedScore:dict];
-                    });
-            }];
-                
+            if (error == nil) {
+                dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:gkScore, nil] forKeys:[NSArray arrayWithObjects:@"score", nil]];
             } else {
-                GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+                dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:error.localizedDescription, gkScore, nil] forKeys:[NSArray arrayWithObjects:@"error", @"score", nil]];
                 [[GameCenterManager sharedManager] saveScoreToReportLater:gkScore];
             }
-        } else {
-            GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
-            [[GameCenterManager sharedManager] saveScoreToReportLater:gkScore];
-        }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:reportedScore:)])
+                    [[self delegate] gameCenterManager:self reportedScore:dict];
+            });
+        }];
     } else {
         GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
         [[GameCenterManager sharedManager] saveScoreToReportLater:gkScore];
@@ -396,14 +387,12 @@ static GameCenterManager *sharedManager = nil;
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
     NSMutableDictionary *playerDict = [plistDict objectForKey:[[GameCenterManager sharedManager] localPlayerId]];
     
-    if (playerDict == nil) {
+    if (playerDict == nil)
         playerDict = [NSMutableDictionary dictionary];
-    }
     
     NSNumber *savedPercentComplete = [playerDict objectForKey:identifier];
-    if (savedPercentComplete == nil) {
+    if (savedPercentComplete == nil)
         savedPercentComplete = [NSNumber numberWithDouble:0];
-    }
     
     double savedPercentCompleteValue = [savedPercentComplete doubleValue];
     if (percentComplete > savedPercentCompleteValue) {
@@ -413,39 +402,35 @@ static GameCenterManager *sharedManager = nil;
         [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
     }
     
-    if ([[GameCenterManager sharedManager] isGameCenterAvailable]) {
-        if ([GKLocalPlayer localPlayer].authenticated) {
-            if ([[GameCenterManager sharedManager] isInternetAvailable]) {
-                GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
-                achievement.percentComplete = percentComplete;
-                if (displayNotification == YES) {
-                    achievement.showsCompletionBanner = YES;
-                } else {
-                   achievement.showsCompletionBanner = NO;
-                }
-                [achievement reportAchievementWithCompletionHandler:^(NSError *error) {
-                NSDictionary *dict = nil;
-                    
-                if (error == nil) {
-                    dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:achievement, nil] forKeys:[NSArray arrayWithObjects:@"achievement", nil]];
-                } else {
-                    if (achievement) {
-                        dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:error.localizedDescription, achievement, nil] forKeys:[NSArray arrayWithObjects:@"error", @"achievement", nil]];
-                    }
-                    [[GameCenterManager sharedManager] saveAchievementToReportLater:identifier percentComplete:percentComplete];
-                }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:reportedAchievement:)])
-                            [[self delegate] gameCenterManager:self reportedAchievement:dict];
-                    });
-            }];
-                
+    if ([[GameCenterManager sharedManager] checkGameCenterAvailability] == YES) {
+        GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
+        achievement.percentComplete = percentComplete;
+        if (displayNotification == YES) {
+            achievement.showsCompletionBanner = YES;
+        } else {
+            achievement.showsCompletionBanner = NO;
+        }
+        
+        [achievement reportAchievementWithCompletionHandler:^(NSError *error) {
+            NSDictionary *dict = nil;
+            
+            if (error == nil) {
+                dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:achievement, nil] forKeys:[NSArray arrayWithObjects:@"achievement", nil]];
             } else {
+                if (achievement) {
+                    dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:error.localizedDescription, achievement, nil] forKeys:[NSArray arrayWithObjects:@"error", @"achievement", nil]];
+                }
+                
                 [[GameCenterManager sharedManager] saveAchievementToReportLater:identifier percentComplete:percentComplete];
             }
-        } else {
-            [[GameCenterManager sharedManager] saveAchievementToReportLater:identifier percentComplete:percentComplete];
-        }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:reportedAchievement:)])
+                    [[self delegate] gameCenterManager:self reportedAchievement:dict];
+            });
+            
+        }];
+        
     } else {
         [[GameCenterManager sharedManager] saveAchievementToReportLater:identifier percentComplete:percentComplete];
     }

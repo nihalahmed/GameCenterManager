@@ -174,6 +174,10 @@ Changelog
 -----
 
 <table>
+  <tr><th colspan="2" style="text-align:center;">Version 4.1</th></tr>
+  <tr>
+    <td>Fixed issue where Game Center Manager would fail to report achievements and scores even if Game Center was available.</td>
+  </tr>
   <tr><th colspan="2" style="text-align:center;"><b>Version 4.0</b></th></tr>
   <tr>
     <td>This update makes massive improvements to the flow and performance of code, updates Objective-C compiler and build settings, redesigns the demo app, and adds three new methods and eight new delegate methods.  </br> 
