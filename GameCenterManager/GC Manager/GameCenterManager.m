@@ -109,6 +109,9 @@ static GameCenterManager *sharedManager = nil;
                         
                         [[self delegate] gameCenterManager:self authenticateUser:viewController];
                     });
+                } else if (!error) {
+                    //Authentication handler completed successfully. Re-check availability
+                    [self checkGameCenterAvailability];
                 }
             };
             
