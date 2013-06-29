@@ -17,6 +17,11 @@
 #import "Reachability.h"
 #import "NSDataAES256.h"
 
+typedef enum GameCenterSortOrder {
+    GameCenterSortOrderHighToLow,
+    GameCenterSortOrderLowToHigh
+} GameCenterSortOrder;
+
 @protocol GameCenterManagerDelegate;
 @interface GameCenterManager : NSObject {
     NSMutableArray *_leaderboards;
@@ -35,7 +40,7 @@
 - (void)syncGameCenter;
 
 // Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later.
-- (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier;
+- (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order;
 
 // Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
 - (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete shouldDisplayNotification:(BOOL)displayNotification;

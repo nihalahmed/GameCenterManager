@@ -130,7 +130,7 @@ static GameCenterManager *sharedManager = nil;
                 self.isGameCenterAvailable = YES;
                 return YES;
             }
-       }
+        }
     }
 }
 
@@ -337,7 +337,7 @@ static GameCenterManager *sharedManager = nil;
 #pragma mark - Score and Achievement Reporting
 
 //Save score and report it to GameCenter
-- (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier {
+- (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order  {
     NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
     NSMutableDictionary *playerDict = [plistDict objectForKey:[[GameCenterManager sharedManager] localPlayerId]];
@@ -352,7 +352,23 @@ static GameCenterManager *sharedManager = nil;
     }
     
     int savedHighScoreValue = [savedHighScore intValue];
-    if (score > savedHighScoreValue) {
+    
+    // Determine if the new score is better than the old score
+    BOOL isScoreBetter = NO;
+    switch (order) {
+        case GameCenterSortOrderLowToHigh: // A lower score is better
+            if (score < savedHighScoreValue) {
+                isScoreBetter = YES;
+            }
+            break;
+        default:
+            if (score > savedHighScoreValue) { // A higher score is better
+                isScoreBetter = YES;
+            }
+            break;
+    }
+    
+    if (isScoreBetter) {
         [playerDict setObject:[NSNumber numberWithInt:score] forKey:identifier];
         [plistDict setObject:playerDict forKey:[[GameCenterManager sharedManager] localPlayerId]];
         NSData *saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:kGameCenterManagerKey];
@@ -480,7 +496,7 @@ static GameCenterManager *sharedManager = nil;
         }
     } else {
         NSMutableDictionary *savedAchievements = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:percentComplete], identifier, nil];
-        playerDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:savedAchievements, @"SavedAchievements", nil];                    
+        playerDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:savedAchievements, @"SavedAchievements", nil];
     }
     [plistDict setObject:playerDict forKey:[[GameCenterManager sharedManager] localPlayerId]];
     NSData *saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:kGameCenterManagerKey];
