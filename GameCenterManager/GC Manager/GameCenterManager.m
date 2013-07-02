@@ -190,7 +190,7 @@ static GameCenterManager *sharedManager = nil;
             
             if (_leaderboards.count > 0) {
                 GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[[GameCenterManager sharedManager] localPlayerId]]];
-                [leaderboardRequest setCategory:[_leaderboards objectAtIndex:0]];
+                [leaderboardRequest setCategory:[(GKLeaderboard *)[_leaderboards objectAtIndex:0] category]];
                 [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if (error == nil) {
                         if (scores.count > 0) {
@@ -211,7 +211,12 @@ static GameCenterManager *sharedManager = nil;
                             [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
                         }
                         
-                        [_leaderboards removeObjectAtIndex:0];
+                        // Seeing an NSRangeException for an empty arrat when trying to remove the object
+                        // Despite the check above in this scope that leaderboards count is > 0
+                        if (_leaderboards.count > 0) {
+                            [_leaderboards removeObjectAtIndex:0];
+                        }
+                        
                         [[GameCenterManager sharedManager] syncGameCenter];
                     } else {
                         NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:error forKey:@"error"];
@@ -221,7 +226,8 @@ static GameCenterManager *sharedManager = nil;
                         });
                     }
                 }];
-            } else {
+            }
+            else {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[@"scoresSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]];
                 [[GameCenterManager sharedManager] syncGameCenter];
             }
