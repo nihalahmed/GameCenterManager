@@ -1,7 +1,7 @@
 Game Center Manager
 =========================
 
-Game Center Manager helps you manage Game Center. It makes it easy to report and keep track of high scores achievements, and challenges for different players. Game Center Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc.
+Game Center Manager helps you manage Game Center in your iOS app. It makes it easy to report and keep track of high scores achievements, and challenges for different players. Game Center Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc.
 
 <img width=750 src="https://github.com/iRareMedia/GameCenterManager/blob/master/Interface.png?raw=true"/>
 
@@ -61,9 +61,9 @@ Check for Game Center availability:
 ###Report Score
 Report a score to Game Center:
 
-    [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"Leaderboard Name"];  
+    [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"Leaderboard Name"  sortOrder:GameCenterSortOrder];  
 
-This method saves the score locally as well. If GameCenter is not available, the scores will be saved locally and uploaded to Game Center the next time your app or game can connect to Game Center.
+This method saves the score locally as well. If GameCenter is not available, the scores will be saved locally and uploaded to Game Center the next time your app or game can connect to Game Center. Set the GameCenter Sort Order (either `GameCenterSortOrderHighToLow` or `GameCenterSortOrderLowToHigh`)  to report a score to Game Center only if the new score is better than the best one (depending on the sort order).
 
 ###Report Achievement
 Report an achievement to Game Center:
@@ -174,6 +174,18 @@ Changelog
 -----
 
 <table>
+<tr><th colspan="2" style="text-align:center;">Version 4.4</th></tr>
+  <tr>
+    <td>Fixed issue where new GKLeaderboard object's category property was being set to the saved GKLeaderboard object. Pull Request from <a href="https://github.com/iRareMedia/GameCenterManager/commit/de340432189d093df852f864cb6d1f10efd7223b">michaelpatzer</a></td>
+  </tr>
+<tr><th colspan="2" style="text-align:center;">Version 4.3</th></tr>
+  <tr>
+    <td>Added support for GameCenter Leaderboard score orders. When submitting scores you can now set the score order from High to Low or Low to High using new GameCenter types: <tt>GameCenterSortOrderHighToLow</tt>, <tt>GameCenterSortOrderLowToHigh</tt>. Pull Request from <a href="https://github.com/iRareMedia/GameCenterManager/commit/667b64cc248573e01f3f14b84914fffcc02d3480">michaelpatzer</a></td>
+  </tr>
+<tr><th colspan="2" style="text-align:center;">Version 4.2</th></tr>
+  <tr>
+    <td>Fixed issue where Game Center Manager would fail to handle authentication after calling the <tt>authenticateHandler</tt>. Pull Request by Jonathan Swafford</td>
+  </tr>
   <tr><th colspan="2" style="text-align:center;">Version 4.1</th></tr>
   <tr>
     <td>Fixed issue where Game Center Manager would fail to report achievements and scores even if Game Center was available.</td>

@@ -211,7 +211,7 @@ static GameCenterManager *sharedManager = nil;
                             [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
                         }
                         
-                        // Seeing an NSRangeException for an empty arrat when trying to remove the object
+                        // Seeing an NSRangeException for an empty array when trying to remove the object
                         // Despite the check above in this scope that leaderboards count is > 0
                         if (_leaderboards.count > 0) {
                             [_leaderboards removeObjectAtIndex:0];
@@ -226,8 +226,7 @@ static GameCenterManager *sharedManager = nil;
                         });
                     }
                 }];
-            }
-            else {
+            } else {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[@"scoresSynced" stringByAppendingString:[[GameCenterManager sharedManager] localPlayerId]]];
                 [[GameCenterManager sharedManager] syncGameCenter];
             }
