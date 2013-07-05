@@ -11,6 +11,7 @@
 @implementation ViewController
 @synthesize statusLabel, statusDetailLabel, actionLabel;
 @synthesize toolBar, header, scrollView;
+@synthesize playerPicture, playerName, playerStatus;
 
 //------------------------------------------------------------------------------------------------------------//
 //Region: View Lifecycle -------------------------------------------------------------------------------------//
@@ -22,15 +23,20 @@
     
     //Setup ViewController Appearance
     self.view.backgroundColor = [UIColor underPageBackgroundColor];
-    scrollView.contentSize = CGSizeMake(320, 484);
+    scrollView.contentSize = CGSizeMake(320, 554);
     [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"GCBar"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     toolBar.layer.shadowOffset = CGSizeMake(1, 1.5);
     toolBar.layer.shadowOpacity = 0.5;
     header.layer.shadowOffset = CGSizeMake(1, 1.5);
     header.layer.shadowOpacity = 0.5;
+    playerPicture.layer.BorderColor = [[UIColor whiteColor] CGColor];
+    playerPicture.layer.BorderWidth = 2.0;
+    playerPicture.layer.shadowOffset = CGSizeMake(1, 1.5);
+    playerPicture.layer.shadowOpacity = 0.5;
     
     //Set GameCenter Manager Delegate
     [[GameCenterManager sharedManager] setDelegate:self];
+    [[GameCenterManager sharedManager] initGameCenter];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -47,7 +53,14 @@
     if (player) {
         if ([player isUnderage] == NO) {
             actionLabel.text = [NSString stringWithFormat:@"%@ signed in.", player.displayName];
+            playerName.text = player.displayName;
+            playerStatus.text = @"Player is not underage";
+            [[GameCenterManager sharedManager] localPlayerPhoto:^(UIImage *playerPhoto) {
+                playerPicture.image = playerPhoto;
+            }];
         } else {
+            playerName.text = player.displayName;
+            playerStatus.text = @"Player is underage";
             actionLabel.text = [NSString stringWithFormat:@"Underage player, %@, signed in.", player.displayName];
         }
     } else {
@@ -65,6 +78,9 @@
     [self setScrollView:nil];
     [self setStatusDetailLabel:nil];
     [self setActionLabel:nil];
+    [self setPlayerPicture:nil];
+    [self setPlayerName:nil];
+    [self setPlayerStatus:nil];
     [super viewDidUnload];
 }
 
@@ -74,7 +90,7 @@
 #pragma mark - GameCenter Scores
 
 - (IBAction)reportScore {
-    [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"HighScores"];
+    [[GameCenterManager sharedManager] saveAndReportScore:[[GameCenterManager sharedManager] highScoreForLeaderboard:@"grp.PlayerScores"]+1 leaderboard:@"grp.PlayerScores" sortOrder:GameCenterSortOrderHighToLow];
     actionLabel.text = [NSString stringWithFormat:@"Score recorded."];
 }
 
@@ -97,7 +113,16 @@
 #pragma mark - GameCenter Achievements
 
 - (IBAction)reportAchievement {
-    [[GameCenterManager sharedManager] saveAndReportAchievement:@"1000Points" percentComplete:50 shouldDisplayNotification:YES];
+    if ([[GameCenterManager sharedManager] progressForAchievement:@"grp.FirstAchievement"] == 100) {
+        [[GameCenterManager sharedManager] saveAndReportAchievement:@"grp.SecondAchievement" percentComplete:100 shouldDisplayNotification:YES];
+    }
+    
+    if ([[GameCenterManager sharedManager] progressForAchievement:@"grp.FirstAchievement"] == 0) {
+        [[GameCenterManager sharedManager] saveAndReportAchievement:@"grp.FirstAchievement" percentComplete:100 shouldDisplayNotification:YES];
+        [[GameCenterManager sharedManager] saveAndReportAchievement:@"grp.SecondAchievement" percentComplete:50 shouldDisplayNotification:NO];
+    }
+    
+    NSLog(@"Achievement One Progress: %f | Achievement Two Progress: %f", [[GameCenterManager sharedManager] progressForAchievement:@"grp.FirstAchievement"], [[GameCenterManager sharedManager] progressForAchievement:@"grp.SecondAchievement"]);
     actionLabel.text = [NSString stringWithFormat:@"Achievement recorded."];
 }
 
@@ -124,10 +149,11 @@
 #pragma mark - GameCenter Challenges
 
 - (IBAction)loadChallenges {
-    //This feature is only supported in iOS 6 and higher
-    NSArray *challenges = [[GameCenterManager sharedManager] getChallenges];
-    actionLabel.text = [NSString stringWithFormat:@"Loaded GameCenter challenges."];
-    NSLog(@"GC Challenges: %@", challenges);
+    //This feature is only supported in iOS 6 and higher (don't worry - GC Manager will check for you and return NIL if it isn't available)
+    [[GameCenterManager sharedManager] getChallengesWithCompletion:^(NSArray *challenges, NSError *error) {
+        actionLabel.text = [NSString stringWithFormat:@"Loaded GameCenter challenges."];
+        NSLog(@"GC Challenges: %@ | Error: %@", challenges, error);
+    }];
 }
 
 //------------------------------------------------------------------------------------------------------------//
@@ -143,14 +169,35 @@
 
 - (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation {
     NSLog(@"GC Availabilty: %@", availabilityInformation);
-    statusDetailLabel.text = [availabilityInformation objectForKey:@"error"];
+    if ([[availabilityInformation objectForKey:@"status"] isEqualToString:@"GameCenter Available"]) {
+        statusLabel.text = @"GAME CENTER AVAILABLE";
+        statusDetailLabel.text = @"Game Center is online, the current player is logged in, and this app is setup.";
+    } else {
+        statusLabel.Text = @"GAME CENTER UNAVAILABLE";
+        statusDetailLabel.text = [availabilityInformation objectForKey:@"error"];
+    }
+    
+    GKLocalPlayer *player = [[GameCenterManager sharedManager] localPlayerData];
+    if (player) {
+        if ([player isUnderage] == NO) {
+            playerName.text = player.displayName;
+            playerStatus.text = @"Player is not underage and is signed-in";
+            [[GameCenterManager sharedManager] localPlayerPhoto:^(UIImage *playerPhoto) {
+                playerPicture.image = playerPhoto;
+            }];
+        } else {
+            playerName.text = player.displayName;
+            playerStatus.text = @"Player is underage";
+            actionLabel.text = [NSString stringWithFormat:@"Underage player, %@, signed in.", player.displayName];
+        }
+    } else {
+        actionLabel.text = [NSString stringWithFormat:@"No GameCenter player found."];
+    }
 }
 
-- (void)gameCenterManager:(GameCenterManager *)manager error:(NSDictionary *)error {
+- (void)gameCenterManager:(GameCenterManager *)manager error:(NSError *)error {
     NSLog(@"GC Error: %@", error);
-    if ([[error objectForKey:@"error"] isEqualToString:@"Could not save achievement. Data missing."]) {
-        actionLabel.text = [NSString stringWithFormat:@"Could not save achievement. Data missing."];
-    }
+    actionLabel.text = error.domain;
 }
 
 - (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation {

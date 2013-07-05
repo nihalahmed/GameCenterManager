@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>GameCenterManager Mac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>GameCenterManager.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>659699D51515718800724EBE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>994E293F17838BF300EAACD2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

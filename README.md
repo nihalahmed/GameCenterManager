@@ -1,7 +1,7 @@
 Game Center Manager
 =========================
 
-Game Center Manager helps you manage Game Center in your iOS app. It makes it easy to report and keep track of high scores achievements, and challenges for different players. Game Center Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc.
+Game Center Manager helps you manage Game Center in your iOS or Mac app. It makes it easy to report and keep track of high scores achievements, and challenges for different players. Game Center Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc.
 
 <img width=750 src="https://github.com/iRareMedia/GameCenterManager/blob/master/Interface.png?raw=true"/>
 
@@ -20,11 +20,11 @@ Setup
 
 1. Add the `GameKit` and `SystemConfiguration` frameworks to your Xcode project  
 2. Add the following classes (can be found in the *GC Manager* folder) to your Xcode project (make sure to select Copy Items in the dialog):  
-   -  GameCenterManager  
+   -  GameCenterManager (GameCenterManager-Mac on OS X)  
    -  Reachability 
    -  NSDataAES256  
-3. Open the `GameCenterManager.h` file and change the `kGameCenterManagerKey` constant to the secret key you want to use for encryption/decryption  
-4. Import the `GameCenterManager.h` file  
+3. Open the `GameCenterManager.h` (`GameCenterManager-Mac.h` on OS X) file and change the `kGameCenterManagerKey` constant to the secret key you want to use for encryption/decryption  
+4. Import the `GameCenterManager.h` file (`GameCenterManager-Mac.h` on OS X)  
 5. Add the delegate `GameCenterManagerDelegate` to your header file, then set the delegate in your implementation and add any delegates you'd like to use (see **Delegates**):
 
         [[GameCenterManager sharedManager] setDelegate:self];
@@ -32,7 +32,7 @@ Setup
 Using the Demo App
 ------------
 
-Game Center Manager's demo app makes it easier to test Game Center integration and how it works with Game Center Manager. It also lays out how to use the `GameCenterManager` class. To get the most out of the Game Center Manager demo app you'll need to connect it to your an app which you have setup in iTunes Connect. You can read about setting up and developing with Game Center from <a href="https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/GameKit_Guide/GameCenterOverview/GameCenterOverview.html#//apple_ref/doc/uid/TP40008304-CH5-SW7">Apple's Developer Documentation</a> and you can also follow these steps to connect the GC Manager demo with your current app.
+Game Center Manager's demo app makes it easier to test Game Center integration on both Mac and iOS and how it works with Game Center Manager. It also lays out how to use the `GameCenterManager` class. To get the most out of the Game Center Manager demo app you'll need to connect it to your an app which you have setup in iTunes Connect. You can read about setting up and developing with Game Center from <a href="https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/GameKit_Guide/GameCenterOverview/GameCenterOverview.html#//apple_ref/doc/uid/TP40008304-CH5-SW7">Apple's Developer Documentation</a> and you can also follow these steps to connect the GC Manager demo with your current app.
 
   1. First, check and make sure your app is setup in **iTunes Connect** and that Game Center is enabled  
   2. In the GC Manager Demo app, change the **Bundle ID** to the same ID of the app which is setup in iTunes Connect  
@@ -59,16 +59,16 @@ Check for Game Center availability:
 
 
 ###Report Score
-Report a score to Game Center:
+Report a score to Game Center using the GameCenter Leaderboard ID:
 
-    [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"Leaderboard Name"  sortOrder:GameCenterSortOrder];  
+    [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"Leaderboard ID"  sortOrder:GameCenterSortOrder];  
 
 This method saves the score locally as well. If GameCenter is not available, the scores will be saved locally and uploaded to Game Center the next time your app or game can connect to Game Center. Set the GameCenter Sort Order (either `GameCenterSortOrderHighToLow` or `GameCenterSortOrderLowToHigh`)  to report a score to Game Center only if the new score is better than the best one (depending on the sort order).
 
 ###Report Achievement
-Report an achievement to Game Center:
+Report an achievement to Game Center using the GameCenter Achievement ID:
 
-    [[GameCenterManager sharedManager] saveAndReportAchievement:@"1000Points" percentComplete:50];  
+    [[GameCenterManager sharedManager] saveAndReportAchievement:@"Achievement ID" percentComplete:50];  
 
 This method saves the achievement progress locally as well. If GameCenter is not available, the achievement will be saved locally and uploaded to Game Center the next time your app or game can connect to Game Center.
 
@@ -98,6 +98,7 @@ To get challenges for the current game and player, you can call
 
 Delegates
 -----
+There is only one required delegate method for iOS versions, none for OS X.
 
 <table>
   <tr><th colspan="2" style="text-align:center;">Required Delegate Methods</th></tr>

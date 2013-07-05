@@ -21,11 +21,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Content.png" id="rFQ-xu-p9U">
-                                        <rect key="frame" x="13" y="105" width="295" height="382"/>
+                                        <rect key="frame" x="13" y="162" width="295" height="382"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="MhM-Nc-oel">
-                                        <rect key="frame" x="20" y="140" width="280" height="53"/>
+                                        <rect key="frame" x="20" y="197" width="280" height="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -40,7 +40,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="VZL-MP-OcC">
-                                        <rect key="frame" x="20" y="196" width="280" height="56"/>
+                                        <rect key="frame" x="20" y="253" width="280" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -55,7 +55,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="z4z-5a-FJO">
-                                        <rect key="frame" x="20" y="375" width="280" height="57"/>
+                                        <rect key="frame" x="20" y="432" width="280" height="57"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -70,7 +70,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Fr3-dO-T75">
-                                        <rect key="frame" x="20" y="316" width="280" height="58"/>
+                                        <rect key="frame" x="20" y="373" width="280" height="58"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -85,7 +85,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Bhl-SL-g2x">
-                                        <rect key="frame" x="20" y="254" width="280" height="53"/>
+                                        <rect key="frame" x="20" y="311" width="280" height="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -100,7 +100,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VHb-yR-31A">
-                                        <rect key="frame" x="80" y="449" width="163" height="29"/>
+                                        <rect key="frame" x="80" y="506" width="163" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -114,25 +114,47 @@
                                             <action selector="resetAchievements" destination="GFw-Bg-hft" eventType="touchUpInside" id="G8x-VV-DVz"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="fTm-OP-Yg8">
+                                        <rect key="frame" x="20" y="103" width="51" height="51"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unknown Player" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="m0N-SO-z4i">
+                                        <rect key="frame" x="88" y="103" width="212" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <size key="shadowOffset" width="0.0" height="1"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Player is not underage" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="6Wx-Ow-gIv">
+                                        <rect key="frame" x="88" y="123" width="212" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="GillSans-LightItalic" family="Gill Sans" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <size key="shadowOffset" width="0.0" height="1"/>
+                                    </label>
                                 </subviews>
                             </scrollView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Header.png" id="7BQ-2z-Plv">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Header@2x.png" id="7BQ-2z-Plv">
                                 <rect key="frame" x="0.0" y="43" width="320" height="97"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="GAME CENTER STATUS" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="Fs8-a6-cL7">
-                                <rect key="frame" x="20" y="53" width="195" height="43"/>
+                                <rect key="frame" x="20" y="53" width="280" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Georgia-Bold" family="Georgia" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="21"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Game Center detailed status." lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="grj-su-vya">
-                                <rect key="frame" x="20" y="97" width="195" height="35"/>
+                                <rect key="frame" x="20" y="97" width="280" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Georgia-Bold" family="Georgia" pointSize="11"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="11"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -149,7 +171,7 @@
                                 <items/>
                             </toolbar>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Game Center Manager" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RnV-FZ-PSI">
-                                <rect key="frame" x="20" y="12" width="280" height="21"/>
+                                <rect key="frame" x="20" y="11" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -171,6 +193,9 @@
                     <connections>
                         <outlet property="actionLabel" destination="P5G-e8-wot" id="yRF-xD-0Ah"/>
                         <outlet property="header" destination="7BQ-2z-Plv" id="9pz-ow-5o0"/>
+                        <outlet property="playerName" destination="m0N-SO-z4i" id="Zmf-8F-C0H"/>
+                        <outlet property="playerPicture" destination="fTm-OP-Yg8" id="Z3y-hc-D1J"/>
+                        <outlet property="playerStatus" destination="6Wx-Ow-gIv" id="C3T-bQ-4rm"/>
                         <outlet property="scrollView" destination="zuH-dQ-cnc" id="qPV-Sf-an5"/>
                         <outlet property="statusDetailLabel" destination="grj-su-vya" id="ge9-ze-zpg"/>
                         <outlet property="statusLabel" destination="Fs8-a6-cL7" id="Hvv-18-yAI"/>
@@ -179,24 +204,19 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xvA-Nz-AAs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250" y="476"/>
+            <point key="canvasLocation" x="188" y="598"/>
         </scene>
     </scenes>
     <resources>
         <image name="Content.png" width="295" height="382"/>
         <image name="Felt-568h@2x.png" width="640" height="1136"/>
-        <image name="Header.png" width="320" height="97"/>
+        <image name="Header@2x.png" width="320" height="97"/>
     </resources>
     <classes>
-        <class className="ViewController" superclassName="UIViewController">
+        <class className="ViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="actionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="header" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="statusDetailLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="toolBar" candidateClass="UIToolbar"/>
             </relationships>
         </class>
     </classes>

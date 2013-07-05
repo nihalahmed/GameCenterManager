@@ -1,8 +1,8 @@
 //
 //  GameCenterManager.h
 //
-//  Created by Nihal Ahmed on 12-03-16. Updated by iRare Media on 7/2/13.
-//  Copyright (c) 2012 NABZ Software. All rights reserved.
+//  Created by iRare Media on 7/2/13.
+//  Copyright (c) 2013 iRare Media. All rights reserved.
 //
 
 #warning Definition of GameCenterManagerKey is required. Change this value to your own secret key.
@@ -28,14 +28,11 @@ enum {
     GCMErrorChallengeNotAvailable = 3,
     GCMErrorInternetNotAvailable = 4,
     GCMErrorAchievementDataMissing = 5
-};
-typedef NSInteger GCMErrorCode;
-
+}; typedef NSInteger GCMErrorCode;
 
 @protocol GameCenterManagerDelegate;
 @interface GameCenterManager : NSObject {
     NSMutableArray *_leaderboards;
-    UIBackgroundTaskIdentifier backgroundProcess;
 }
 
 // Sets up the Delegate
@@ -82,15 +79,17 @@ typedef NSInteger GCMErrorCode;
  */
 - (void)getChallengesWithCompletion:(void (^)(NSArray *challenges, NSError *error))handler;
 
-// Resets local player's achievements
+/** Resets local player's achievements */
 - (void)resetAchievements;
 
 // Returns currently authenticated local player. If no player is authenticated, "unknownPlayer" is returned.
 - (NSString *)localPlayerId;
 - (GKLocalPlayer *)localPlayerData;
-- (void)localPlayerPhoto:(void (^)(UIImage *playerPhoto))handler;
+- (void)localPlayerPhoto:(void (^)(NSImage *playerPhoto))handler;
 
-// Returns YES if an active internet connection is available.
+/** Checks for an active internet connection.
+  @return BOOL value, YES if an active internet connection is available, NO if there is no internet connection.
+ */
 - (BOOL)isInternetAvailable;
 
 // Check if GameCenter is supported
@@ -102,10 +101,8 @@ typedef NSInteger GCMErrorCode;
 @end
 
 
-//GameCenterManager Delegate
+//GameCenterManager Mac Delegate
 @protocol GameCenterManagerDelegate <NSObject>
-@required
-- (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController;
 @optional
 - (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation;
 - (void)gameCenterManager:(GameCenterManager *)manager error:(NSError *)error;

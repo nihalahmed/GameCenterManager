@@ -17,5 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (weak, nonatomic) IBOutlet UIImageView *header;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIImageView *playerPicture;
+@property (weak, nonatomic) IBOutlet UILabel *playerName;
+@property (weak, nonatomic) IBOutlet UILabel *playerStatus;
 
 @end
