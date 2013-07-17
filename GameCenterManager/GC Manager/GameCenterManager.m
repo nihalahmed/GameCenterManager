@@ -242,7 +242,6 @@ static GameCenterManager *sharedManager = nil;
                 if (error == nil) {
                     NSLog(@"Number of Achievements: %@", achievements);
                     if (achievements.count > 0) {
-#warning make sure this check works
                         NSData *gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:kGameCenterManagerKey];
                         NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
                         NSMutableDictionary *playerDict = [plistDict objectForKey:[[GameCenterManager sharedManager] localPlayerId]];
@@ -634,7 +633,7 @@ static GameCenterManager *sharedManager = nil;
                 }
         }];
         } else {
-            NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"GKChallenge Class is not available. GKChallenge is only available on iOS 6.0 and higher. Current iOS version: %@", [[UIDevice currentDevice] systemVersion]] code:GCMErrorChallengeNotAvailable userInfo:nil];
+            NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"GKChallenge Class is not available. GKChallenge is only available on iOS 6.0 and higher. Current iOS version: %@", [[UIDevice currentDevice] systemVersion]] code:GCMErrorFeatureNotAvailable userInfo:nil];
             if ([[self delegate] respondsToSelector:@selector(gameCenterManager:error:)])
                 [[self delegate] gameCenterManager:self error:error];
         }
@@ -699,7 +698,6 @@ static GameCenterManager *sharedManager = nil;
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark - Player Data
 
-//Checks if player is authenticated and gets his / her ID
 - (NSString *)localPlayerId {
     if ([[GameCenterManager sharedManager] isGameCenterAvailable]) {
         if ([GKLocalPlayer localPlayer].authenticated) {
@@ -709,27 +707,55 @@ static GameCenterManager *sharedManager = nil;
     return @"unknownPlayer";
 }
 
-//Checks if player is authenticated and gets his / her ID
+- (NSString *)localPlayerDisplayName {
+    if ([[GameCenterManager sharedManager] isGameCenterAvailable]) {
+        BOOL osVersionSupported = ([[[UIDevice currentDevice] systemVersion] compare:@"6.0" options:NSNumericSearch] != NSOrderedAscending);
+        if (osVersionSupported == YES) {
+            if ([GKLocalPlayer localPlayer].authenticated) {
+                return [GKLocalPlayer localPlayer].displayName;
+            }
+        } else {
+            if ([GKLocalPlayer localPlayer].authenticated) {
+                return [GKLocalPlayer localPlayer].alias;
+            }
+        }
+    }
+    return @"unknownPlayer";
+}
+
 - (GKLocalPlayer *)localPlayerData {
     if ([[GameCenterManager sharedManager] isGameCenterAvailable]) {
         if ([GKLocalPlayer localPlayer].authenticated) {
             return [GKLocalPlayer localPlayer];
         }
     }
+    
     return nil;
 }
 
 - (void)localPlayerPhoto:(void (^)(UIImage *playerPhoto))handler {
-    [[self localPlayerData] loadPhotoForSize:GKPhotoSizeNormal withCompletionHandler:^(UIImage *photo, NSError *error) {
-        handler(photo);
-        if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:error:)])
-                    [[self delegate] gameCenterManager:self error:error];
-            });
+    if ([[GameCenterManager sharedManager] isGameCenterAvailable]) {
+        BOOL osVersionSupported = ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] != NSOrderedAscending);
+        if (osVersionSupported == YES) {
+            [[self localPlayerData] loadPhotoForSize:GKPhotoSizeNormal withCompletionHandler:^(UIImage *photo, NSError *error) {
+                handler(photo);
+                if (error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:error:)])
+                            [[self delegate] gameCenterManager:self error:error];
+                    });
+                }
+            }];
+        } else {
+            NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"loadPhotoForSize:withCompletionHandler: method is not available. loadPhotoForSize:withCompletionHandler: is only available on iOS 5.0 and higher. Current iOS version: %@", [[UIDevice currentDevice] systemVersion]] code:GCMErrorFeatureNotAvailable userInfo:nil];
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:error:)])
+                [[self delegate] gameCenterManager:self error:error];
         }
-    }];
+    } else {
+        NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"GameCenter Unavailable"] code:GCMErrorNotAvailable userInfo:nil];
+        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:error:)])
+            [[self delegate] gameCenterManager:self error:error];
+    }
 }
-
 
 @end

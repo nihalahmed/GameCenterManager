@@ -204,7 +204,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xvA-Nz-AAs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="188" y="598"/>
+            <point key="canvasLocation" x="183" y="609"/>
         </scene>
     </scenes>
     <resources>
@@ -213,10 +213,18 @@
         <image name="Header@2x.png" width="320" height="97"/>
     </resources>
     <classes>
-        <class className="ViewController">
+        <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="actionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="header" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="playerName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="playerPicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="playerStatus" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="statusDetailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="toolBar" candidateClass="UIToolbar"/>
             </relationships>
         </class>
     </classes>

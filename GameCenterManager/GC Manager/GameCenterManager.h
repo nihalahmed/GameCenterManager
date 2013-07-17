@@ -25,7 +25,7 @@ typedef enum GameCenterSortOrder {
 enum {
     GCMErrorUnknown = 1,
     GCMErrorNotAvailable = 2,
-    GCMErrorChallengeNotAvailable = 3,
+    GCMErrorFeatureNotAvailable = 3,
     GCMErrorInternetNotAvailable = 4,
     GCMErrorAchievementDataMissing = 5
 };
@@ -44,37 +44,37 @@ typedef NSInteger GCMErrorCode;
 // Returns the shared instance of GameCenterManager.
 + (GameCenterManager *)sharedManager;
 
-// Initializes Game Center Manager. Should be called at app launch.
+/// Initializes Game Center Manager. Should be called at app launch.
 - (void)initGameCenter;
 
-// Synchronizes local player data with Game Center data.
+/// Synchronizes local player data with Game Center data.
 - (void)syncGameCenter;
 
-// Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later.
+/// Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later.
 - (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order;
 
-// Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
+/// Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
 - (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete shouldDisplayNotification:(BOOL)displayNotification;
 
-// Reports scores and achievements which could not be reported earlier.
+/// Reports scores and achievements which could not be reported earlier.
 - (void)reportSavedScoresAndAchievements;
 
-// Saves score to be submitted later.
+/// Saves score to be submitted later.
 - (void)saveScoreToReportLater:(GKScore *)score;
 
-// Saves achievement to be submitted later.
+/// Saves achievement to be submitted later.
 - (void)saveAchievementToReportLater:(NSString *)identifier percentComplete:(double)percentComplete;
 
-// Returns local player's high score for specified leaderboard.
+/// Returns local player's high score for specified leaderboard.
 - (int)highScoreForLeaderboard:(NSString *)identifier;
 
-// Returns local player's high scores for multiple leaderboards.
+/// Returns local player's high scores for multiple leaderboards.
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers;
 
-// Returns local player's percent completed for specified achievement.
+/// Returns local player's percent completed for specified achievement.
 - (double)progressForAchievement:(NSString *)identifier;
 
-// Returns local player's percent completed for multiple achievements.
+/// Returns local player's percent completed for multiple achievements.
 - (NSDictionary *)progressForAchievements:(NSArray *)identifiers;
 
 /** Gets a list of challenges for the current player and game. If GameCenter is not available it will return nil and provide an error using the gameCenterManager:error: delegate method. Use the completion handler to get challenges.
@@ -82,27 +82,34 @@ typedef NSInteger GCMErrorCode;
  */
 - (void)getChallengesWithCompletion:(void (^)(NSArray *challenges, NSError *error))handler;
 
-// Resets local player's achievements
+/// Resets local player's achievements
 - (void)resetAchievements;
 
-// Returns currently authenticated local player. If no player is authenticated, "unknownPlayer" is returned.
+/// Returns currently authenticated local player ID. If no player is authenticated, "unknownPlayer" is returned.
 - (NSString *)localPlayerId;
+
+/// Returns currently authenticated local player's display name (alias or actual name depending on friendship). If no player is authenticated, "unknownPlayer" is returned. Player Alias will be returned if the Display Name property is not available
+- (NSString *)localPlayerDisplayName;
+
+/// Returns currently authenticated local player and all associated data. If no player is authenticated, `nil` is returned.
 - (GKLocalPlayer *)localPlayerData;
+
+/// Fetches a UIImage with the local player's profile picture at full resolution. The completion handler passes a UIImage object when the image is downloaded from the GameCenter Servers
 - (void)localPlayerPhoto:(void (^)(UIImage *playerPhoto))handler;
 
-// Returns YES if an active internet connection is available.
+/// Returns YES if an active internet connection is available.
 - (BOOL)isInternetAvailable;
 
-// Check if GameCenter is supported
+/// Check if GameCenter is supported
 - (BOOL)checkGameCenterAvailability;
 
-// Use this property to check if Game Center is available and supported on the current device.
+/// Use this property to check if Game Center is available and supported on the current device.
 @property (nonatomic, assign) BOOL isGameCenterAvailable;
 
 @end
 
 
-//GameCenterManager Delegate
+/// GameCenterManager Delegate
 @protocol GameCenterManagerDelegate <NSObject>
 @required
 - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController;
