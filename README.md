@@ -45,10 +45,10 @@ GameCenter Manager automatically checks if Game Center is available before perfo
     BOOL isAvailable = [[GameCenterManager sharedManager] checkGameCenterAvailability];  
 
 This method will perform the following checks in the following order:
-	1. Current OS version new enough to run Game Center. iOS 4.1 or OS X 10.8. Some Game Center methods require newer OS versions which will be checked (ex. challenges and some multiplayer features).
-	2. GameKit API availability. The `GKLocalPlayer` class must be available at a minimum.
-	3. Internet Connection. The `Reachability` class is used to determine if there is an active internet connection. GameCenterManager will still work without internet, however all saved data can only be uploaded with an internet connection.
-	4. Local Player. Check to make sure a local player is logged in and authenticated.
+	1. Current OS version new enough to run Game Center. iOS 4.1 or OS X 10.8. Some Game Center methods require newer OS versions which will be checked (ex. challenges and some multiplayer features).  
+	2. GameKit API availability. The `GKLocalPlayer` class must be available at a minimum.  
+	3. Internet Connection. The `Reachability` class is used to determine if there is an active internet connection. GameCenterManager will still work without internet, however all saved data can only be uploaded with an internet connection.  
+	4. Local Player. Check to make sure a local player is logged in and authenticated.  
 
 This method may return **NO** in many cases. Use the `gameCenterManager: availabilityChanged:` delegate method to get an `NSDictionary` containing information about why Game Center is or isn't available. Refer to the section on delegate methods below.
 
