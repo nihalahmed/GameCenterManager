@@ -41,37 +41,37 @@ enum {
 // Returns the shared instance of GameCenterManager.
 + (GameCenterManager *)sharedManager;
 
-// Initializes Game Center Manager. Should be called at app launch.
+/// Initializes Game Center Manager. Should be called at app launch.
 - (void)initGameCenter;
 
-// Synchronizes local player data with Game Center data.
+/// Synchronizes local player data with Game Center data.
 - (void)syncGameCenter;
 
-// Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later.
+/// Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later.
 - (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order;
 
-// Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
+/// Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
 - (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete shouldDisplayNotification:(BOOL)displayNotification;
 
-// Reports scores and achievements which could not be reported earlier.
+/// Reports scores and achievements which could not be reported earlier.
 - (void)reportSavedScoresAndAchievements;
 
-// Saves score to be submitted later.
+/// Saves score to be submitted later.
 - (void)saveScoreToReportLater:(GKScore *)score;
 
-// Saves achievement to be submitted later.
+/// Saves achievement to be submitted later.
 - (void)saveAchievementToReportLater:(NSString *)identifier percentComplete:(double)percentComplete;
 
-// Returns local player's high score for specified leaderboard.
+/// Returns local player's high score for specified leaderboard.
 - (int)highScoreForLeaderboard:(NSString *)identifier;
 
-// Returns local player's high scores for multiple leaderboards.
+/// Returns local player's high scores for multiple leaderboards.
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers;
 
-// Returns local player's percent completed for specified achievement.
+/// Returns local player's percent completed for specified achievement.
 - (double)progressForAchievement:(NSString *)identifier;
 
-// Returns local player's percent completed for multiple achievements.
+/// Returns local player's percent completed for multiple achievements.
 - (NSDictionary *)progressForAchievements:(NSArray *)identifiers;
 
 /** Gets a list of challenges for the current player and game. If GameCenter is not available it will return nil and provide an error using the gameCenterManager:error: delegate method. Use the completion handler to get challenges.
@@ -82,7 +82,7 @@ enum {
 /** Resets local player's achievements */
 - (void)resetAchievements;
 
-// Returns currently authenticated local player. If no player is authenticated, "unknownPlayer" is returned.
+/// Returns currently authenticated local player. If no player is authenticated, "unknownPlayer" is returned.
 - (NSString *)localPlayerId;
 - (GKLocalPlayer *)localPlayerData;
 - (void)localPlayerPhoto:(void (^)(NSImage *playerPhoto))handler;
@@ -92,16 +92,16 @@ enum {
  */
 - (BOOL)isInternetAvailable;
 
-// Check if GameCenter is supported
+/// Check if GameCenter is supported
 - (BOOL)checkGameCenterAvailability;
 
-// Use this property to check if Game Center is available and supported on the current device.
+/// Use this property to check if Game Center is available and supported on the current device.
 @property (nonatomic, assign) BOOL isGameCenterAvailable;
 
 @end
 
 
-//GameCenterManager Mac Delegate
+/// GameCenterManager Mac Delegate
 @protocol GameCenterManagerDelegate <NSObject>
 @optional
 - (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation;

@@ -1,7 +1,7 @@
-Game Center Manager
+Game Kit Manager
 =========================
 
-Game Center Manager helps you manage Game Center in your iOS or Mac app. It makes it easy to report and keep track of high scores achievements, and challenges for different players. Game Center Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. In future updates, Game Center Manager will make it easy to setup and run live Game Center Multiplayer matches.
+GameKit Manager helps you manage Game Center in your iOS or Mac app. It makes it easy to report and keep track of high scores achievements, and challenges for different players. GameKit Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. In future updates, GameKit Manager will make it easy to setup and run live Game Center Multiplayer matches.
 
 <img width=750 src="https://github.com/iRareMedia/GameCenterManager/blob/master/Interface.png?raw=true"/>
 
@@ -26,7 +26,7 @@ Setup
 Using the Demo App
 ------------
 
-Game Center Manager's demo app makes it easier to test Game Center integration with Game Center Manager on both Mac and iOS. It also lays out how to use the `GameCenterManager` class. We recommend that you leave the Bundle ID provided with the Demo App as-is. This Bundle ID is already linked to a Game Center game in iTunes Connect with scores and achievements. You may, however, substitute your own Bundle ID and entitlements file.
+GameKit Manager's demo app makes it easier to test Game Center integration with GameKit Manager on both Mac and iOS. It also lays out how to use the `GameCenterManager` class. We recommend that you leave the Bundle ID provided with the Demo App as-is. This Bundle ID is already linked to a Game Center game in iTunes Connect with scores and achievements. You may, however, substitute your own Bundle ID and entitlements file.
 
 Documentation
 -----
@@ -217,8 +217,8 @@ When the `gameCenterManager: error:` delegate is called, one of the following er
     -  `GCMErrorUnknown` (0) an unknown error occured  
     -  `GCMErrorNotAvailable` (1) the feature is not available or GameCenter is not available  
     -  `GCMErrorFeatureNotAvailable` (2) the request feature is not available, check error message for info  
-    -   `GCMErrorInternetNotAvailable` (3) no internet connection  
-    -   `GCMErrorAchievementDataMissing` (3) could not save achievement because the data was formatted improperly or is missing
+    -  `GCMErrorInternetNotAvailable` (3) no internet connection
+    -  `GCMErrorAchievementDataMissing` (3) could not save achievement because the data was formatted improperly or is missing
 
 Changelog
 -----
@@ -252,11 +252,11 @@ Changelog
   </tr>
 <tr><th colspan="2" style="text-align:center;">Version 4.2</th></tr>
   <tr>
-    <td>Fixed issue where Game Center Manager would fail to handle authentication after calling the <tt>authenticateHandler</tt>. Pull Request by Jonathan Swafford</td>
+    <td>Fixed issue where GameKit Manager would fail to handle authentication after calling the <tt>authenticateHandler</tt>. Pull Request by Jonathan Swafford</td>
   </tr>
   <tr><th colspan="2" style="text-align:center;">Version 4.1</th></tr>
   <tr>
-    <td>Fixed issue where Game Center Manager would fail to report achievements and scores even if Game Center was available.</td>
+    <td>Fixed issue where GameKit Manager would fail to report achievements and scores even if Game Center was available.</td>
   </tr>
   <tr><th colspan="2" style="text-align:center;"><b>Version 4.0</b></th></tr>
   <tr>
@@ -266,7 +266,7 @@ Changelog
     <li>Improved Game Center Availability Checking and Error Reporting. Now check for the availablity of Game Center with the <tt>checkGameCenterAvailability</tt> method. </li>
    <li>Makes improvements to thread switching - now UI tasks are performed on the main thread. Previously they were performed on a background thread for Game Center. </li>
     <li>In depth error reporting for Game Center errors and availability issues.</li>
-    <li>The demo app has undergone massive improvements, including many interface improvements. To eliminate redundancy, the iPad part of the Demo App has been removed - Game Center Manager still works with iPad though. </li>
+    <li>The demo app has undergone massive improvements, including many interface improvements. To eliminate redundancy, the iPad part of the Demo App has been removed - GameKit Manager still works with iPad though. </li>
     <li>Code cleanup and reorganization to make it easier on the eyes.</li>
     <li>Upgrades ARMV6 assembler codegen from THUMB to ARM</li>
     <ul>

@@ -11,6 +11,8 @@
 #define LIBRARY_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
 #define kGameCenterManagerDataFile @"GameCenterManager.plist"
 #define kGameCenterManagerDataPath [LIBRARY_FOLDER stringByAppendingPathComponent:kGameCenterManagerDataFile]
+#define __GK_USES_LEADERBOARD_ID [[GKLeaderboard alloc] respondsToSelector:@selector(leaderboardIdentifier)] == YES
+#define __GK_USES_IDENTIFIER ([[GKLeaderboard alloc] respondsToSelector:@selector(identifier)])
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
@@ -44,17 +46,23 @@ typedef NSInteger GCMErrorCode;
 // Returns the shared instance of GameCenterManager.
 + (GameCenterManager *)sharedManager;
 
+
+
 /// Initializes Game Center Manager. Should be called at app launch.
 - (void)initGameCenter;
 
 /// Synchronizes local player data with Game Center data.
 - (void)syncGameCenter;
 
+
+
 /// Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later.
 - (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order;
 
 /// Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
 - (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete shouldDisplayNotification:(BOOL)displayNotification;
+
+
 
 /// Reports scores and achievements which could not be reported earlier.
 - (void)reportSavedScoresAndAchievements;
@@ -65,11 +73,15 @@ typedef NSInteger GCMErrorCode;
 /// Saves achievement to be submitted later.
 - (void)saveAchievementToReportLater:(NSString *)identifier percentComplete:(double)percentComplete;
 
+
+
 /// Returns local player's high score for specified leaderboard.
 - (int)highScoreForLeaderboard:(NSString *)identifier;
 
 /// Returns local player's high scores for multiple leaderboards.
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers;
+
+
 
 /// Returns local player's percent completed for specified achievement.
 - (double)progressForAchievement:(NSString *)identifier;
@@ -77,13 +89,19 @@ typedef NSInteger GCMErrorCode;
 /// Returns local player's percent completed for multiple achievements.
 - (NSDictionary *)progressForAchievements:(NSArray *)identifiers;
 
+
+
 /** Gets a list of challenges for the current player and game. If GameCenter is not available it will return nil and provide an error using the gameCenterManager:error: delegate method. Use the completion handler to get challenges.
  @param handler Completion handler with an NSArray containing challenges and an NSError. The NSError object will be nil if there is no error.
  */
 - (void)getChallengesWithCompletion:(void (^)(NSArray *challenges, NSError *error))handler;
 
+
+
 /// Resets local player's achievements
-- (void)resetAchievements;
+- (void)resetAchievementsWithCompletion:(void (^)(NSError *error))handler;
+
+
 
 /// Returns currently authenticated local player ID. If no player is authenticated, "unknownPlayer" is returned.
 - (NSString *)localPlayerId;
@@ -97,6 +115,8 @@ typedef NSInteger GCMErrorCode;
 /// Fetches a UIImage with the local player's profile picture at full resolution. The completion handler passes a UIImage object when the image is downloaded from the GameCenter Servers
 - (void)localPlayerPhoto:(void (^)(UIImage *playerPhoto))handler;
 
+
+
 /// Returns YES if an active internet connection is available.
 - (BOOL)isInternetAvailable;
 
@@ -106,21 +126,29 @@ typedef NSInteger GCMErrorCode;
 /// Use this property to check if Game Center is available and supported on the current device.
 @property (nonatomic, assign) BOOL isGameCenterAvailable;
 
+
 @end
 
 
 /// GameCenterManager Delegate
 @protocol GameCenterManagerDelegate <NSObject>
+
 @required
+/// Required Delegate Method called when the user needs to be authenticated using the GameCenter Login View Controller
 - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController;
+
 @optional
+/// Delegate Method called when the availability of GameCenter changes
 - (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation;
+/// Delegate Method called when the there is an error with GameCenter or GC Manager
 - (void)gameCenterManager:(GameCenterManager *)manager error:(NSError *)error;
+
 - (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation;
 - (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(NSDictionary *)achievementInformation;
 - (void)gameCenterManager:(GameCenterManager *)manager savedScore:(GKScore *)score;
 - (void)gameCenterManager:(GameCenterManager *)manager savedAchievement:(NSDictionary *)achievementInformation;
-- (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error;
+
+- (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error __deprecated;
 @end
 
 
