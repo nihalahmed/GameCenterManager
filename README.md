@@ -171,9 +171,9 @@ GameCenterManager delegate methods notify you of the status of Game Center and v
     <td>Reported Score</td>
     <td>Called after the submitted score is successfully saved, uploaded, and posted to Game Center. 
   <br />
-    The NSDictionary, <tt>scoreInformation</tt>, contains one NSError object, <tt>error</tt>, which may be nil if there is no error. It also contains a GKScore object, <tt>score</tt>, which contains information about the submitted score.
+    The GKScore object, <tt>score</tt>, is the final score that was saved. The error object may contain an error if one occured, or it may be nil.
        <br /><br />
-            <tt>- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation</tt></td>
+            <tt>- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(GKScore *)score withError:(NSError *)error;</tt></td>
   </tr>
   <tr>
     <td>Saved Score</td>
@@ -181,29 +181,23 @@ GameCenterManager delegate methods notify you of the status of Game Center and v
   <br />
     The GKScore object, <tt>score</tt> contains information about the submitted score.
        <br /><br />
-          <tt> - (void)gameCenterManager:(GameCenterManager *)manager savedScore:(GKScore *)score</tt></td>
+          <tt> - (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score</tt></td>
   </tr>
     <tr>
     <td>Reported Achievement</td>
     <td>Called after the submitted achievement and its percent complete is successfully saved, uploaded, and posted to Game Center. 
   <br />
-    The NSDictionary, <tt>achievementInformation</tt>, contains one NSError object, <tt>error</tt>, which may be nil if there is no error. It also contains a GKAchievement object, <tt>achievement</tt>, which contains information about the submitted achievement.
+    The GKAchievement object, <tt>achievement</tt>, is the final achievement that was saved. The error object may contain an error if one occured, or it may be nil.
        <br /><br />
-            <tt>- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(NSDictionary *)achievementInformation</tt></td>
+            <tt>- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(GKAchievement *)achievement withError:(NSError *)error</tt></td>
   </tr>
   <tr>
     <td>Saved Achievement</td>
     <td>Called after the submitted achievement is successfully saved, but not posted or uploaded to Game Center. The saved achievement and its percent completed will be uploaded the next time GC Manager can successfully connect to Game Center. 
   <br />
-    The NSDictionary object, <tt>achievementInformation</tt> contains a double, <tt>percent complete</tt>, which is the percent completed on the specified and saved achievement. It also contains a GKAchievement object, <tt>achievement</tt>, which contains information about the submitted achievement.
+    The GKAchievement object, <tt>achievement</tt>, is the final achievement that was saved.
        <br /><br />
-          <tt>- (void)gameCenterManager:(GameCenterManager *)manager savedAchievement:(NSDictionary *)achievementInformation</tt></td>
-  </tr>
-    <tr>
-    <td>Reset All Achievements <b><p style="color:red">DEPRECATED</p></b></td>
-    <td>When the <tt>resetAchievements</tt> method is called and resets all achievements successfully, this delegate method is fired. This method may be useful for updating user interface elements (ex. updating a table view listing completed achievements). Be warned though, the <tt>resetAchievements</tt> method does not prompt the user before resetting - you must do this on your own. 
-       <br /><br />
-        <tt> - (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error</tt></td>
+          <tt>- (void)gameCenterManager:(GameCenterManager *)manager didSaveAchievement:(GKAchievement *)achievement</tt></td>
   </tr>
 </table>
 
