@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Uh5-X5-BB9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Uh5-X5-BB9">
     <dependencies>
-        <deployment version="1792" defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <deployment version="1792" defaultVersion="1296" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--View Controller - GameKit Manager-->
+        <!--View Controller - GameCenter Manager-->
         <scene sceneID="WYb-qL-94y">
             <objects>
                 <viewController id="GFw-Bg-hft" customClass="ViewController" sceneMemberID="viewController">
@@ -156,7 +156,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="44s-fr-juw"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="GameKit Manager" prompt="GameCenter Status" id="vtN-WT-5Ez"/>
+                    <navigationItem key="navigationItem" title="GameCenter Manager" prompt="GameCenter Status" id="vtN-WT-5Ez"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="actionBarLabel" destination="edP-Jt-doD" id="EuV-Wl-L08"/>

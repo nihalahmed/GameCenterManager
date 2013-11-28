@@ -1,7 +1,7 @@
 GameCenter Manager
 =========================
 
-GameCenter Manager helps you manage Game Center in your iOS or Mac app. It makes it easy to report and keep track of high scores achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. In future updates, GameCenter Manager will make it easy to setup and run live Game Center Multiplayer matches.
+GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and keep track of high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. In future updates, GameCenter Manager will make it easy to setup and run live Game Center Multiplayer matches.
 
 <img width=750 src="https://github.com/iRareMedia/GameCenterManager/blob/master/Interface.png?raw=true"/>
 
@@ -10,12 +10,12 @@ Setup
 
 1. Add the `GameKit` and `SystemConfiguration` frameworks to your Xcode project  
 2. Add the following classes (can be found in the *GC Manager* folder) to your Xcode project (make sure to select Copy Items in the dialog):  
-     -  GameCenterManager (GameCenterManager-Mac on OS X)  
+     -  GameCenterManager
      -  Reachability 
      -  NSDataAES256  
-3. Open the `GameCenterManager.h` (`GameCenterManager-Mac.h` on OS X) file and change the `kGameCenterManagerKey` constant to the secret key you want to use for encryption/decryption  
-4. Import the `GameCenterManager.h` file (`GameCenterManager-Mac.h` on OS X)  
-5. Initialize GameCenter Manager and begin Syncing by using the following method call  (preferrably in your `appDidFinishLaunching` method of your AppDelegate):
+3. Open the `GameCenterManager.h` file and change the `kGameCenterManagerKey` constant to the secret key you want to use for encryption / decryption
+4. Import the `GameCenterManager.h` file
+5. Initialize GameCenter Manager and begin Syncing by using the following method call:
 
         [[GameCenterManager sharedManager] initGameCenter];
 
@@ -33,16 +33,16 @@ Documentation
 All methods, properties, types, and delegate methods available on the GameCenterManager class are documented below. If you're using [Xcode 5](https://developer.apple.com/technologies/tools/whats-new.html) with GameCenterManager, documentation is available directly within Xcode (just Option-Click any method for Quick Help).
 
 ###Initialize GameCenterManager
-You should initialize GameCenterManager when your app is launched, preferably in the `application didFinishLaunchingWithOptions` method.
+You should initialize GameCenterManager when your app is launched
 
-    [[GameCenterManager sharedManager] initGameCenter];  
+    [[GameCenterManager sharedManager] initGameCenter];
 
 This checks if Game Center is supported in the current device, authenticates the player and synchronizes scores and achievements from Game Center if its being run for the first time.
 
 ###Check Game Center Support
 GameCenter Manager automatically checks if Game Center is available before performing any Game Center-related operations. You can also check for Game Center availability by using the following method, which returns a `BOOL` value (YES / NO).
 
-    BOOL isAvailable = [[GameCenterManager sharedManager] checkGameCenterAvailability];  
+    BOOL isAvailable = [[GameCenterManager sharedManager] checkGameCenterAvailability];
 
 This method will perform the following checks in the following order:
 	1. Current OS version new enough to run Game Center. iOS 4.1 or OS X 10.8. Some Game Center methods require newer OS versions which will be checked (ex. challenges and some multiplayer features).  
@@ -50,19 +50,19 @@ This method will perform the following checks in the following order:
 	3. Internet Connection. The `Reachability` class is used to determine if there is an active internet connection. GameCenterManager will still work without internet, however all saved data can only be uploaded with an internet connection.  
 	4. Local Player. Check to make sure a local player is logged in and authenticated.  
 
-This method may return **NO** in many cases. Use the `gameCenterManager: availabilityChanged:` delegate method to get an `NSDictionary` containing information about why Game Center is or isn't available. Refer to the section on delegate methods below.
+This method may return **NO** in many cases. Use the `gameCenterManager:availabilityChanged:` delegate method to get an `NSDictionary` containing information about why Game Center is or isn't available. Refer to the section on delegate methods below.
 
 ###Report Score
 Report a score to Game Center using a Game Center Leaderboard ID. The score is saved locally then uploaded to Game Center (if Game Center is available). 
 
-    [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"Leaderboard ID"  sortOrder:GameCenterSortOrder];  
+    [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"Leaderboard ID"  sortOrder:GameCenterSortOrder];
 
 Set the Game Center Sort Order (either `GameCenterSortOrderHighToLow` or `GameCenterSortOrderLowToHigh`)  to report a score to Game Center only if the new score is better than the best one (depending on the sort order). There is no need for you to find out if a user has beat their highscore before submitting it - GameCenterManager will determine if the score should be submitted based on the parameters provided.
 
 ###Report Achievement
 Report an achievement to Game Center using a Game Center Achievement ID. The achievement and its percent complete are saved locally then uploaded to Game Center (if Game Center is available). 
 
-    [[GameCenterManager sharedManager] saveAndReportAchievement:@"Achievement ID" percentComplete:50];  
+    [[GameCenterManager sharedManager] saveAndReportAchievement:@"Achievement ID" percentComplete:50];
 
 The `percentComplete` parameter specifies how much progress the user has made on an achievement. Specifiying a value of 100 will mark the achievement as completed. Values submitted between 1-99 will display in Game Center and show the user that they need to make more progress to earn an achievement. if you specify an achievement percent complete lower than the current percent complete, it will be ignored by Game Center.
 
@@ -124,7 +124,7 @@ To get the player's display name (alias on iOS lower than iOS 6.0) use this meth
 
 To get the player's profile picture the following method. On iOS, the completion handler passes a `UIImage`, on OS X the completion handler passes an `NSImage`. The image passed to you is at full resolution.
 
-    [self localPlayerPhoto:^(UIImage *playerPhoto) {
+    [self localPlayerPhoto:^(UIImage *playerPhoto) { // On OS X, the completion handler pases an NSImage instead of a UIImage
         UIImageView *imageView = [[UIImageView alloc] initWithImage:playerPhoto];
     }];    
 

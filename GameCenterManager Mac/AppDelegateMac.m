@@ -96,10 +96,6 @@
     }
 }
 
-- (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(NSViewController *)gameCenterLoginController {
-    NSLog(@"Please Login");
-}
-
 - (void)gameCenterManager:(GameCenterManager *)manager error:(NSDictionary *)error {
     NSLog(@"GC Error: %@", error);
     if ([[error objectForKey:@"error"] isEqualToString:@"Could not save achievement. Data missing."]) {
@@ -107,36 +103,36 @@
     }
 }
 
-- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation {
-    NSLog(@"GC Reported Score: %@", scoreInformation);
-    gcActionInfo.stringValue = [NSString stringWithFormat:@"Reported leaderboard score to GameCenter."];
-}
-
-- (void)gameCenterManager:(GameCenterManager *)manager savedScore:(GKScore *)score {
-    NSLog(@"Saved GC Score with value: %lld", score.value);
-    gcActionInfo.stringValue = [NSString stringWithFormat:@"Score saved for upload to GameCenter."];
-}
-
-- (void)gameCenterManager:(GameCenterManager *)manager savedAchievement:(NSDictionary *)achievementInformation {
-    NSLog(@"Saved GC Achievement, %@", [achievementInformation objectForKey:@"id"]);
-    gcActionInfo.stringValue = [NSString stringWithFormat:@"Achievement saved for upload to GameCenter."];
-}
-
-- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(NSDictionary *)achievementInformation {
-    NSLog(@"GC Reported Achievement: %@", achievementInformation);
-    gcActionInfo.stringValue = [NSString stringWithFormat:@"Reported achievement to GameCenter."];
-}
-
-- (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error {
-    if (error) {
-        gcActionInfo.stringValue = [NSString stringWithFormat:@"Error reseting all GameCenter achievements."];
+- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(GKAchievement *)achievement withError:(NSError *)error {
+    if (!error) {
+        NSLog(@"GCM Reported Achievement: %@", achievement);
+        gcActionInfo.stringValue = [NSString stringWithFormat:@"Reported achievement with %.1f percent completed", achievement.percentComplete];
     } else {
-        gcActionInfo.stringValue = [NSString stringWithFormat:@"Reset all GameCenter achievements."];
+        NSLog(@"GCM Error while reporting achievement: %@", error);
     }
 }
 
+- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(GKScore *)score withError:(NSError *)error {
+    if (!error) {
+        NSLog(@"GCM Reported Score: %@", score);
+        gcActionInfo.stringValue = [NSString stringWithFormat:@"Reported leaderboard score: %lld", score.value];
+    } else {
+        NSLog(@"GCM Error while reporting score: %@", error);
+    }
+}
+
+- (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score {
+    NSLog(@"Saved GCM Score with value: %lld", score.value);
+    gcActionInfo.stringValue = [NSString stringWithFormat:@"Score saved for upload to GameCenter."];
+}
+
+- (void)gameCenterManager:(GameCenterManager *)manager didSaveAchievement:(GKAchievement *)achievement {
+    NSLog(@"Saved GCM Achievement: %@", achievement);
+    gcActionInfo.stringValue = [NSString stringWithFormat:@"Achievement saved for upload to GameCenter."];
+}
+
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
-    
+    NSLog(@"%@ finished", gameCenterViewController);
 }
 
 //------------------------------------------------------------------------------------------------------------//
@@ -204,7 +200,13 @@
 }
 
 - (IBAction)resetAchievements:(id)sender {
-    [[GameCenterManager sharedManager] resetAchievements];
+    [[GameCenterManager sharedManager] resetAchievementsWithCompletion:^(NSError *error) {
+        if (error) {
+            gcActionInfo.stringValue = [NSString stringWithFormat:@"Error reseting all GameCenter achievements."];
+        } else {
+            gcActionInfo.stringValue = [NSString stringWithFormat:@"Reset all GameCenter achievements."];
+        }
+    }];
 }
 
 //------------------------------------------------------------------------------------------------------------//
@@ -213,7 +215,7 @@
 #pragma mark - GameCenter Challenges
 
 - (IBAction)loadChallenges:(id)sender {
-    //This feature is only supported in OS X 10.8.2 and higher
+    // This feature is only supported in OS X 10.8.2 and higher
     [[GameCenterManager sharedManager] getChallengesWithCompletion:^(NSArray *challenges, NSError *error) {
         gcActionInfo.stringValue = [NSString stringWithFormat:@"Loaded GameCenter challenges."];
         NSLog(@"GC Challenges: %@", challenges);

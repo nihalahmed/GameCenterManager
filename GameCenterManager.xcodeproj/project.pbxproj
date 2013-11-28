@@ -16,6 +16,11 @@
 		659699EE1515718800724EBE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 659699ED1515718800724EBE /* ViewController.m */; };
 		65969A06151572D800724EBE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65969A05151572D800724EBE /* GameKit.framework */; };
 		65969A0B1515748900724EBE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65969A0A1515748900724EBE /* SystemConfiguration.framework */; };
+		993EFA171847C2E30061C758 /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C22172D71130091618D /* GameCenterManager.m */; };
+		993EFA181847C37A0061C758 /* NSDataAES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C24172D71130091618D /* NSDataAES256.m */; };
+		993EFA191847C37E0061C758 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C26172D71130091618D /* Reachability.m */; };
+		993EFA1B1847C54A0061C758 /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = 993EFA1A1847C54A0061C758 /* Changelog.md */; };
+		993EFA1D1847C55A0061C758 /* Interface.png in Resources */ = {isa = PBXBuildFile; fileRef = 993EFA1C1847C55A0061C758 /* Interface.png */; };
 		994B764E17EE2F3D008DE309 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994B764C17EE282F008DE309 /* Images.xcassets */; };
 		994B764F17EE2F47008DE309 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994B764C17EE282F008DE309 /* Images.xcassets */; };
 		994E294C17838BF300EAACD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 994E294A17838BF300EAACD2 /* InfoPlist.strings */; };
@@ -27,12 +32,6 @@
 		994E296117838C4100EAACD2 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994E296017838C4100EAACD2 /* GameKit.framework */; };
 		994E296317838C4F00EAACD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994E296217838C4F00EAACD2 /* Foundation.framework */; };
 		994E296517838C5A00EAACD2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994E296417838C5A00EAACD2 /* SystemConfiguration.framework */; };
-		994E29701783919400EAACD2 /* GameCenterManager-Mac.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E296B1783919400EAACD2 /* GameCenterManager-Mac.m */; };
-		994E29711783919400EAACD2 /* NSDataAES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E296D1783919400EAACD2 /* NSDataAES256.m */; };
-		994E29721783919400EAACD2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E296F1783919400EAACD2 /* Reachability.m */; };
-		994E29751783D05B00EAACD2 /* FeltTile.png in Resources */ = {isa = PBXBuildFile; fileRef = 994E29741783D05B00EAACD2 /* FeltTile.png */; };
-		994E29771783D68500EAACD2 /* TopBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 994E29761783D68500EAACD2 /* TopBar.png */; };
-		994E29791783DC6200EAACD2 /* MacHeader.png in Resources */ = {isa = PBXBuildFile; fileRef = 994E29781783DC6200EAACD2 /* MacHeader.png */; };
 		99B16C18172D46180091618D /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C16172D46180091618D /* Storyboard_iPhone.storyboard */; };
 		99B16C1E172D70AB0091618D /* License.md in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C1C172D70AB0091618D /* License.md */; };
 		99B16C1F172D70AB0091618D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C1D172D70AB0091618D /* README.md */; };
@@ -56,7 +55,9 @@
 		659699ED1515718800724EBE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		65969A05151572D800724EBE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		65969A0A1515748900724EBE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		994B764C17EE282F008DE309 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = GameCenterManager/Images.xcassets; sourceTree = "<group>"; };
+		993EFA1A1847C54A0061C758 /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Changelog.md; sourceTree = "<group>"; };
+		993EFA1C1847C55A0061C758 /* Interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Interface.png; sourceTree = "<group>"; };
+		994B764C17EE282F008DE309 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		994E294017838BF300EAACD2 /* GameCenterManager Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GameCenterManager Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		994E294417838BF300EAACD2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		994E294517838BF300EAACD2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -73,24 +74,15 @@
 		994E296017838C4100EAACD2 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
 		994E296217838C4F00EAACD2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		994E296417838C5A00EAACD2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		994E296A1783919400EAACD2 /* GameCenterManager-Mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GameCenterManager-Mac.h"; sourceTree = "<group>"; };
-		994E296B1783919400EAACD2 /* GameCenterManager-Mac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GameCenterManager-Mac.m"; sourceTree = "<group>"; };
-		994E296C1783919400EAACD2 /* NSDataAES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAES256.h; sourceTree = "<group>"; };
-		994E296D1783919400EAACD2 /* NSDataAES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAES256.m; sourceTree = "<group>"; };
-		994E296E1783919400EAACD2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		994E296F1783919400EAACD2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		994E29741783D05B00EAACD2 /* FeltTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FeltTile.png; sourceTree = "<group>"; };
-		994E29761783D68500EAACD2 /* TopBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TopBar.png; sourceTree = "<group>"; };
-		994E29781783DC6200EAACD2 /* MacHeader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MacHeader.png; sourceTree = "<group>"; };
 		99B16C17172D46180091618D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
 		99B16C1C172D70AB0091618D /* License.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.md; sourceTree = "<group>"; };
 		99B16C1D172D70AB0091618D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		99B16C21172D71130091618D /* GameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameCenterManager.h; path = "GC Manager/GameCenterManager.h"; sourceTree = "<group>"; };
-		99B16C22172D71130091618D /* GameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameCenterManager.m; path = "GC Manager/GameCenterManager.m"; sourceTree = "<group>"; };
-		99B16C23172D71130091618D /* NSDataAES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDataAES256.h; path = "GC Manager/NSDataAES256.h"; sourceTree = "<group>"; };
-		99B16C24172D71130091618D /* NSDataAES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSDataAES256.m; path = "GC Manager/NSDataAES256.m"; sourceTree = "<group>"; };
-		99B16C25172D71130091618D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "GC Manager/Reachability.h"; sourceTree = "<group>"; };
-		99B16C26172D71130091618D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "GC Manager/Reachability.m"; sourceTree = "<group>"; };
+		99B16C21172D71130091618D /* GameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCenterManager.h; sourceTree = "<group>"; };
+		99B16C22172D71130091618D /* GameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCenterManager.m; sourceTree = "<group>"; };
+		99B16C23172D71130091618D /* NSDataAES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAES256.h; sourceTree = "<group>"; };
+		99B16C24172D71130091618D /* NSDataAES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAES256.m; sourceTree = "<group>"; };
+		99B16C25172D71130091618D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		99B16C26172D71130091618D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,9 +116,12 @@
 			isa = PBXGroup;
 			children = (
 				99B16C1D172D70AB0091618D /* README.md */,
+				993EFA1A1847C54A0061C758 /* Changelog.md */,
 				99B16C1C172D70AB0091618D /* License.md */,
+				993EFA1C1847C55A0061C758 /* Interface.png */,
 				994B764C17EE282F008DE309 /* Images.xcassets */,
-				659699E01515718800724EBE /* GameCenterManager */,
+				99B16C20172D71090091618D /* GC Manager */,
+				659699E01515718800724EBE /* GameCenterManager iOS */,
 				994E294717838BF300EAACD2 /* GameCenterManager Mac */,
 				659699D91515718800724EBE /* Frameworks */,
 				659699D71515718800724EBE /* Products */,
@@ -152,10 +147,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		659699E01515718800724EBE /* GameCenterManager */ = {
+		659699E01515718800724EBE /* GameCenterManager iOS */ = {
 			isa = PBXGroup;
 			children = (
-				99B16C20172D71090091618D /* GC Manager */,
 				659699E91515718800724EBE /* AppDelegate.h */,
 				659699EA1515718800724EBE /* AppDelegate.m */,
 				659699EC1515718800724EBE /* ViewController.h */,
@@ -163,6 +157,7 @@
 				99B16C16172D46180091618D /* Storyboard_iPhone.storyboard */,
 				659699E11515718800724EBE /* Supporting Files */,
 			);
+			name = "GameCenterManager iOS";
 			path = GameCenterManager;
 			sourceTree = "<group>";
 		};
@@ -171,8 +166,8 @@
 			children = (
 				659699E21515718800724EBE /* GameCenterManager-Info.plist */,
 				659699E31515718800724EBE /* InfoPlist.strings */,
-				659699E61515718800724EBE /* main.m */,
 				659699E81515718800724EBE /* GameCenterManager-Prefix.pch */,
+				659699E61515718800724EBE /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -190,8 +185,6 @@
 		994E294717838BF300EAACD2 /* GameCenterManager Mac */ = {
 			isa = PBXGroup;
 			children = (
-				994E29691783919400EAACD2 /* GC Manager */,
-				994E29731783D05B00EAACD2 /* Images */,
 				994E295317838BF300EAACD2 /* AppDelegateMac.h */,
 				994E295417838BF300EAACD2 /* AppDelegateMac.m */,
 				994E295617838BF300EAACD2 /* MainMenu.xib */,
@@ -205,9 +198,9 @@
 			children = (
 				994E294917838BF300EAACD2 /* GameCenterManager Mac-Info.plist */,
 				994E294A17838BF300EAACD2 /* InfoPlist.strings */,
-				994E294D17838BF300EAACD2 /* main.m */,
-				994E294F17838BF300EAACD2 /* GameCenterManager Mac-Prefix.pch */,
 				994E295017838BF300EAACD2 /* Credits.rtf */,
+				994E294F17838BF300EAACD2 /* GameCenterManager Mac-Prefix.pch */,
+				994E294D17838BF300EAACD2 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -233,26 +226,6 @@
 				994E295C17838C1300EAACD2 /* Cocoa.framework */,
 			);
 			name = "OS X";
-			sourceTree = "<group>";
-		};
-		994E29691783919400EAACD2 /* GC Manager */ = {
-			isa = PBXGroup;
-			children = (
-				994E296A1783919400EAACD2 /* GameCenterManager-Mac.h */,
-				994E296B1783919400EAACD2 /* GameCenterManager-Mac.m */,
-				99DD76A9178497AD00353229 /* Dependencies */,
-			);
-			path = "GC Manager";
-			sourceTree = "<group>";
-		};
-		994E29731783D05B00EAACD2 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				994E29781783DC6200EAACD2 /* MacHeader.png */,
-				994E29761783D68500EAACD2 /* TopBar.png */,
-				994E29741783D05B00EAACD2 /* FeltTile.png */,
-			);
-			path = Images;
 			sourceTree = "<group>";
 		};
 		99B0162C1754FD7700F56A5C /* Dependencies */ = {
@@ -289,18 +262,7 @@
 				99B16C21172D71130091618D /* GameCenterManager.h */,
 				99B16C22172D71130091618D /* GameCenterManager.m */,
 			);
-			name = "GC Manager";
-			sourceTree = "<group>";
-		};
-		99DD76A9178497AD00353229 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				994E296C1783919400EAACD2 /* NSDataAES256.h */,
-				994E296D1783919400EAACD2 /* NSDataAES256.m */,
-				994E296E1783919400EAACD2 /* Reachability.h */,
-				994E296F1783919400EAACD2 /* Reachability.m */,
-			);
-			name = Dependencies;
+			path = "GC Manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,10 +343,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				659699E51515718800724EBE /* InfoPlist.strings in Resources */,
+				993EFA1D1847C55A0061C758 /* Interface.png in Resources */,
 				994B764F17EE2F47008DE309 /* Images.xcassets in Resources */,
 				99B16C18172D46180091618D /* Storyboard_iPhone.storyboard in Resources */,
 				99B16C1E172D70AB0091618D /* License.md in Resources */,
 				99B16C1F172D70AB0091618D /* README.md in Resources */,
+				993EFA1B1847C54A0061C758 /* Changelog.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,9 +360,6 @@
 				994B764E17EE2F3D008DE309 /* Images.xcassets in Resources */,
 				994E295217838BF300EAACD2 /* Credits.rtf in Resources */,
 				994E295817838BF300EAACD2 /* MainMenu.xib in Resources */,
-				994E29751783D05B00EAACD2 /* FeltTile.png in Resources */,
-				994E29771783D68500EAACD2 /* TopBar.png in Resources */,
-				994E29791783DC6200EAACD2 /* MacHeader.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,9 +385,9 @@
 			files = (
 				994E294E17838BF300EAACD2 /* main.m in Sources */,
 				994E295517838BF300EAACD2 /* AppDelegateMac.m in Sources */,
-				994E29701783919400EAACD2 /* GameCenterManager-Mac.m in Sources */,
-				994E29711783919400EAACD2 /* NSDataAES256.m in Sources */,
-				994E29721783919400EAACD2 /* Reachability.m in Sources */,
+				993EFA181847C37A0061C758 /* NSDataAES256.m in Sources */,
+				993EFA171847C2E30061C758 /* GameCenterManager.m in Sources */,
+				993EFA191847C37E0061C758 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +506,7 @@
 		659699F81515718800724EBE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -554,10 +516,11 @@
 				GCC_PREFIX_HEADER = "GameCenterManager/GameCenterManager-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0267AEAF-9C47-4D68-B69E-87B0B4DA938D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0267AEAF-9C47-4D68-B69E-87B0B4DA938D";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -566,6 +529,7 @@
 		659699F91515718800724EBE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -575,10 +539,10 @@
 				GCC_PREFIX_HEADER = "GameCenterManager/GameCenterManager-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0267AEAF-9C47-4D68-B69E-87B0B4DA938D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0267AEAF-9C47-4D68-B69E-87B0B4DA938D";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

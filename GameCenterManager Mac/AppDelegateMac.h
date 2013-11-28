@@ -7,10 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "GameCenterManager-Mac.h"
+#import "GameCenterManager.h"
 
-@interface AppDelegateMac : NSObject <NSApplicationDelegate, GameCenterManagerDelegate, GKGameCenterControllerDelegate, GKLeaderboardViewControllerDelegate,
-                                    GKAchievementViewControllerDelegate>
+@interface AppDelegateMac : NSObject <NSApplicationDelegate, GameCenterManagerDelegate, GKGameCenterControllerDelegate, GKLeaderboardViewControllerDelegate, GKAchievementViewControllerDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (strong) IBOutlet NSTextField *gcStatusTitle;

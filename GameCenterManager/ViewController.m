@@ -23,9 +23,9 @@
     
     // Setup ViewController Appearance
     scrollView.contentSize = CGSizeMake(320, 450);
-    playerPicture.layer.cornerRadius = 25;
+    playerPicture.layer.cornerRadius = playerPicture.frame.size.height/2;
     playerPicture.layer.masksToBounds = YES;
-    [actionBarLabel setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15<=10], NSFontAttributeName,nil] forState:UIControlStateNormal];
+    [actionBarLabel setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:10]} forState:UIControlStateNormal];
     
     // Set GameCenter Manager Delegate
     [[GameCenterManager sharedManager] setDelegate:self];
@@ -195,36 +195,36 @@
 }
 
 - (void)gameCenterManager:(GameCenterManager *)manager error:(NSError *)error {
-    NSLog(@"GC Error: %@", error);
+    NSLog(@"GCM Error: %@", error);
     actionBarLabel.title = error.domain;
 }
 
-- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation {
-    NSLog(@"GC Reported Score: %@", scoreInformation);
-    actionBarLabel.title = [NSString stringWithFormat:@"Reported leaderboard score to GameCenter."];
+- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(GKAchievement *)achievement withError:(NSError *)error {
+    if (!error) {
+        NSLog(@"GCM Reported Achievement: %@", achievement);
+        actionBarLabel.title = [NSString stringWithFormat:@"Reported achievement with %.1f percent completed", achievement.percentComplete];
+    } else {
+        NSLog(@"GCM Error while reporting achievement: %@", error);
+    }
 }
 
-- (void)gameCenterManager:(GameCenterManager *)manager savedScore:(GKScore *)score {
-    NSLog(@"Saved GC Score with value: %lld", score.value);
+- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(GKScore *)score withError:(NSError *)error {
+    if (!error) {
+        NSLog(@"GCM Reported Score: %@", score);
+        actionBarLabel.title = [NSString stringWithFormat:@"Reported leaderboard score: %lld", score.value];
+    } else {
+        NSLog(@"GCM Error while reporting score: %@", error);
+    }
+}
+
+- (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score {
+    NSLog(@"Saved GCM Score with value: %lld", score.value);
     actionBarLabel.title = [NSString stringWithFormat:@"Score saved for upload to GameCenter."];
 }
 
-- (void)gameCenterManager:(GameCenterManager *)manager savedAchievement:(NSDictionary *)achievementInformation {
-    NSLog(@"Saved GC Achievement, %@", [achievementInformation objectForKey:@"id"]);
+- (void)gameCenterManager:(GameCenterManager *)manager didSaveAchievement:(GKAchievement *)achievement {
+    NSLog(@"Saved GCM Achievement: %@", achievement);
     actionBarLabel.title = [NSString stringWithFormat:@"Achievement saved for upload to GameCenter."];
-}
-
-- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(NSDictionary *)achievementInformation {
-    NSLog(@"GC Reported Achievement: %@", achievementInformation);
-    actionBarLabel.title = [NSString stringWithFormat:@"Reported achievement to GameCenter."];
-}
-
-- (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error {
-    if (error) {
-        actionBarLabel.title = [NSString stringWithFormat:@"Error reseting all GameCenter achievements."];
-    } else {
-        actionBarLabel.title = [NSString stringWithFormat:@"Reset all GameCenter achievements."];
-    }
 }
 
 //------------------------------------------------------------------------------------------------------------//
