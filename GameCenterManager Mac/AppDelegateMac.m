@@ -26,8 +26,8 @@
     playerPicture.layer.shadowOpacity = 0.5;
     
     // Setup GameCenter Manager
+    [[GameCenterManager sharedManager] setupManager];
     [[GameCenterManager sharedManager] setDelegate:self];
-    [[GameCenterManager sharedManager] initGameCenter];
     BOOL available = [[GameCenterManager sharedManager] checkGameCenterAvailability];
     if (available) {
         gcStatusTitle.stringValue = @"GAME CENTER AVAILABLE";

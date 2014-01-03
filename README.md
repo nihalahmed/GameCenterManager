@@ -1,43 +1,71 @@
-GameCenter Manager
-=========================
+<img width=725 src="https://raw.github.com/nihalahmed/GameCenterManager/master/Images/GameBanner.png"/>
 
-GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and keep track of high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. In future updates, GameCenter Manager will make it easy to setup and run live Game Center Multiplayer matches.
+GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and track high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. In future updates, GameCenter Manager will make it easy to setup and run live Game Center Multiplayer matches.
 
-<img width=750 src="https://github.com/iRareMedia/GameCenterManager/blob/master/Interface.png?raw=true"/>
+If you like the project, please [star it](https://github.com/nihalahmed/iCloudDocumentSync) on GitHub! Watch the project on GitHub for updates. If you use GameCenter Manager in your app, send an email to contact@iraremedia.com or let us know on Twitter @iRareMedia.
 
-Setup
-------------
+# Project Features
+GameCenter Manager is a great way to use Game Center in your iOS or OS X app. Below are a few key project features and highlights.
+* Sync, Submit, Save, Retrieve, and Track any Game Center leaderboards, achievements, or challenges in only one line of code.  
+* Just drag and drop the files into your project - no complicated setup  
+* Useful delegate methods and properties let you access and manage advanced Game Center features
+* iOS / OS X Sample-apps illustrate how easy it is to use GameCenter Manager
+* Frequent updates to the project based on user issues and requests  
+* Easily contribute to the project
 
-1. Add the `GameKit` and `SystemConfiguration` frameworks to your Xcode project  
+# Project Information
+Learn more about the project requirements, licensing, and contributions.
+
+## Requirements
+* Built with and for Objective-C ARC  
+* Requires a minimum of iOS 7.0 / OS X 10.9 as the deployment target  
+* Requires Xcode 5.0.1 for use in any iOS Project  
+* Uses Apple LLVM compiler 5.0  
+
+## License 
+You are free to make changes and use this in either personal or commercial projects. Attribution is not required, but is appreciated. We have spent a lot of time, energy, and resources working on this project - so a little *Thanks!* (or something to that affect) would be much appreciated. If you use GameCenter Manager in your app, send an email to contact@iraremedia.com or let us know on Twitter @iRareMedia. See the [full GameCenter Manager license here](https://github.com/nihalahmed/GameCenterManager/blob/master/License.md).
+
+## Contributions
+Any contribution is more than welcome! You can contribute through pull requests and issues on GitHub. 
+
+## Sample App
+GameCenter Manager's demo app makes it easier to test Game Center integration with GameCenter Manager on both Mac and iOS. It also lays out how to use the `GameCenterManager` class. We recommend that you leave the Bundle ID provided with the Demo App as-is. This Bundle ID is already linked to a Game Center game in iTunes Connect with scores and achievements. You may, however, substitute your own Bundle ID and entitlements file.
+
+<img width=750 src="https://raw.github.com/nihalahmed/GameCenterManager/master/Images/Interface.png"/>
+
+# Documentation
+All methods, properties, types, and delegate methods available on the GameCenterManager class are documented below. If you're using [Xcode 5](https://developer.apple.com/technologies/tools/whats-new.html) with GameCenter Manager, documentation is available directly within Xcode (just Option-Click any method for Quick Help).
+
+## Setup
+Setting up GameCenter Manager is very straightforward. These instructions do not detail how to enable Game Center in your app. You need to setup Game Center before using GameCenter Manager. Refer to the wiki pages for details on that.
+
+1. Add the `GameKit`, `SystemConfiguration`, and `Security` frameworks to your Xcode project
 2. Add the following classes (can be found in the *GC Manager* folder) to your Xcode project (make sure to select Copy Items in the dialog):  
      -  GameCenterManager
      -  Reachability 
-     -  NSDataAES256  
-3. Open the `GameCenterManager.h` file and change the `kGameCenterManagerKey` constant to the secret key you want to use for encryption / decryption
-4. Import the `GameCenterManager.h` file
-5. Initialize GameCenter Manager and begin Syncing by using the following method call:
+     -  NSDataAES256
+3. Import the `GameCenterManager.h` file
+4. You can initialize GameCenterManager and begin syncing by using the following method call:
 
-        [[GameCenterManager sharedManager] initGameCenter];
+        [[GameCenterManager sharedManager] setupManager]; // Or use setupManagerAndSetShouldCryptWithKey: for use with encryption
 
 6. Add the delegate `GameCenterManagerDelegate` to your header file, then set the delegate in your implementation and add any delegate methods you'd like to use (see **Delegates**):
 
         [[GameCenterManager sharedManager] setDelegate:self];
 
-Using the Demo App
-------------
-
-GameCenter Manager's demo app makes it easier to test Game Center integration with GameCenter Manager on both Mac and iOS. It also lays out how to use the `GameCenterManager` class. We recommend that you leave the Bundle ID provided with the Demo App as-is. This Bundle ID is already linked to a Game Center game in iTunes Connect with scores and achievements. You may, however, substitute your own Bundle ID and entitlements file.
-
-Documentation
------
-All methods, properties, types, and delegate methods available on the GameCenterManager class are documented below. If you're using [Xcode 5](https://developer.apple.com/technologies/tools/whats-new.html) with GameCenterManager, documentation is available directly within Xcode (just Option-Click any method for Quick Help).
+## Methods
+There are many methods available on iCloud Document Sync. The most important / highlight methods are documented below. All other methods are documented in the docset and with in-code comments.
 
 ###Initialize GameCenterManager
-You should initialize GameCenterManager when your app is launched
+You should setup GameCenterManager when your app is launched. This should only be done once and can be done in the `application: didFinishLaunchingWithOptions:` method of your AppDelegate.
 
-    [[GameCenterManager sharedManager] initGameCenter];
+    [[GameCenterManager sharedManager] setupManager];
 
-This checks if Game Center is supported in the current device, authenticates the player and synchronizes scores and achievements from Game Center if its being run for the first time.
+This initializes GameCenter Manager, checks if Game Center is supported on the current device, authenticates the player and synchronizes scores and achievements from Game Center. Alternatively, you can call the following method to enable encryption of local data:
+
+    [[GameCenterManager sharedManager] setupManagerAndSetShouldCryptWithKey:@"YourKey"];
+    
+These methods are not interchangable. If you decide to setup with encryption then you should never revert to setting up without encryption, and vice versa. Doing so will cause issues with archiving and unarchiving the saved data - which results in a crash. Pick one and stick with it forever. If you do change it, you'll need to delete the `GameCenterManager.plist` file from your app's library (inside the bundle).
 
 ###Check Game Center Support
 GameCenter Manager automatically checks if Game Center is available before performing any Game Center-related operations. You can also check for Game Center availability by using the following method, which returns a `BOOL` value (YES / NO).
@@ -113,6 +141,19 @@ Get challenges for the current game and player on iOS 6 and higher (GameCenterMa
 
  If there is an error retrieving the challenges, the `NSArray` will be `nil` and the `NSError` will contain an error. The `NSError` passed here is an error generated by Game Center, not GameCenterMananger
  
+###Presenting GameKit ViewControllers
+ GameCenter Manager makes the presentation of GameKit ViewControllers easy one-liners. To present the leaderboards view controller, call the following method:
+ 
+     [[GameCenterManager sharedManager] presentLeaderboardsOnViewController:self];
+     
+  To present the achievements view controller, call the following method:
+ 
+     [[GameCenterManager sharedManager] presentAchievementsOnViewController:self];
+     
+   To present the challenges view controller, call the following method:
+ 
+     [[GameCenterManager sharedManager] presentChallengesOnViewController:self];
+     
 ##Player Data
 GameCenterManager provides four different methods to retrieve various bits of data about the current local player. Retrieve a player ID using the following method, but **never** display a player ID in your interface or expose the ID in any way at all - it should only be used to identify a player. If you display a player ID in your app, it will be rejected from the AppStore.
 
@@ -132,78 +173,62 @@ To get any other data about a player use this method:
 
     GKLocalPlayer *player = [[GameCenterManager sharedManager] localPlayerData]; 
 
-Delegates
------
-GameCenterManager delegate methods notify you of the status of Game Center and various other tasks. There is only one required delegate method for iOS, none for OS X.
+## Delegates
+GameCenter Manager delegate methods notify you of the status of Game Center and various other tasks. There is only one required delegate method for iOS, none for OS X.
 
-<table>
-  <tr><th colspan="2" style="text-align:center;">Required Delegate Methods</th></tr>
-  <tr>
-    <td>Authenticate User (iOS only)</td>
-    <td> If the user is not logged into Game Center, you'll need to present the Game Center login view controller. This method is required because the user must be logged in for Game Center to work. If the user does not login, an error will be returned.  
-     <br /><br />
-           <tt> - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController</tt></td>
-  </tr>
-    <tr><th colspan="2" style="text-align:center;">Optional Delegate Methods</th></tr>
-  <tr>
-    <td>Availability Changed</td>
-    <td>When the availability status of Game Center changes, this delegate method is called. The availability of Game Center depends on multiple factors including: <br />
-    <ul>
-    <li> Internet Connection</li>
-    <li> iOS Version (4.1+ required)</li>
-    <li> Player Authentication</li>
-    <li> Game Authentication</li>
-    </ul>
-  <br />
-    The NSDictionary object, <tt>availabilityInformation</tt>, contains two objects, a <tt>message</tt> and a <tt>title</tt>. The `message` object is an NSString describing the availability issue. The <tt>title</tt> is a shorter description of the error; it is also an NSString.
-       <br /><br />
-            <tt>- (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation</tt></td>
-  </tr>
-  <tr>
-    <td>Game Center Error</td>
-    <td>When there is an error performing a Game Center task this delegate method is executed.
-  <br />
-    The <tt>error</tt> NSError object contains an error code (refer to the section on Constants below), a description (error domain) and sometimes user information.
-       <br /><br />
-           <tt> - (void)gameCenterManager:(GameCenterManager *)manager error:(NSError *)error</tt></td>
-  </tr>
-  <tr>
-    <td>Reported Score</td>
-    <td>Called after the submitted score is successfully saved, uploaded, and posted to Game Center. 
-  <br />
-    The GKScore object, <tt>score</tt>, is the final score that was saved. The error object may contain an error if one occured, or it may be nil.
-       <br /><br />
-            <tt>- (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(GKScore *)score withError:(NSError *)error;</tt></td>
-  </tr>
-  <tr>
-    <td>Saved Score</td>
-    <td>Called after the submitted score is successfully saved, but not posted or uploaded to Game Center. The saved score will be uploaded the next time GC Manager can successfully connect to Game Center. 
-  <br />
-    The GKScore object, <tt>score</tt> contains information about the submitted score.
-       <br /><br />
-          <tt> - (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score</tt></td>
-  </tr>
-    <tr>
-    <td>Reported Achievement</td>
-    <td>Called after the submitted achievement and its percent complete is successfully saved, uploaded, and posted to Game Center. 
-  <br />
-    The GKAchievement object, <tt>achievement</tt>, is the final achievement that was saved. The error object may contain an error if one occured, or it may be nil.
-       <br /><br />
-            <tt>- (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(GKAchievement *)achievement withError:(NSError *)error</tt></td>
-  </tr>
-  <tr>
-    <td>Saved Achievement</td>
-    <td>Called after the submitted achievement is successfully saved, but not posted or uploaded to Game Center. The saved achievement and its percent completed will be uploaded the next time GC Manager can successfully connect to Game Center. 
-  <br />
-    The GKAchievement object, <tt>achievement</tt>, is the final achievement that was saved.
-       <br /><br />
-          <tt>- (void)gameCenterManager:(GameCenterManager *)manager didSaveAchievement:(GKAchievement *)achievement</tt></td>
-  </tr>
-</table>
+###Authenticate User (Required, iOS only)
+If the user is not logged into Game Center, you'll need to present the Game Center login view controller. This method is required because the user must be logged in for Game Center to work. If the user does not login, an error will be returned.  
 
-Constants
------
-Constants are used throughout GameCenterManager in error messages and method parameters.
+     - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController
+     
+###Availability Changed
+When the availability status of Game Center changes, this delegate method is called. The availability of Game Center depends on multiple factors including:
+    * Internet Connection
+    * iOS Version (4.1+ required)
+    * Player Authentication
+    * Game Authentication
+    
+The NSDictionary object, `availabilityInformation`, contains two objects, a `message` and a `title`. The `message` object is an NSString describing the availability issue. The `title` is a shorter description of the error; it is also an NSString.
+
+    - (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation
+
+###Game Center Error
+When there is an error performing a Game Center task this delegate method is executed.
+
+The `error` NSError object contains an error code (refer to the section on Constants below), a description (error domain) and sometimes user information.
+
+    - (void)gameCenterManager:(GameCenterManager *)manager error:(NSError *)error
+
+###Reported Score
+Called after the submitted score is successfully saved, uploaded, and posted to Game Center. 
+
+The GKScore object, `score`, is the final score that was saved. The error object may contain an error if one occured, or it may be nil.
+
+    - (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(GKScore *)score withError:(NSError *)error;
+
+###Saved Score
+Called after the submitted score is successfully saved, but not posted or uploaded to Game Center. The saved score will be uploaded the next time GC Manager can successfully connect to Game Center. 
+
+The GKScore object, `score` contains information about the submitted score.
+
+    - (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score
+
+###Reported Achievement
+Called after the submitted achievement and its percent complete is successfully saved, uploaded, and posted to Game Center. 
+
+The GKAchievement object, `achievement`, is the final achievement that was saved. The error object may contain an error if one occured, or it may be nil.
+
+    - (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(GKAchievement *)achievement withError:(NSError *)error
+
+###Saved Achievement
+Called after the submitted achievement is successfully saved, but not posted or uploaded to Game Center. The saved achievement and its percent completed will be uploaded the next time GC Manager can successfully connect to Game Center. 
+
+The GKAchievement object, `achievement`, is the final achievement that was saved.
+
+    - (void)gameCenterManager:(GameCenterManager *)manager didSaveAchievement:(GKAchievement *)achievement
+
+##Constants
+Constants are used throughout GameCenter Manager in error messages and method parameters.
 
 ###Score Sort Order
 The order in which your leaderboard scores are sorted. This helps GameCenterManager decide how to submit a score to a leaderboard (and determine if it is a highscore).  
@@ -217,12 +242,3 @@ When the `gameCenterManager: error:` delegate is called, one of the following er
     -  `GCMErrorFeatureNotAvailable` (2) the request feature is not available, check error message for info  
     -  `GCMErrorInternetNotAvailable` (3) no internet connection
     -  `GCMErrorAchievementDataMissing` (3) could not save achievement because the data was formatted improperly or is missing
-
-Changelog
------
-See the `Changelog.md` file for details on updates. For the most updated information, take a look at the project releases.
-
-License and Attribution
------
-
-See the `License.md` file for details on licensing this work / project, and attribution to other projects.

@@ -16,7 +16,7 @@
     // Override point for customization after application launch.
     
     // Setup GameCenter
-    [[GameCenterManager sharedManager] initGameCenter];
+    [[GameCenterManager sharedManager] setupManager];
     
     return YES;
 }

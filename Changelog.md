@@ -1,16 +1,45 @@
 #Changelog
 
 <table>
-<tr><th colspan="2" style="text-align:center;"><b>Version 5.1</b></th></tr>
+  <tr><th colspan="2" style="text-align:center;"><b>Version 5.3</b></th></tr>
+  <tr>
+    <td>Updated GameCenterManager for iOS 7 and OS X 10.9 Improved Singleton. New features and enhancements.</br>
+     <ul>
+      <li>Added compiler checks for ARC, iOS 7, and OS X Mavericks 10.9.</li>
+      <li>Deprecated <tt>initGameCenter</tt>. Use <tt>setupManagerAndSetShouldCryptWithKey:</tt> or <tt>setupManager</tt> instead.</li>
+      <li>Encryption of local data is no longer required. Use the new setup methods to define encrytion parameters, or to turn it OFF.</li>
+      <li>Improved Singleton - Removed nil object creation and replaced <tt>allocWithZone:</tt> with <tt>alloc</tt>. Improved private init method.</li>
+      <li>Added three new methods for presenting GameKit ViewControllers</li>
+      <li>New properties to handle encryption.</li>
+      <li>Improved sample apps</li>
+     </ul>
+    </td>
+  </tr>
+  <tr><th colspan="2" style="text-align:center;"><b>Version 5.2</b></th></tr>
+  <tr>
+    <td>Consolidated the GameCenterManager for iOS and OS X classes into one class. Improved Singleton. 64-bit compatible. Bug fixes and enhancements. Documentation improvements.</br>
+     <ul>
+      <li>Combined the GameCenterManager classes for Mac and iOS and combined them into one single class.</li>
+      <li>Deprecated delegate methods with new (better) names and parameters. Now some delegates pass actual GKScore and GKAchievement objects instead of NSDictionaries with those objects.</li>
+      <li>Moved project files around for better organization.</li>
+      <li>Improved Singleton - now uses GCD dispatch once to properly setup. Improved setup.</li>
+      <li>64-bit compatible - added arm64 architecture to the build settings and updated the encryption files for 64-bit</li>
+      <li>Documentation improvements - added more extensive documentation for all methods and properties. Now documentation can be viewed with Xcode 5.0's built-in documentation viewer / Quick Help features.</li>
+      <li>Bug fixes and enhancements</li>
+      <li>New properties</li>
+     </ul>
+    </td>
+  </tr>
+  <tr><th colspan="2" style="text-align:center;"><b>Version 5.1</b></th></tr>
   <tr>
     <td>This update adds support for iOS 7, makes improvements to the iOS & Mac OS X demo apps, fixes bugs with error reporting, improves player data methods, and makes some breaking changes to resetting achievements.</br> 
     <ul>
-   <li>Major improvements to the demo apps including new UI and Icons</li>
-    <li>Limited iOS 7 support. The project runs on iOS 7, but the classes are not fully optimized for iOS 7. A new branch will be created soon which has specific iOS 7 changes.</li>
-   <li>Fixed a bug where checking for GameCenter availability would return NO, but wouldn't deliver an error message.</li>
-    <li>Deprecated <tt>gameCenterManager:resetAchievements:</tt> delegate method in favor of a completion handler now available on the <tt>resetAchievements:</tt> method. The <tt>gameCenterManager:resetAchievements:</tt> delegate method is no longer called</li>
-    <li>Fixed a bug where resetting achievements may not work</li>
-    <li>Cleaned code, minor improvements to code</li>
+      <li>Major improvements to the demo apps including new UI and Icons</li>
+      <li>Limited iOS 7 support. The project runs on iOS 7, but the classes are not fully optimized for iOS 7. A new branch will be created soon which has specific iOS 7 changes.</li>
+      <li>Fixed a bug where checking for GameCenter availability would return NO, but wouldn't deliver an error message.</li>
+      <li>Deprecated <tt>gameCenterManager:resetAchievements:</tt> delegate method in favor of a completion handler now available on the <tt>resetAchievements:</tt> method. The <tt>gameCenterManager:resetAchievements:</tt> delegate method is no longer called</li>
+      <li>Fixed a bug where resetting achievements may not work</li>
+      <li>Cleaned code, minor improvements to code</li>
     </ul>
     </td>
   </tr>

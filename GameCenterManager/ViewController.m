@@ -29,7 +29,6 @@
     
     // Set GameCenter Manager Delegate
     [[GameCenterManager sharedManager] setDelegate:self];
-    [[GameCenterManager sharedManager] initGameCenter];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -86,11 +85,8 @@
 }
 
 - (IBAction)showLeaderboard {
-    GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
-    leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
-    leaderboardViewController.gameCenterDelegate = self;
-    [self presentViewController:leaderboardViewController animated:YES completion:nil];
-    actionBarLabel.title = [NSString stringWithFormat:@"Attempting to display GameCenter leaderboards."];
+    [[GameCenterManager sharedManager] presentLeaderboardsOnViewController:self];
+    actionBarLabel.title = [NSString stringWithFormat:@"Displayed GameCenter Leaderboards."];
 }
 
 //------------------------------------------------------------------------------------------------------------//
@@ -113,11 +109,8 @@
 }
 
 - (IBAction)showAchievements {
-    GKGameCenterViewController *achievementViewController = [[GKGameCenterViewController alloc] init];
-    achievementViewController.viewState = GKGameCenterViewControllerStateAchievements;
-    achievementViewController.gameCenterDelegate = self;
-    [self presentViewController:achievementViewController animated:YES completion:nil];
-    actionBarLabel.title = [NSString stringWithFormat:@"Attempting to display GameCenter achievements."];
+    [[GameCenterManager sharedManager] presentAchievementsOnViewController:self];
+    actionBarLabel.title = [NSString stringWithFormat:@"Displayed GameCenter Achievements."];
 }
 
 - (IBAction)resetAchievements {
@@ -133,7 +126,7 @@
 - (IBAction)loadChallenges {
     // This feature is only supported in iOS 6 and higher (don't worry - GC Manager will check for you and return NIL if it isn't available)
     [[GameCenterManager sharedManager] getChallengesWithCompletion:^(NSArray *challenges, NSError *error) {
-        actionBarLabel.title = [NSString stringWithFormat:@"Loaded GameCenter challenges."];
+        actionBarLabel.title = [NSString stringWithFormat:@"Loaded GameCenter challenges. Check log."];
         NSLog(@"GC Challenges: %@ | Error: %@", challenges, error);
     }];
 }
@@ -242,6 +235,4 @@
 }
 
 @end
-
-
 

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GameCenterManager.h"
 
-@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIActionSheetDelegate, GameCenterManagerDelegate>
+@interface ViewController : UIViewController <UIActionSheetDelegate, GameCenterManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *statusDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *actionLabel;

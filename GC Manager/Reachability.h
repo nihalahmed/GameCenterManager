@@ -50,8 +50,7 @@
 
 extern NSString *const kReachabilityChangedNotification;
 
-typedef enum 
-{
+typedef enum  {
 	// Apple NetworkStatus Compatible Names.
 	NotReachable     = 0,
 	ReachableViaWiFi = 2,

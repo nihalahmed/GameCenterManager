@@ -5,8 +5,21 @@
 //  Copyright (c) 2012 NABZ Software. All rights reserved.
 //
 
-#warning Definition of GameCenterManagerKey is required. Change this value to your own secret key.
-#define kGameCenterManagerKey [@"MyKey" dataUsingEncoding:NSUTF8StringEncoding]
+// GameCenterManager uses ARC, check for compatibility before building
+#if !__has_feature(objc_arc)
+    #error GameCenterManager uses Objective-C ARC. Compile these files with ARC enabled. Add the -fobjc-arc compiler flag to enable ARC for only these files.
+#endif
+
+// As of version 5.3, GameCenterManager only runs on iOS 7.0+ and OS X 10.9+, check for compatibility before building. See the GitHub Releases page (https://github.com/nihalahmed/GameCenterManager/releases) for older versions which work with iOS 4.1 and higher and OS X 10.8 and higher. The last supported version for iOS < 7.0 is version 5.2. The last supported version for OS X < 10.9 is also version 5.2.
+#if TARGET_OS_IPHONE
+    #ifndef __IPHONE_7_0
+        #warning GameCenterManager uses features only available in iOS SDK 7.0 and later. Running on an older version of iOS may result in a crash. Download an older release from GitHub for compatibility with iOS SDK < 7.0
+    #endif
+#else
+    #ifndef __MAC_10_9
+        #warning GameCenterManager uses features only available in OS X SDK 10.9 and later. Running on an older version of OS X may result in a crash. Download an older release from GitHub for compatibility with OS X SDK < 10.9
+    #endif
+#endif
 
 #define LIBRARY_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
 #define kGameCenterManagerDataFile @"GameCenterManager.plist"
@@ -14,8 +27,18 @@
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
+
+#if TARGET_OS_IPHONE
+    #import <UIKit/UIKit.h>
+#else
+    #import <Cocoa/Cocoa.h>
+#endif
+
 #import "Reachability.h"
 #import "NSDataAES256.h"
+
+
+
 
 /// Leaderboard sort order. Use this value when submitting new leaderboard scores. This value should match the value set in iTunes Connect for the speicifed leaderboard.
 typedef enum GameCenterSortOrder {
@@ -40,29 +63,43 @@ enum {
 /// GameCenterManager error codes that may be passed in a completion handler's error parameter
 typedef NSInteger GCMErrorCode;
 
+
+
+
 /// GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and keep track of high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc.
 @class GameCenterManager;
 @protocol GameCenterManagerDelegate;
-@interface GameCenterManager : NSObject {
-    NSMutableArray *GCMLeaderboards;
-    #if TARGET_OS_IPHONE
-        UIBackgroundTaskIdentifier backgroundProcess;
-    #endif
-}
+@interface GameCenterManager : NSObject <GKGameCenterControllerDelegate>
 
-/// GameCenterManager delegate property that can be used to set the delegate
-@property (nonatomic, weak) id <GameCenterManagerDelegate> delegate;
+
+
 
 /// Returns the shared instance of GameCenterManager.
 + (GameCenterManager *)sharedManager;
 
+/// GameCenterManager delegate property that can be used to set the delegate
+@property (nonatomic, weak) id <GameCenterManagerDelegate> delegate;
 
 
-/// Initializes Game Center Manager. Should be called at app launch.
-- (void)initGameCenter;
+
+
+/** DEPRECTAED. Use \p setupManagerAndSetShouldCryptWithKey: instead.
+    @discussion Initializes GameCenterManager. Should be called at app launch. */
+- (void)initGameCenter __deprecated;
+
+/** Initializes GameCenterManager. Should be called at app launch. Locally saved scores and achievements will be encrypted with the specified keyword when saved.
+ 
+ @discussion This is more secure, but it may be slower. When submitting an app to the AppStore with GCManager Encryption, you may need to register for US Export Compliance. */
+- (void)setupManagerAndSetShouldCryptWithKey:(NSString *)cryptKey;
+
+/** Initializes GameCenterManager. Should be called at app launch. Locally saved scores and achievements will not be encrypted when saved.
+ 
+ @discussion This is less secure, but it may be faster. When submitting an app to the AppStore without using GCManager Encryption, you will not have to register for US Export Compliance (unless other parts of your app require it). */
+- (void)setupManager;
 
 /// Synchronizes local player data with Game Center data.
 - (void)syncGameCenter;
+
 
 
 
@@ -82,6 +119,7 @@ typedef NSInteger GCMErrorCode;
 
 
 
+
 /// Reports scores and achievements which could not be reported earlier.
 - (void)reportSavedScoresAndAchievements;
 
@@ -93,11 +131,13 @@ typedef NSInteger GCMErrorCode;
 
 
 
+
 /// Returns local player's high score for specified leaderboard.
 - (int)highScoreForLeaderboard:(NSString *)identifier;
 
 /// Returns local player's high scores for multiple leaderboards.
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers;
+
 
 
 
@@ -109,9 +149,24 @@ typedef NSInteger GCMErrorCode;
 
 
 
+
 /** Gets a list of challenges for the current player and game. If GameCenter is not available it will return nil and provide an error using the gameCenterManager:error: delegate method. Use the completion handler to get challenges.
  @param handler Completion handler with an NSArray containing challenges and an NSError. The NSError object will be nil if there is no error. */
 - (void)getChallengesWithCompletion:(void (^)(NSArray *challenges, NSError *error))handler __attribute__((nonnull));
+
+
+
+
+/// Presents the GameCenter Achievements ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
+- (void)presentAchievementsOnViewController:(UIViewController *)viewController;
+
+/// Presents the GameCenter Leaderboards ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
+- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController;
+
+/// Presents the GameCenter Challenges ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
+- (void)presentChallengesOnViewController:(UIViewController *)viewController;
+
+
 
 
 #if TARGET_OS_IPHONE
@@ -121,9 +176,11 @@ typedef NSInteger GCMErrorCode;
 /// Resets all of the local player's achievements and progress for the current game
 - (void)resetAchievementsWithCompletion:(void (^)(NSError *error))handler __attribute__((nonnull));
 
-/// DEPRECATED. Use resetAchievementsWithCompletion: instead
+/// DEPRECATED. Use resetAchievementsWithCompletion: instead.
 - (void)resetAchievements __deprecated __unavailable;
 #endif
+
+
 
 
 /// Returns currently authenticated local player ID. If no player is authenticated, "unknownPlayer" is returned.
@@ -145,14 +202,23 @@ typedef NSInteger GCMErrorCode;
 
 
 
+
 /// Returns YES if an active internet connection is available.
 - (BOOL)isInternetAvailable;
 
-/// Check if GameCenter is supported
+/// Check if Game Center is supported
 - (BOOL)checkGameCenterAvailability;
 
 /// Use this property to check if Game Center is available and supported on the current device.
 @property (nonatomic, assign) BOOL isGameCenterAvailable;
+
+/// @b Readonly. Indicates whether or not locally saved scores and achievements should be encrypted. To turn ON this feature, initialize GameCenterManager using the \p setupManagerAndSetShouldCryptWithKey: method (instead of just \p setupManager)
+@property (nonatomic, assign, readonly) BOOL shouldCryptData;
+
+/// @b Readonly. The key used to encrypt and decrypt locally saved scores and achievements. To set the key, setup GameCenterManager using the \p setupManagerAndSetShouldCryptWithKey: method
+@property (nonatomic, strong, readonly) NSString *cryptKey;
+
+
 
 
 @end
@@ -185,10 +251,23 @@ typedef NSInteger GCMErrorCode;
 - (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score;
 
 
+//----------------------------------//
+//-- Deprecated Delegate Methods ---//
+//----------------------------------//
+
+/// DEPRECATED. Use gameCenterManager: didSaveScore: instead.
 - (void)gameCenterManager:(GameCenterManager *)manager savedScore:(GKScore *)score __deprecated;
+
+/// DEPRECATED. Use gameCenterManager: didSaveAchievement: instead.
 - (void)gameCenterManager:(GameCenterManager *)manager savedAchievement:(NSDictionary *)achievementInformation __deprecated;
+
+/// DEPRECATED. Use gameCenterManager: reportedScore: withError: instead.
 - (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(NSDictionary *)scoreInformation __deprecated;
+
+/// DEPRECATED. Use gameCenterManager: reportedAchievement: withError: instead.
 - (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(NSDictionary *)achievementInformation __deprecated;
+
+/// DEPRECATED. UNAVAILABLE. Use the completion handler on resetAchievementsWithCompletion:
 - (void)gameCenterManager:(GameCenterManager *)manager resetAchievements:(NSError *)error __deprecated __unavailable;
 
 @end
