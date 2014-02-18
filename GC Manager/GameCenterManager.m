@@ -7,6 +7,9 @@
 
 #import "GameCenterManager.h"
 
+#define GCM_IS_LESSER_THAN_IOS(major, minor) floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_##major##_##minor
+#define GCM_IS_GREATER_THAN_IOS(major, minor) floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_##major##_##minor
+
 //------------------------------------------------------------------------------------------------------------//
 //------- GameCenter Manager Singleton -----------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------//
@@ -521,6 +524,7 @@
     }
     
     if (gkScore != nil) {
+        gkScore.value = gkScore.value;
         [GKScore reportScores:@[gkScore] withCompletionHandler:^(NSError *error) {
             if (error == nil) {
                 [self reportSavedScoresAndAchievements];
@@ -614,11 +618,16 @@
         [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
     }
     
+    GKScore *gkScore = nil;
     if ([self checkGameCenterAvailability] == YES) {
 #if TARGET_OS_IPHONE
-        GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
+        if (GCM_IS_GREATER_THAN_IOS(6, 1)) { // 7.0+
+            gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
+        } else {
+            gkScore = [[GKScore alloc] initWithCategory:identifier];
+        }
 #else
-        GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+        gkScore = [[GKScore alloc] initWithCategory:identifier];
 #endif
         gkScore.value = score;
         
@@ -644,10 +653,15 @@
         }];
     } else {
 #if TARGET_OS_IPHONE
-        GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
+        if (GCM_IS_GREATER_THAN_IOS(6, 1)) { // 7.0+
+            gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
+        } else {
+            gkScore = [[GKScore alloc] initWithCategory:identifier];
+        }
 #else
-        GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+        gkScore = [[GKScore alloc] initWithCategory:identifier];
 #endif
+        gkScore.value = score;
         [self saveScoreToReportLater:gkScore];
     }
 }
