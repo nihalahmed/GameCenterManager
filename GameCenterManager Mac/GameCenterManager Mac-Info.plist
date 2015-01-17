@@ -15,19 +15,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>5.2</string>
+	<string>5.3.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>5.2</string>
+	<string>5.3.1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.games</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2013 iRare Media. All rights reserved.</string>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<key>NSMainStoryboardFile</key>
+	<string>Storyboard</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

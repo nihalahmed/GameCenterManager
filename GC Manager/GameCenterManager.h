@@ -157,6 +157,7 @@ typedef NSInteger GCMErrorCode;
 
 
 
+#if TARGET_OS_IPHONE
 /// Presents the GameCenter Achievements ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
 - (void)presentAchievementsOnViewController:(UIViewController *)viewController;
 
@@ -165,6 +166,7 @@ typedef NSInteger GCMErrorCode;
 
 /// Presents the GameCenter Challenges ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
 - (void)presentChallengesOnViewController:(UIViewController *)viewController;
+#endif
 
 
 
@@ -231,6 +233,10 @@ typedef NSInteger GCMErrorCode;
 @required
 /// Required Delegate Method called when the user needs to be authenticated using the GameCenter Login View Controller
 - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController;
+#else
+@required
+/// Required Delegate Method called when the user needs to be authenticated using the Game Center Login View Controller
+- (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(NSViewController *)gameCenterLoginController;
 #endif
 
 @optional

@@ -10,31 +10,31 @@
 	<string>GameCenterManager</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>E0094824-D1D3-4EFA-A9D4-4DA228F45D83</key>
+		<key>B46B0F71F29146CBE0ED10C5B186CB1872D5105B</key>
 		<string>https://github.com/nihalahmed/GameCenterManager.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>GameCenterManager.xcodeproj/project.xcworkspace</string>
+	<string>GameCenterManager.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>E0094824-D1D3-4EFA-A9D4-4DA228F45D83</key>
+		<key>B46B0F71F29146CBE0ED10C5B186CB1872D5105B</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/nihalahmed/GameCenterManager.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E0094824-D1D3-4EFA-A9D4-4DA228F45D83</string>
+	<string>B46B0F71F29146CBE0ED10C5B186CB1872D5105B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E0094824-D1D3-4EFA-A9D4-4DA228F45D83</string>
+			<string>B46B0F71F29146CBE0ED10C5B186CB1872D5105B</string>
 			<key>IDESourceControlWCCName</key>
-			<string>GameCenterManager-Official</string>
+			<string>GameCenterManager</string>
 		</dict>
 	</array>
 </dict>

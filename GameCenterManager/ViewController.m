@@ -64,16 +64,6 @@
     return YES;
 }
 
-- (void)viewDidUnload {
-    [self setScrollView:nil];
-    [self setStatusDetailLabel:nil];
-    [self setActionLabel:nil];
-    [self setPlayerPicture:nil];
-    [self setPlayerName:nil];
-    [self setPlayerStatus:nil];
-    [super viewDidUnload];
-}
-
 //------------------------------------------------------------------------------------------------------------//
 //------- GameCenter Scores ----------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------//

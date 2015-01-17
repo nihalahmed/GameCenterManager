@@ -183,6 +183,12 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
                             [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+                        
+                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
+                            [[self delegate] gameCenterManager:self authenticateUser:viewController];
+                        } else {
+                            NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
+                        }
                     });
                 } else if (!error) {
                     // Authentication handler completed successfully. Re-check availability
@@ -222,6 +228,7 @@
     NetworkStatus internetStatus = [reachability currentReachabilityStatus];
     
     if (internetStatus == NotReachable) {
+        NSLog(@"Not Reachable");
         NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"Internet unavailable - could not connect to the internet. Connect to WiFi or a Cellular Network to upload data to GameCenter."] code:GCMErrorInternetNotAvailable userInfo:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -929,6 +936,7 @@
 //------- Presenting GameKit Controllers ---------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark - Presenting GameKit Controllers
+#if TARGET_OS_IPHONE
 
 - (void)presentAchievementsOnViewController:(UIViewController *)viewController {
     GKGameCenterViewController *achievementsViewController = [[GKGameCenterViewController alloc] init];
@@ -954,6 +962,7 @@
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
     [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
 }
+#endif
 
 //------------------------------------------------------------------------------------------------------------//
 //------- Resetting Data -------------------------------------------------------------------------------------//
