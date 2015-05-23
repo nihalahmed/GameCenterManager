@@ -945,11 +945,24 @@
     [viewController presentViewController:achievementsViewController animated:YES completion:nil];
 }
 
+// left here for backwards compatibility
 - (void)presentLeaderboardsOnViewController:(UIViewController *)viewController {
-    GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
-    leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
-    leaderboardViewController.gameCenterDelegate = self;
-    [viewController presentViewController:leaderboardViewController animated:YES completion:nil];
+	NSLog(@"WARNING: Calling a deprecated GameCenterManager method that may become obsolete in future versions. Use presentLeaderboardsOnViewController: withLeaderboard: instead. %s", __PRETTY_FUNCTION__);
+	[self presentLeaderboardsOnViewController:viewController withLeaderboard:nil];
+}
+
+- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController withLeaderboard:(NSString *)leaderboard {
+	GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+	leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+	/*
+	 Passing nil to leaderboardViewController.leaderboardIdentifier works fine,
+	 but to make sure futur updates will not brake, we'll check it first
+	 */
+	if (leaderboard != nil) {
+		leaderboardViewController.leaderboardIdentifier = leaderboard;
+	}
+	leaderboardViewController.gameCenterDelegate = self;
+	[viewController presentViewController:leaderboardViewController animated:YES completion:nil];
 }
 
 - (void)presentChallengesOnViewController:(UIViewController *)viewController {
