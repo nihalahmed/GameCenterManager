@@ -63,6 +63,20 @@ enum {
 /// GameCenterManager error codes that may be passed in a completion handler's error parameter
 typedef NSInteger GCMErrorCode;
 
+/// GameCenter availability status. Use these statuss to identify the state of GameCenter's availability.
+typedef enum GameCenterAvailability {
+	/// GameKit Framework not available on this device
+	GameCenterAvailabilityNotAvailable,
+	/// Cannot connect to the internet
+	GameCenterAvailabilityNoInternet,
+	/// Player is not yet signed into GameCenter
+	GameCenterAvailabilityNoPlayer,
+	/// Player is not signed into GameCenter, has declined to sign into GameCenter, or GameKit had an issue validating this game / app
+	GameCenterAvailabilityPlayerNotAuthenticated,
+	/// Player is signed into GameCenter
+	GameCenterAvailabilityPlayerAuthenticated
+} GameCenterAvailability;
+
 
 
 
@@ -208,8 +222,11 @@ typedef NSInteger GCMErrorCode;
 /// Returns YES if an active internet connection is available.
 - (BOOL)isInternetAvailable;
 
+/// DEPRECATED. Use checkGameCenterAvailability: ignorePreviousStatus: instead.
+- (BOOL)checkGameCenterAvailability __deprecated;
+
 /// Check if Game Center is supported
-- (BOOL)checkGameCenterAvailability;
+- (BOOL)checkGameCenterAvailability:(BOOL)ignorePreviousStatus;
 
 /// Use this property to check if Game Center is available and supported on the current device.
 @property (nonatomic, assign) BOOL isGameCenterAvailable;
