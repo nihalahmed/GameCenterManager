@@ -75,7 +75,7 @@
 }
 
 - (IBAction)showLeaderboard {
-    [[GameCenterManager sharedManager] presentLeaderboardsOnViewController:self];
+    [[GameCenterManager sharedManager] presentLeaderboardsOnViewController:self withLeaderboard:@"grp.PlayerScores"];
     actionBarLabel.title = [NSString stringWithFormat:@"Displayed GameCenter Leaderboards."];
 }
 

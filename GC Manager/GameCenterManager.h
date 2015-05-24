@@ -161,8 +161,11 @@ typedef NSInteger GCMErrorCode;
 /// Presents the GameCenter Achievements ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
 - (void)presentAchievementsOnViewController:(UIViewController *)viewController;
 
-/// Presents the GameCenter Leaderboards ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
-- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController;
+/// DEPRECATED. Use presentLeaderboardsOnViewController: withLeaderboard: instead.
+- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController __deprecated;
+
+/// Presents the GameCenter Leaderboards ViewController with Leaderboard Identifier over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
+- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController withLeaderboard:(NSString *)leaderboard;
 
 /// Presents the GameCenter Challenges ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
 - (void)presentChallengesOnViewController:(UIViewController *)viewController;
