@@ -70,7 +70,11 @@ These methods are not interchangable. If you decide to setup with encryption the
 ###Check Game Center Support
 GameCenter Manager automatically checks if Game Center is available before performing any Game Center-related operations. You can also check for Game Center availability by using the following method, which returns a `BOOL` value (YES / NO).
 
-    BOOL isAvailable = [[GameCenterManager sharedManager] checkGameCenterAvailability];
+    // Will not call delegate if status has not changed from the previous time it was called
+    BOOL isAvailable = [[GameCenterManager sharedManager] checkGameCenterAvailability:NO];
+
+    // Will always call delegate even if status has not changed from the previous time it was called
+    BOOL isAvailable = [[GameCenterManager sharedManager] checkGameCenterAvailability:YES];
 
 This method will perform the following checks in the following order:
  1. Current OS version new enough to run Game Center. iOS 4.1 or OS X 10.8. Some Game Center methods require newer OS versions which will be checked (ex. challenges and some multiplayer features).

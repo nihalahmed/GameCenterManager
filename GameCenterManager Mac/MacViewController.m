@@ -31,7 +31,7 @@
         [[GameCenterManager sharedManager] setDelegate:self];
         
         // Setup Game Center Manager
-        BOOL available = [[GameCenterManager sharedManager] checkGameCenterAvailability];
+        BOOL available = [[GameCenterManager sharedManager] checkGameCenterAvailability:YES];
         if (available) self.gameCenterStatus.stringValue = @"GAME CENTER AVAILABLE";
         else self.gameCenterStatus.stringValue = @"GAME CENTER UNAVAILABLE";
         
