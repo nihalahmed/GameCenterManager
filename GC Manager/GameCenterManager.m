@@ -307,9 +307,13 @@
                 }
                 
                 
-                if (GCMLeaderboards.count > 0) {
-                    GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
-                    
+				if (GCMLeaderboards.count > 0) {
+#ifdef __IPHONE_8_0
+					GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[GKLocalPlayer localPlayer]]];
+#else
+					GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
+#endif
+					
                     [leaderboardRequest setIdentifier:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] identifier]];
                     
                     [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
@@ -431,8 +435,13 @@
             }
             
             if (GCMLeaderboards.count > 0) {
-                GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
-                [leaderboardRequest setCategory:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] category]];
+#ifdef __MAC_10_10
+				GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[GKLocalPlayer localPlayer]]];
+				[leaderboardRequest setIdentifier:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] identifier]];
+#else
+				GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
+				[leaderboardRequest setCategory:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] category]];
+#endif
                 [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if (error == nil) {
                         if (scores.count > 0) {
@@ -446,14 +455,22 @@
                                 playerDict = [NSMutableDictionary dictionary];
                             }
                             
-                            float savedHighScoreValue = 0;
-                            NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.category];
-                            
+							float savedHighScoreValue = 0;
+#ifdef __MAC_10_10
+							NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
+#else
+							NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.category];
+#endif
+							
                             if (savedHighScore != nil) {
                                 savedHighScoreValue = [savedHighScore intValue];
                             }
-                            
-                            [playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.category];
+							
+#ifdef __MAC_10_10
+							[playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
+#else
+							[playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.category];
+#endif
                             [plistDict setObject:playerDict forKey:[self localPlayerId]];
                             
                             NSData *saveData;
@@ -650,7 +667,11 @@
 #if TARGET_OS_IPHONE
         GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
 #else
-        GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+#ifdef __MAC_10_10
+		GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
+#else
+		GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+#endif
 #endif
         gkScore.value = score;
         
@@ -678,7 +699,11 @@
 #if TARGET_OS_IPHONE
         GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
 #else
-        GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+#ifdef __MAC_10_10
+		GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
+#else
+		GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+#endif
 #endif
         [self saveScoreToReportLater:gkScore];
     }
@@ -996,11 +1021,15 @@
     challengeViewController.gameCenterDelegate = self;
     [viewController presentViewController:challengeViewController animated:YES completion:nil];
 }
+#endif
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
-    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
-}
+#if TARGET_OS_IPHONE
+	[gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+#else
+	[gameCenterViewController dismissViewController:gameCenterViewController];
 #endif
+}
 
 //------------------------------------------------------------------------------------------------------------//
 //------- Resetting Data -------------------------------------------------------------------------------------//
