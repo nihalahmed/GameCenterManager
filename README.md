@@ -109,8 +109,8 @@ You can get high scores from multiple leaderboards or just one leaderboard. In b
 
 To get the high score for the current player for a single leaderboard:
 
-    // Returns an integer value as a high scores
-    int highScore = [[GameCenterManager sharedManager] highScoreForLeaderboard:@"LeaderboardID"];  
+    // Returns an integer value (long long integer) as a high scores
+   long long highScore = [[GameCenterManager sharedManager] highScoreForLeaderboard:@"LeaderboardID"];  
 
 ###Get Achievement Progress
 You can get achievement progress for multiple achievements or just one achievement. In both cases you'll need to provide Achievement IDs. GameCenterManager will return either an NSDictionary with double values, or one double value. To get the achievement progress for the current player from multiple achievements:

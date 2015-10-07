@@ -333,10 +333,10 @@
                                 NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
                                 
                                 if (savedHighScore != nil) {
-                                    savedHighScoreValue = [savedHighScore intValue];
+                                    savedHighScoreValue = [savedHighScore longLongValue];
                                 }
                                 
-                                [playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
+                                [playerDict setObject:[NSNumber numberWithLongLong:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
                                 [plistDict setObject:playerDict forKey:[self localPlayerId]];
                                 NSData *saveData;
                                 if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
@@ -463,13 +463,13 @@
 #endif
 							
                             if (savedHighScore != nil) {
-                                savedHighScoreValue = [savedHighScore intValue];
+                                savedHighScoreValue = [savedHighScore longLongValue];
                             }
 							
 #ifdef __MAC_10_10
-							[playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
+							[playerDict setObject:[NSNumber numberWithLongLong:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
 #else
-							[playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.category];
+							[playerDict setObject:[NSNumber numberWithLongLong:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.category];
 #endif
                             [plistDict setObject:playerDict forKey:[self localPlayerId]];
                             
@@ -628,7 +628,7 @@
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark - Score and Achievement Reporting
 
-- (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order  {
+- (void)saveAndReportScore:(long long)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order  {
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
@@ -638,9 +638,9 @@
     if (playerDict == nil) playerDict = [NSMutableDictionary dictionary];
     
     NSNumber *savedHighScore = [playerDict objectForKey:identifier];
-    if (savedHighScore == nil) savedHighScore = [NSNumber numberWithInt:0];
+    if (savedHighScore == nil) savedHighScore = [NSNumber numberWithLongLong:0];
     
-    int savedHighScoreValue = [savedHighScore intValue];
+    long long savedHighScoreValue = [savedHighScore longLongValue];
     
     // Determine if the new score is better than the old score
     BOOL isScoreBetter = NO;
@@ -655,7 +655,7 @@
     }
     
     if (isScoreBetter) {
-        [playerDict setObject:[NSNumber numberWithInt:score] forKey:identifier];
+        [playerDict setObject:[NSNumber numberWithLongLong:score] forKey:identifier];
         [plistDict setObject:playerDict forKey:[self localPlayerId]];
         NSData *saveData;
         if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
@@ -866,7 +866,7 @@
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark - Score, Achievement, and Challenge Retrieval
 
-- (int)highScoreForLeaderboard:(NSString *)identifier {
+- (long long)highScoreForLeaderboard:(NSString *)identifier {
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
@@ -876,7 +876,7 @@
     if (playerDict != nil) {
         NSNumber *savedHighScore = [playerDict objectForKey:identifier];
         if (savedHighScore != nil) {
-            return [savedHighScore intValue];
+            return [savedHighScore longLongValue];
         } else {
             return 0;
         }
@@ -898,12 +898,12 @@
             NSNumber *savedHighScore = [playerDict objectForKey:identifier];
             
             if (savedHighScore != nil) {
-                [highScores setObject:[NSNumber numberWithInt:[savedHighScore intValue]] forKey:identifier];
+                [highScores setObject:[NSNumber numberWithLongLong:[savedHighScore longLongValue]] forKey:identifier];
                 continue;
             }
         }
         
-        [highScores setObject:[NSNumber numberWithInt:0] forKey:identifier];
+        [highScores setObject:[NSNumber numberWithLongLong:0] forKey:identifier];
     }
     
     NSDictionary *highScoreDict = [NSDictionary dictionaryWithDictionary:highScores];

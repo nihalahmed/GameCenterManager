@@ -327,9 +327,6 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "NABZ Software";
 				TargetAttributes = {
-					659699D51515718800724EBE = {
-						DevelopmentTeam = 243F4RK8Z3;
-					};
 					994E293F17838BF300EAACD2 = {
 						DevelopmentTeam = 243F4RK8Z3;
 						SystemCapabilities = {
