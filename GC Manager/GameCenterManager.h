@@ -105,10 +105,10 @@ typedef NSInteger GCMErrorCode;
 
 /** Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later. 
  
- @param score The int value of the score to be submitted to Game Center. This score should not be formatted, instead it should be a plain int. For example, if you wanted to submit a score of 45.28 meters then you would submit it as an integer of 4528. To format your scores, you must set the Score Formatter for your leaderboard in iTunes Connect.
+ @param score The long long value of the score to be submitted to Game Center. This score should not be formatted, instead it should be a plain long long (int). For example, if you wanted to submit a score of 45.28 meters then you would submit it as an integer of 4528. To format your scores, you must set the Score Formatter for your leaderboard in iTunes Connect.
  @param identifier The Leaderboard ID set through iTunes Connect. This is different from the name of the leaderboard, and it is not shown to the user. 
  @param order The score sort order that you set in iTunes Connect - either high to low or low to high. This is used to determine if the user has a new highscore before submitting. */
-- (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order __attribute__((nonnull));
+- (void)saveAndReportScore:(long long)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order __attribute__((nonnull));
 
 /** Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
  
@@ -133,7 +133,7 @@ typedef NSInteger GCMErrorCode;
 
 
 /// Returns local player's high score for specified leaderboard.
-- (int)highScoreForLeaderboard:(NSString *)identifier;
+- (long long)highScoreForLeaderboard:(NSString *)identifier;
 
 /// Returns local player's high scores for multiple leaderboards.
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers;
