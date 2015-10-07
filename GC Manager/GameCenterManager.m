@@ -401,7 +401,16 @@
                         });
                     }
                 }];
+            } else if( [[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[self localPlayerId]]] == YES &&
+                      [[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]] == YES ) {
+                // Game Center Synced
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterSynced:)]) {
+                        [[self delegate] gameCenterManager:self gameCenterSynced:YES];
+                    }
+                });
             }
+            
         } else {
             NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"GameCenter unavailable."] code:GCMErrorNotAvailable userInfo:nil];
             dispatch_async(dispatch_get_main_queue(), ^{

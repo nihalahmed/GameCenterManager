@@ -275,6 +275,8 @@ typedef enum GameCenterAvailability {
 - (void)gameCenterManager:(GameCenterManager *)manager didSaveAchievement:(GKAchievement *)achievement;
 /// Sent to the delegate when a score is saved locally
 - (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score;
+/// Sent to the delegate when the Game Center is synced
+- (void)gameCenterManager:(GameCenterManager *)manager gameCenterSynced:(BOOL)synced;
 
 
 //----------------------------------//
