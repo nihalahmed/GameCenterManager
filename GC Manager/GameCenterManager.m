@@ -283,7 +283,11 @@
                 
                 
                 if (GCMLeaderboards.count > 0) {
+#ifdef __IPHONE_8_0
+                    GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[self localPlayerData]]];
+#else
                     GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
+#endif
                     
                     [leaderboardRequest setIdentifier:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] identifier]];
                     
