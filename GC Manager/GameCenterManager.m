@@ -12,6 +12,8 @@
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark GameCenter Manager
 
+#define IS_IOS_8_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+
 @interface GameCenterManager () {
     NSMutableArray *GCMLeaderboards;
     
@@ -253,7 +255,7 @@
     NetworkStatus internetStatus = [reachability currentReachabilityStatus];
     
     if (internetStatus == NotReachable) {
-        NSLog(@"Not Reachable");
+        NSLog(@"Internet unavailable");
         NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"Internet unavailable - could not connect to the internet. Connect to WiFi or a Cellular Network to upload data to GameCenter."] code:GCMErrorInternetNotAvailable userInfo:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -308,12 +310,13 @@
                 
                 
 				if (GCMLeaderboards.count > 0) {
-#ifdef __IPHONE_8_0
-					GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[GKLocalPlayer localPlayer]]];
-#else
-					GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
-#endif
-					
+
+                    GKLeaderboard *leaderboardRequest;
+                    if(IS_IOS_8_OR_LATER) {
+                        leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[GKLocalPlayer localPlayer]]];
+                    } else {
+                        leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
+                    }
                     [leaderboardRequest setIdentifier:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] identifier]];
                     
                     [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
@@ -568,6 +571,7 @@
         if (savedScores.count > 0) {
             gkScore = [NSKeyedUnarchiver unarchiveObjectWithData:[savedScores objectAtIndex:0]];
             
+            
             [savedScores removeObjectAtIndex:0];
             [plistDict setObject:savedScores forKey:@"SavedScores"];
             
@@ -578,7 +582,7 @@
         }
     }
     
-    if (gkScore != nil) {
+    if (gkScore != nil && gkScore.value != 0) {
         [GKScore reportScores:@[gkScore] withCompletionHandler:^(NSError *error) {
             if (error == nil) {
                 [self reportSavedScoresAndAchievements];
@@ -647,7 +651,8 @@
     if (playerDict == nil) playerDict = [NSMutableDictionary dictionary];
     
     NSNumber *savedHighScore = [playerDict objectForKey:identifier];
-    if (savedHighScore == nil) savedHighScore = [NSNumber numberWithLongLong:0];
+    if (savedHighScore == nil)
+        savedHighScore = [NSNumber numberWithLongLong:0];
     
     long long savedHighScoreValue = [savedHighScore longLongValue];
     
@@ -682,7 +687,7 @@
 		GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
 #endif
 #endif
-        gkScore.value = score;
+        [gkScore setValue:score];
         
         [GKScore reportScores:@[gkScore] withCompletionHandler:^(NSError *error) {
             NSDictionary *dict = nil;
@@ -714,6 +719,7 @@
 		GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
 #endif
 #endif
+        [gkScore setValue:score];
         [self saveScoreToReportLater:gkScore];
     }
 }
@@ -778,6 +784,9 @@
 }
 
 - (void)saveScoreToReportLater:(GKScore *)score {
+    if(score.value == 0) {
+        return;
+    }
     NSData *scoreData = [NSKeyedArchiver archivedDataWithRootObject:score];
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
@@ -799,13 +808,14 @@
     [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:savedScore:)]) {
+        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:didSaveScore:)]) {
+            [[self delegate] gameCenterManager:self didSaveScore:score];
+        } else if ([[self delegate] respondsToSelector:@selector(gameCenterManager:savedScore:)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             [[self delegate] gameCenterManager:self savedScore:score];
 #pragma clang diagnostic pop
-        } else if ([[self delegate] respondsToSelector:@selector(gameCenterManager:didSaveScore:)])
-            [[self delegate] gameCenterManager:self didSaveScore:score];
+        }
     });
 }
 
