@@ -5,6 +5,11 @@
 //  Copyright (c) 2012 NABZ Software. All rights reserved.
 //
 
+// GameCenterManager uses ARC, check for compatibility before building
+#if !__has_feature(objc_arc)
+#error GameCenterManager uses Objective-C ARC. Compile these files with ARC enabled. Add the -fobjc-arc compiler flag to enable ARC for only these files.
+#endif
+
 #import "GameCenterManager.h"
 
 //------------------------------------------------------------------------------------------------------------//
