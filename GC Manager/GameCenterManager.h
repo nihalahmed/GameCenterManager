@@ -63,6 +63,20 @@ enum {
 /// GameCenterManager error codes that may be passed in a completion handler's error parameter
 typedef NSInteger GCMErrorCode;
 
+/// GameCenter availability status. Use these statuss to identify the state of GameCenter's availability.
+typedef enum GameCenterAvailability {
+	/// GameKit Framework not available on this device
+	GameCenterAvailabilityNotAvailable,
+	/// Cannot connect to the internet
+	GameCenterAvailabilityNoInternet,
+	/// Player is not yet signed into GameCenter
+	GameCenterAvailabilityNoPlayer,
+	/// Player is not signed into GameCenter, has declined to sign into GameCenter, or GameKit had an issue validating this game / app
+	GameCenterAvailabilityPlayerNotAuthenticated,
+	/// Player is signed into GameCenter
+	GameCenterAvailabilityPlayerAuthenticated
+} GameCenterAvailability;
+
 
 
 
@@ -105,10 +119,10 @@ typedef NSInteger GCMErrorCode;
 
 /** Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later. 
  
- @param score The int value of the score to be submitted to Game Center. This score should not be formatted, instead it should be a plain int. For example, if you wanted to submit a score of 45.28 meters then you would submit it as an integer of 4528. To format your scores, you must set the Score Formatter for your leaderboard in iTunes Connect.
+ @param score The long long value of the score to be submitted to Game Center. This score should not be formatted, instead it should be a plain long long (int). For example, if you wanted to submit a score of 45.28 meters then you would submit it as an integer of 4528. To format your scores, you must set the Score Formatter for your leaderboard in iTunes Connect.
  @param identifier The Leaderboard ID set through iTunes Connect. This is different from the name of the leaderboard, and it is not shown to the user. 
  @param order The score sort order that you set in iTunes Connect - either high to low or low to high. This is used to determine if the user has a new highscore before submitting. */
-- (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order __attribute__((nonnull));
+- (void)saveAndReportScore:(long long)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order __attribute__((nonnull));
 
 /** Saves achievement locally and reports it to Game Center. If error occurs, achievement is saved to be submitted later.
  
@@ -133,7 +147,7 @@ typedef NSInteger GCMErrorCode;
 
 
 /// Returns local player's high score for specified leaderboard.
-- (int)highScoreForLeaderboard:(NSString *)identifier;
+- (long long)highScoreForLeaderboard:(NSString *)identifier;
 
 /// Returns local player's high scores for multiple leaderboards.
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers;
@@ -161,8 +175,11 @@ typedef NSInteger GCMErrorCode;
 /// Presents the GameCenter Achievements ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
 - (void)presentAchievementsOnViewController:(UIViewController *)viewController;
 
-/// Presents the GameCenter Leaderboards ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
-- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController;
+/// DEPRECATED. Use presentLeaderboardsOnViewController: withLeaderboard: instead.
+- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController __deprecated;
+
+/// Presents the GameCenter Leaderboards ViewController with Leaderboard Identifier over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
+- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController withLeaderboard:(NSString *)leaderboard;
 
 /// Presents the GameCenter Challenges ViewController over the specified ViewController. Dismissal and delegation is handled by GameCenterManager.
 - (void)presentChallengesOnViewController:(UIViewController *)viewController;
@@ -208,8 +225,11 @@ typedef NSInteger GCMErrorCode;
 /// Returns YES if an active internet connection is available.
 - (BOOL)isInternetAvailable;
 
+/// DEPRECATED. Use checkGameCenterAvailability: ignorePreviousStatus: instead.
+- (BOOL)checkGameCenterAvailability __deprecated;
+
 /// Check if Game Center is supported
-- (BOOL)checkGameCenterAvailability;
+- (BOOL)checkGameCenterAvailability:(BOOL)ignorePreviousStatus;
 
 /// Use this property to check if Game Center is available and supported on the current device.
 @property (nonatomic, assign) BOOL isGameCenterAvailable;
@@ -255,6 +275,8 @@ typedef NSInteger GCMErrorCode;
 - (void)gameCenterManager:(GameCenterManager *)manager didSaveAchievement:(GKAchievement *)achievement;
 /// Sent to the delegate when a score is saved locally
 - (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score;
+/// Sent to the delegate when the Game Center is synced
+- (void)gameCenterManager:(GameCenterManager *)manager gameCenterSynced:(BOOL)synced;
 
 
 //----------------------------------//

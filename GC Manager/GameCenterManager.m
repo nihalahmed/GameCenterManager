@@ -12,6 +12,8 @@
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark GameCenter Manager
 
+#define IS_IOS_8_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+
 @interface GameCenterManager () {
     NSMutableArray *GCMLeaderboards;
     
@@ -23,6 +25,7 @@
 @property (nonatomic, assign, readwrite) BOOL shouldCryptData;
 @property (nonatomic, strong, readwrite) NSString *cryptKey;
 @property (nonatomic, strong, readwrite) NSData *cryptKeyData;
+@property (nonatomic, assign, readwrite) GameCenterAvailability previousGameCenterAvailability;
 
 @end
 
@@ -43,7 +46,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        BOOL gameCenterAvailable = [self checkGameCenterAvailability];
+        BOOL gameCenterAvailable = [self checkGameCenterAvailability:YES];
         
         if (gameCenterAvailable) {
             // Set GameCenter as available
@@ -119,6 +122,12 @@
 }
 
 - (BOOL)checkGameCenterAvailability {
+    // left here for backwards compatibility. Because previous versions of GameCenterManager were built with without the ignorePreviousState feature, we will preserve the old
+    NSLog(@"WARNING: Calling a deprecated GameCenterManager method that may become obsolete in future versions. Use checkGameCenterAvailability: ignorePreviousStatus: instead. %s", __PRETTY_FUNCTION__);
+    return [self checkGameCenterAvailability:YES];
+}
+
+- (BOOL)checkGameCenterAvailability:(BOOL)ignorePreviousStatus {
 #if TARGET_OS_IPHONE
     // First, check if the the GameKit Framework exists on the device. Return NO if it does not.
     BOOL localPlayerClassAvailable = (NSClassFromString(@"GKLocalPlayer")) != nil;
@@ -131,12 +140,15 @@
 #endif
     
     if (!isGameCenterAPIAvailable) {
-        NSDictionary *errorDictionary = @{@"message": @"GameKit Framework not available on this device. GameKit is only available on devices with iOS 4.1 or higher. Some devices running iOS 4.1 may not have GameCenter enabled.", @"title": @"GameCenter Unavailable"};
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
-                [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
-        });
+        if ([self previousGameCenterAvailability] != GameCenterAvailabilityNotAvailable) {
+            [self setPreviousGameCenterAvailability:GameCenterAvailabilityNotAvailable];
+            NSDictionary *errorDictionary = @{@"message": @"GameKit Framework not available on this device. GameKit is only available on devices with iOS 4.1 or     higher. Some devices running iOS 4.1 may not have GameCenter enabled.", @"title": @"GameCenter Unavailable"};
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
+                    [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+            });
+        }
         
         return NO;
         
@@ -144,12 +156,15 @@
         // The GameKit Framework is available. Now check if an internet connection can be established
         BOOL internetAvailable = [self isInternetAvailable];
         if (!internetAvailable) {
-            NSDictionary *errorDictionary = @{@"message": @"Cannot connect to the internet. Connect to the internet to establish a connection with GameCenter. Achievements and scores will still be saved locally and then uploaded later.", @"title": @"Internet Unavailable"};
+            if ([self previousGameCenterAvailability] != GameCenterAvailabilityNoInternet) {
+                [self setPreviousGameCenterAvailability:GameCenterAvailabilityNoInternet];
+                NSDictionary *errorDictionary = @{@"message": @"Cannot connect to the internet. Connect to the internet to establish a connection with GameCenter. Achievements and scores will still be saved locally and then uploaded later.", @"title": @"Internet Unavailable"};
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
-                    [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
-            });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
+                        [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+                });
+            }
             
             return NO;
             
@@ -159,62 +174,74 @@
 #if TARGET_OS_IPHONE
             localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
                 if (viewController != nil) {
-                    NSDictionary *errorDictionary = @{@"message": @"Player is not yet signed into GameCenter. Please prompt the player using the authenticateUser delegate method.", @"title": @"No Player"};
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
-                            [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+                    if ([self previousGameCenterAvailability] != GameCenterAvailabilityNoPlayer) {
+                        [self setPreviousGameCenterAvailability:GameCenterAvailabilityNoPlayer];
+                        NSDictionary *errorDictionary = @{@"message": @"Player is not yet signed into GameCenter. Please prompt the player using the authenticateUser delegate method.", @"title": @"No Player"};
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
+                                [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
                         
-                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
-                            [[self delegate] gameCenterManager:self authenticateUser:viewController];
-                        } else {
-                            NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
-                        }
-                    });
+                            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
+                                [[self delegate] gameCenterManager:self authenticateUser:viewController];
+                            } else {
+                                NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
+                            }
+                        });
+                    }
                 } else if (!error) {
                     // Authentication handler completed successfully. Re-check availability
-                    [self checkGameCenterAvailability];
+                    [self checkGameCenterAvailability:ignorePreviousStatus];
                 }
             };
 #else
             localPlayer.authenticateHandler = ^(NSViewController *viewController, NSError *error) {
                 if (viewController != nil) {
-                    NSDictionary *errorDictionary = @{@"message": @"Player is not yet signed into GameCenter. Please prompt the player using the authenticateUser delegate method.", @"title": @"No Player"};
+                    if ([self previousGameCenterAvailability] != GameCenterAvailabilityNoPlayer) {
+                        [self setPreviousGameCenterAvailability:GameCenterAvailabilityNoPlayer];
+                        NSDictionary *errorDictionary = @{@"message": @"Player is not yet signed into GameCenter. Please prompt the player using the authenticateUser delegate method.", @"title": @"No Player"};
                     
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
-                            [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
-                        
-                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
-                            [[self delegate] gameCenterManager:self authenticateUser:viewController];
-                        } else {
-                            NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
-                        }
-                    });
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
+                                [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+                            
+                            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
+                                [[self delegate] gameCenterManager:self authenticateUser:viewController];
+                            } else {
+                                NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
+                            }
+                        });
+                    }
                 } else if (!error) {
                     // Authentication handler completed successfully. Re-check availability
-                    [self checkGameCenterAvailability];
+                    [self checkGameCenterAvailability:ignorePreviousStatus];
                 }
             };
 #endif
             
             if (![[GKLocalPlayer localPlayer] isAuthenticated]) {
-                NSDictionary *errorDictionary = @{@"message": @"Player is not signed into GameCenter, has declined to sign into GameCenter, or GameKit had an issue validating this game / app.", @"title": @"Player not Authenticated"};
+                if ([self previousGameCenterAvailability] != GameCenterAvailabilityPlayerNotAuthenticated) {
+                    [self setPreviousGameCenterAvailability:GameCenterAvailabilityPlayerNotAuthenticated];
+                    NSDictionary *errorDictionary = @{@"message": @"Player is not signed into GameCenter, has declined to sign into GameCenter, or GameKit had an issue validating this game / app.", @"title": @"Player not Authenticated"};
                 
-                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
-                    [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+                    if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
+                        [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+                }
                 
                 return NO;
                 
             } else {
-                // The current player is logged into GameCenter
-                NSDictionary *successDictionary = [NSDictionary dictionaryWithObject:@"GameCenter Available" forKey:@"status"];
+                if ([self previousGameCenterAvailability] != GameCenterAvailabilityPlayerAuthenticated) {
+                    [self setPreviousGameCenterAvailability:GameCenterAvailabilityPlayerAuthenticated];
+                    // The current player is logged into GameCenter
+                    NSDictionary *successDictionary = [NSDictionary dictionaryWithObject:@"GameCenter Available" forKey:@"status"];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
+                            [[self delegate] gameCenterManager:self availabilityChanged:successDictionary];
+                    });
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
-                        [[self delegate] gameCenterManager:self availabilityChanged:successDictionary];
-                });
-                
-                self.isGameCenterAvailable = YES;
+                    self.isGameCenterAvailable = YES;
+                }
                 
                 return YES;
             }
@@ -228,7 +255,7 @@
     NetworkStatus internetStatus = [reachability currentReachabilityStatus];
     
     if (internetStatus == NotReachable) {
-        NSLog(@"Not Reachable");
+        NSLog(@"Internet unavailable");
         NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"Internet unavailable - could not connect to the internet. Connect to WiFi or a Cellular Network to upload data to GameCenter."] code:GCMErrorInternetNotAvailable userInfo:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -263,7 +290,7 @@
     dispatch_async(syncGameCenterOnBackgroundThread, ^{
         
         // Check if GameCenter is available
-        if ([self checkGameCenterAvailability] == YES) {
+        if ([self checkGameCenterAvailability:NO] == YES) {
             // Check if Leaderboard Scores are synced
             if (![[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]]) {
                 if (GCMLeaderboards == nil) {
@@ -282,9 +309,14 @@
                 }
                 
                 
-                if (GCMLeaderboards.count > 0) {
-                    GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
-                    
+				if (GCMLeaderboards.count > 0) {
+
+                    GKLeaderboard *leaderboardRequest;
+                    if(IS_IOS_8_OR_LATER) {
+                        leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[GKLocalPlayer localPlayer]]];
+                    } else {
+                        leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
+                    }
                     [leaderboardRequest setIdentifier:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] identifier]];
                     
                     [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
@@ -304,10 +336,10 @@
                                 NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
                                 
                                 if (savedHighScore != nil) {
-                                    savedHighScoreValue = [savedHighScore intValue];
+                                    savedHighScoreValue = [savedHighScore longLongValue];
                                 }
                                 
-                                [playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
+                                [playerDict setObject:[NSNumber numberWithLongLong:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
                                 [plistDict setObject:playerDict forKey:[self localPlayerId]];
                                 NSData *saveData;
                                 if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
@@ -372,7 +404,16 @@
                         });
                     }
                 }];
+            } else if( [[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[self localPlayerId]]] == YES &&
+                      [[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]] == YES ) {
+                // Game Center Synced
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterSynced:)]) {
+                        [[self delegate] gameCenterManager:self gameCenterSynced:YES];
+                    }
+                });
             }
+            
         } else {
             NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"GameCenter unavailable."] code:GCMErrorNotAvailable userInfo:nil];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -387,7 +428,7 @@
     backgroundProcess = UIBackgroundTaskInvalid;
 #else
     // Check if GameCenter is available
-    if ([self checkGameCenterAvailability] == YES) {
+    if ([self checkGameCenterAvailability:NO] == YES) {
         // Check if Leaderboard Scores are synced
         if (![[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]]) {
             if (GCMLeaderboards == nil) {
@@ -406,8 +447,13 @@
             }
             
             if (GCMLeaderboards.count > 0) {
-                GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
-                [leaderboardRequest setCategory:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] category]];
+#ifdef __MAC_10_10
+				GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[GKLocalPlayer localPlayer]]];
+				[leaderboardRequest setIdentifier:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] identifier]];
+#else
+				GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
+				[leaderboardRequest setCategory:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] category]];
+#endif
                 [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if (error == nil) {
                         if (scores.count > 0) {
@@ -421,14 +467,22 @@
                                 playerDict = [NSMutableDictionary dictionary];
                             }
                             
-                            float savedHighScoreValue = 0;
-                            NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.category];
-                            
+							float savedHighScoreValue = 0;
+#ifdef __MAC_10_10
+							NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
+#else
+							NSNumber *savedHighScore = [playerDict objectForKey:leaderboardRequest.localPlayerScore.category];
+#endif
+							
                             if (savedHighScore != nil) {
-                                savedHighScoreValue = [savedHighScore intValue];
+                                savedHighScoreValue = [savedHighScore longLongValue];
                             }
-                            
-                            [playerDict setObject:[NSNumber numberWithInt:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.category];
+							
+#ifdef __MAC_10_10
+							[playerDict setObject:[NSNumber numberWithLongLong:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
+#else
+							[playerDict setObject:[NSNumber numberWithLongLong:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.category];
+#endif
                             [plistDict setObject:playerDict forKey:[self localPlayerId]];
                             
                             NSData *saveData;
@@ -517,6 +571,7 @@
         if (savedScores.count > 0) {
             gkScore = [NSKeyedUnarchiver unarchiveObjectWithData:[savedScores objectAtIndex:0]];
             
+            
             [savedScores removeObjectAtIndex:0];
             [plistDict setObject:savedScores forKey:@"SavedScores"];
             
@@ -527,7 +582,7 @@
         }
     }
     
-    if (gkScore != nil) {
+    if (gkScore != nil && gkScore.value != 0) {
         [GKScore reportScores:@[gkScore] withCompletionHandler:^(NSError *error) {
             if (error == nil) {
                 [self reportSavedScoresAndAchievements];
@@ -586,7 +641,7 @@
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark - Score and Achievement Reporting
 
-- (void)saveAndReportScore:(int)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order  {
+- (void)saveAndReportScore:(long long)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order  {
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
@@ -596,9 +651,10 @@
     if (playerDict == nil) playerDict = [NSMutableDictionary dictionary];
     
     NSNumber *savedHighScore = [playerDict objectForKey:identifier];
-    if (savedHighScore == nil) savedHighScore = [NSNumber numberWithInt:0];
+    if (savedHighScore == nil)
+        savedHighScore = [NSNumber numberWithLongLong:0];
     
-    int savedHighScoreValue = [savedHighScore intValue];
+    long long savedHighScoreValue = [savedHighScore longLongValue];
     
     // Determine if the new score is better than the old score
     BOOL isScoreBetter = NO;
@@ -613,7 +669,7 @@
     }
     
     if (isScoreBetter) {
-        [playerDict setObject:[NSNumber numberWithInt:score] forKey:identifier];
+        [playerDict setObject:[NSNumber numberWithLongLong:score] forKey:identifier];
         [plistDict setObject:playerDict forKey:[self localPlayerId]];
         NSData *saveData;
         if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
@@ -621,13 +677,17 @@
         [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
     }
     
-    if ([self checkGameCenterAvailability] == YES) {
+    if ([self checkGameCenterAvailability:NO] == YES) {
 #if TARGET_OS_IPHONE
         GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
 #else
-        GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+#ifdef __MAC_10_10
+		GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
+#else
+		GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
 #endif
-        gkScore.value = score;
+#endif
+        [gkScore setValue:score];
         
         [GKScore reportScores:@[gkScore] withCompletionHandler:^(NSError *error) {
             NSDictionary *dict = nil;
@@ -653,8 +713,13 @@
 #if TARGET_OS_IPHONE
         GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
 #else
-        GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
+#ifdef __MAC_10_10
+		GKScore *gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
+#else
+		GKScore *gkScore = [[GKScore alloc] initWithCategory:identifier];
 #endif
+#endif
+        [gkScore setValue:score];
         [self saveScoreToReportLater:gkScore];
     }
 }
@@ -683,7 +748,7 @@
         [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
     }
     
-    if ([self checkGameCenterAvailability] == YES) {
+    if ([self checkGameCenterAvailability:NO] == YES) {
         GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
         achievement.percentComplete = percentComplete;
         if (displayNotification == YES) achievement.showsCompletionBanner = YES;
@@ -719,6 +784,9 @@
 }
 
 - (void)saveScoreToReportLater:(GKScore *)score {
+    if(score.value == 0) {
+        return;
+    }
     NSData *scoreData = [NSKeyedArchiver archivedDataWithRootObject:score];
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
@@ -740,13 +808,14 @@
     [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:savedScore:)]) {
+        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:didSaveScore:)]) {
+            [[self delegate] gameCenterManager:self didSaveScore:score];
+        } else if ([[self delegate] respondsToSelector:@selector(gameCenterManager:savedScore:)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             [[self delegate] gameCenterManager:self savedScore:score];
 #pragma clang diagnostic pop
-        } else if ([[self delegate] respondsToSelector:@selector(gameCenterManager:didSaveScore:)])
-            [[self delegate] gameCenterManager:self didSaveScore:score];
+        }
     });
 }
 
@@ -816,7 +885,7 @@
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark - Score, Achievement, and Challenge Retrieval
 
-- (int)highScoreForLeaderboard:(NSString *)identifier {
+- (long long)highScoreForLeaderboard:(NSString *)identifier {
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
@@ -826,7 +895,7 @@
     if (playerDict != nil) {
         NSNumber *savedHighScore = [playerDict objectForKey:identifier];
         if (savedHighScore != nil) {
-            return [savedHighScore intValue];
+            return [savedHighScore longLongValue];
         } else {
             return 0;
         }
@@ -848,12 +917,12 @@
             NSNumber *savedHighScore = [playerDict objectForKey:identifier];
             
             if (savedHighScore != nil) {
-                [highScores setObject:[NSNumber numberWithInt:[savedHighScore intValue]] forKey:identifier];
+                [highScores setObject:[NSNumber numberWithLongLong:[savedHighScore longLongValue]] forKey:identifier];
                 continue;
             }
         }
         
-        [highScores setObject:[NSNumber numberWithInt:0] forKey:identifier];
+        [highScores setObject:[NSNumber numberWithLongLong:0] forKey:identifier];
     }
     
     NSDictionary *highScoreDict = [NSDictionary dictionaryWithDictionary:highScores];
@@ -905,7 +974,7 @@
 }
 
 - (void)getChallengesWithCompletion:(void (^)(NSArray *challenges, NSError *error))handler {
-    if ([self checkGameCenterAvailability] == YES) {
+    if ([self checkGameCenterAvailability:NO] == YES) {
         BOOL isGameCenterChallengeAPIAvailable = (NSClassFromString(@"GKChallenge")) != nil;
         
         if (isGameCenterChallengeAPIAvailable == YES) {
@@ -945,9 +1014,22 @@
     [viewController presentViewController:achievementsViewController animated:YES completion:nil];
 }
 
+// left here for backwards compatibility
 - (void)presentLeaderboardsOnViewController:(UIViewController *)viewController {
+    NSLog(@"WARNING: Calling a deprecated GameCenterManager method that may become obsolete in future versions. Use presentLeaderboardsOnViewController: withLeaderboard: instead. %s", __PRETTY_FUNCTION__);
+    [self presentLeaderboardsOnViewController:viewController withLeaderboard:nil];
+}
+
+- (void)presentLeaderboardsOnViewController:(UIViewController *)viewController withLeaderboard:(NSString *)leaderboard {
     GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
     leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+    /*
+     Passing nil to leaderboardViewController.leaderboardIdentifier works fine,
+     but to make sure futur updates will not brake, we'll check it first
+     */
+    if (leaderboard != nil) {
+        leaderboardViewController.leaderboardIdentifier = leaderboard;
+    }
     leaderboardViewController.gameCenterDelegate = self;
     [viewController presentViewController:leaderboardViewController animated:YES completion:nil];
 }
@@ -958,11 +1040,15 @@
     challengeViewController.gameCenterDelegate = self;
     [viewController presentViewController:challengeViewController animated:YES completion:nil];
 }
+#endif
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
-    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
-}
+#if TARGET_OS_IPHONE
+	[gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+#else
+	[gameCenterViewController dismissViewController:gameCenterViewController];
 #endif
+}
 
 //------------------------------------------------------------------------------------------------------------//
 //------- Resetting Data -------------------------------------------------------------------------------------//

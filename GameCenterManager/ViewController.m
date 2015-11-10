@@ -34,7 +34,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
 
-    BOOL available = [[GameCenterManager sharedManager] checkGameCenterAvailability];
+    BOOL available = [[GameCenterManager sharedManager] checkGameCenterAvailability:YES];
     if (available) {
         [self.navigationController.navigationBar setValue:@"GameCenter Available" forKeyPath:@"prompt"];
     } else {
@@ -75,7 +75,7 @@
 }
 
 - (IBAction)showLeaderboard {
-    [[GameCenterManager sharedManager] presentLeaderboardsOnViewController:self];
+    [[GameCenterManager sharedManager] presentLeaderboardsOnViewController:self withLeaderboard:@"grp.PlayerScores"];
     actionBarLabel.title = [NSString stringWithFormat:@"Displayed GameCenter Leaderboards."];
 }
 
