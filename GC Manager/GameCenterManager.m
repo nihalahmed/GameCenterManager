@@ -87,6 +87,12 @@
         [self setShouldCryptData:NO];
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
+        if(![fileManager fileExistsAtPath:kApplicationAppSupportDirectory]) {
+            NSError *error = nil;
+            BOOL isDirectoryCreated = [fileManager createDirectoryAtPath:kApplicationAppSupportDirectory withIntermediateDirectories:NO attributes:nil error:&error];
+            if(!isDirectoryCreated) NSLog(@"Failed to created Application Support Folder: %@", error);
+        }
+        
         if (![fileManager fileExistsAtPath:kGameCenterManagerDataPath]) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             NSData *saveData = [NSKeyedArchiver archivedDataWithRootObject:dict];
@@ -111,6 +117,12 @@
         self.cryptKeyData = [cryptionKey dataUsingEncoding:NSUTF8StringEncoding];
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
+        if(![fileManager fileExistsAtPath:kApplicationAppSupportDirectory]) {
+            NSError *error = nil;
+            BOOL isDirectoryCreated = [fileManager createDirectoryAtPath:kApplicationAppSupportDirectory withIntermediateDirectories:NO attributes:nil error:&error];
+            if(!isDirectoryCreated) NSLog(@"Failed to created Application Support Folder: %@", error);
+        }
+        
         if (![fileManager fileExistsAtPath:kGameCenterManagerDataPath]) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             NSData *saveData = [[NSKeyedArchiver archivedDataWithRootObject:dict] encryptedWithKey:self.cryptKeyData];
@@ -550,6 +562,15 @@
                     });
                 }
             }];
+        } else if( [[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[self localPlayerId]]] == YES &&
+                 [[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]] == YES ) {
+            // Game Center Synced
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterSynced:)]) {
+                    [[self delegate] gameCenterManager:self gameCenterSynced:YES];
+                }
+            });
+        } else {
         }
     } else {
         NSError *error = [NSError errorWithDomain:[NSString stringWithFormat:@"GameCenter unavailable."] code:GCMErrorNotAvailable userInfo:nil];

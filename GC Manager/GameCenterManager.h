@@ -16,9 +16,15 @@
     #endif
 #endif
 
-#define LIBRARY_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
-#define kGameCenterManagerDataFile @"GameCenterManager.plist"
-#define kGameCenterManagerDataPath [LIBRARY_FOLDER stringByAppendingPathComponent:kGameCenterManagerDataFile]
+#if TARGET_OS_IPHONE
+    #define kApplicationAppSupportDirectory [NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
+    #define kGameCenterManagerDataFile @"GameCenterManager.plist"
+    #define kGameCenterManagerDataPath [kApplicationAppSupportDirectory stringByAppendingPathComponent:kGameCenterManagerDataFile]
+#else
+    #define kApplicationAppSupportDirectory [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+    #define kGameCenterManagerDataFile @"GameCenterManager.plist"
+    #define kGameCenterManagerDataPath [kApplicationAppSupportDirectory stringByAppendingPathComponent:kGameCenterManagerDataFile]
+#endif
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
