@@ -460,7 +460,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -527,8 +527,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GameCenterManager/GameCenterManager-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -536,8 +534,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -549,16 +545,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GameCenterManager/GameCenterManager-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -572,10 +564,6 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_ENTITLEMENTS = "GameCenterManager Mac/GameCenterManager Mac.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer: iRare Media (4N75L7CCKZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Mac Developer: iRare Media (4N75L7CCKZ)";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: iRare Media (4N75L7CCKZ)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -588,9 +576,8 @@
 				INFOPLIST_FILE = "GameCenterManager Mac/GameCenterManager Mac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamecentermanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "44e2c126-8374-4773-bac4-eb76cae11b1f";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "44e2c126-8374-4773-bac4-eb76cae11b1f";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
@@ -604,10 +591,6 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_ENTITLEMENTS = "GameCenterManager Mac/GameCenterManager Mac.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer: iRare Media (4N75L7CCKZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Mac Developer: iRare Media (4N75L7CCKZ)";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: iRare Media (4N75L7CCKZ)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -620,9 +603,8 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "GameCenterManager Mac/GameCenterManager Mac-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamecentermanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "44e2c126-8374-4773-bac4-eb76cae11b1f";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "44e2c126-8374-4773-bac4-eb76cae11b1f";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
