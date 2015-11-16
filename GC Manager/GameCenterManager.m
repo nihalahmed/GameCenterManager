@@ -53,17 +53,36 @@
     if (self) {
         BOOL gameCenterAvailable = [self checkGameCenterAvailability:YES];
         
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        [prefs synchronize];
+        
+        if([prefs objectForKey:@"scoresSynced"] == nil) {
+            NSLog(@"scoresSynced not setup");
+            [prefs setBool:NO forKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]];
+        } else {
+            NSLog(@"scoresSynced WAS setup");
+        }
+        
+        if([prefs objectForKey:@"achievementsSynced"] == nil) {
+            NSLog(@"achievementsSynced not setup");
+             [prefs setBool:NO forKey:[@"achievementsSynced" stringByAppendingString:[self localPlayerId]]];
+        } else {
+            NSLog(@"achievementsSynced WAS setup");
+        }
+        [prefs synchronize];
+        
         if (gameCenterAvailable) {
             // Set GameCenter as available
             [self setIsGameCenterAvailable:YES];
-            
+
             if (![[NSUserDefaults standardUserDefaults] boolForKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]]
                 || ![[NSUserDefaults standardUserDefaults] boolForKey:[@"achievementsSynced" stringByAppendingString:[self localPlayerId]]])
                 [self syncGameCenter];
             else
                 [self reportSavedScoresAndAchievements];
-        } else
+        } else {
             [self setIsGameCenterAvailable:NO];
+        }
     }
     
     return self;
@@ -251,7 +270,10 @@
                     [self setPreviousGameCenterAvailability:GameCenterAvailabilityPlayerAuthenticated];
                     // The current player is logged into GameCenter
                     NSDictionary *successDictionary = [NSDictionary dictionaryWithObject:@"GameCenter Available" forKey:@"status"];
-                    
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setBool:NO forKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]];
+                    [userDefaults setBool:NO forKey:[@"achievementsSynced" stringByAppendingString:[self localPlayerId]]];
+                    [userDefaults synchronize];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
                             [[self delegate] gameCenterManager:self availabilityChanged:successDictionary];
@@ -454,6 +476,7 @@
                         GCMLeaderboards = [[NSMutableArray alloc] initWithArray:leaderboards];
                         [self syncGameCenter];
                     } else {
+                        NSLog(@"%@",[error localizedDescription]);
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if ([[self delegate] respondsToSelector:@selector(gameCenterManager:error:)])
                                 [[self delegate] gameCenterManager:self error:error];
@@ -517,6 +540,7 @@
                         [self syncGameCenter];
                     } else {
                         dispatch_async(dispatch_get_main_queue(), ^{
+                            NSLog(@"%@",[error localizedDescription]);
                             if ([[self delegate] respondsToSelector:@selector(gameCenterManager:error:)])
                                 [[self delegate] gameCenterManager:self error:error];
                         });
@@ -556,6 +580,7 @@
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[@"achievementsSynced" stringByAppendingString:[self localPlayerId]]];
                     [self syncGameCenter];
                 } else {
+                    NSLog(@"%@",[error localizedDescription]);
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if ([[self delegate] respondsToSelector:@selector(gameCenterManager:error:)])
                             [[self delegate] gameCenterManager:self error:error];
