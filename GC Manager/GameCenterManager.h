@@ -21,10 +21,11 @@
     #define kGameCenterManagerDataFile @"GameCenterManager.plist"
     #define kGameCenterManagerDataPath [kApplicationAppSupportDirectory stringByAppendingPathComponent:kGameCenterManagerDataFile]
 #else
-    #define kApplicationAppSupportDirectory [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]]
+    #define kApplicationAppSupportDirectory [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]]
     #define kGameCenterManagerDataFile @"GameCenterManager.plist"
     #define kGameCenterManagerDataPath [kApplicationAppSupportDirectory stringByAppendingPathComponent:kGameCenterManagerDataFile]
 #endif
+
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
