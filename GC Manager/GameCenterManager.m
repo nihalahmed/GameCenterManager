@@ -35,7 +35,8 @@
 @end
 
 @implementation GameCenterManager
-@synthesize isGameCenterAvailable, delegate;
+
+#pragma mark - Object Lifecycle
 
 + (GameCenterManager *)sharedManager {
     static GameCenterManager *singleton;
@@ -48,7 +49,7 @@
     return singleton;
 }
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
         BOOL gameCenterAvailable = [self checkGameCenterAvailability:YES];
@@ -56,19 +57,20 @@
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         [prefs synchronize];
         
-        if([prefs objectForKey:@"scoresSynced"] == nil) {
+        if ([prefs objectForKey:@"scoresSynced"] == nil) {
             NSLog(@"scoresSynced not setup");
             [prefs setBool:NO forKey:[@"scoresSynced" stringByAppendingString:[self localPlayerId]]];
         } else {
             NSLog(@"scoresSynced WAS setup");
         }
         
-        if([prefs objectForKey:@"achievementsSynced"] == nil) {
+        if ([prefs objectForKey:@"achievementsSynced"] == nil) {
             NSLog(@"achievementsSynced not setup");
              [prefs setBool:NO forKey:[@"achievementsSynced" stringByAppendingString:[self localPlayerId]]];
         } else {
             NSLog(@"achievementsSynced WAS setup");
         }
+        
         [prefs synchronize];
         
         if (gameCenterAvailable) {
@@ -278,7 +280,7 @@
                         if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
                             [[self delegate] gameCenterManager:self availabilityChanged:successDictionary];
                     });
-                
+                    
                     self.isGameCenterAvailable = YES;
                 }
                 

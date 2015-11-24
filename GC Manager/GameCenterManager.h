@@ -38,56 +38,17 @@
 
 #import "Reachability.h"
 #import "NSDataAES256.h"
+#import "GCMConstants.h"
 
-
-
-
-/// Leaderboard sort order. Use this value when submitting new leaderboard scores. This value should match the value set in iTunes Connect for the speicifed leaderboard.
-typedef enum GameCenterSortOrder {
-    /// Scores are sorted highest to lowest. Higher scores are on the top of the leaderboard
-    GameCenterSortOrderHighToLow,
-    /// Scores are sorted lowest to highest. Lower scores are on the top of the leaderboard
-    GameCenterSortOrderLowToHigh
-} GameCenterSortOrder;
-
-enum {
-    /// An unknown error occurred
-    GCMErrorUnknown = 1,
-    /// GameCenterManager is unavailable, possibly for a variety of reasons
-    GCMErrorNotAvailable = 2,
-    /// The requested feature is unavailable on the current device or iOS version
-    GCMErrorFeatureNotAvailable = 3,
-    /// There is no active internet connection for the requested operation
-    GCMErrorInternetNotAvailable = 4,
-    /// The achievement data submitted was not valid because there were missing parameters
-    GCMErrorAchievementDataMissing = 5
-};
-/// GameCenterManager error codes that may be passed in a completion handler's error parameter
-typedef NSInteger GCMErrorCode;
-
-/// GameCenter availability status. Use these statuss to identify the state of GameCenter's availability.
-typedef enum GameCenterAvailability {
-	/// GameKit Framework not available on this device
-	GameCenterAvailabilityNotAvailable,
-	/// Cannot connect to the internet
-	GameCenterAvailabilityNoInternet,
-	/// Player is not yet signed into GameCenter
-	GameCenterAvailabilityNoPlayer,
-	/// Player is not signed into GameCenter, has declined to sign into GameCenter, or GameKit had an issue validating this game / app
-	GameCenterAvailabilityPlayerNotAuthenticated,
-	/// Player is signed into GameCenter
-	GameCenterAvailabilityPlayerAuthenticated
-} GameCenterAvailability;
-
-
-
+#if TARGET_OS_IPHONE
+// Multiplayer is currently only available for the iOS platform
+#import "GCMMultiplayer.h"
+#endif
 
 /// GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and keep track of high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc.
 @class GameCenterManager;
 @protocol GameCenterManagerDelegate;
 @interface GameCenterManager : NSObject <GKGameCenterControllerDelegate>
-
-
 
 
 /// Returns the shared instance of GameCenterManager.
@@ -97,6 +58,10 @@ typedef enum GameCenterAvailability {
 @property (nonatomic, weak) id <GameCenterManagerDelegate> delegate;
 
 
+#if TARGET_OS_IPHONE
+/// The multiplayer object used to facilitate and create peer-to-peer multiplayer sessions
+@property (nonatomic, strong) GCMMultiplayer *multiplayerObject;
+#endif
 
 
 /** DEPRECTAED. Use \p setupManagerAndSetShouldCryptWithKey: instead.
@@ -117,8 +82,6 @@ typedef enum GameCenterAvailability {
 - (void)syncGameCenter;
 
 
-
-
 /** Saves score locally and reports it to Game Center. If error occurs, score is saved to be submitted later. 
  
  @param score The long long value of the score to be submitted to Game Center. This score should not be formatted, instead it should be a plain long long (int). For example, if you wanted to submit a score of 45.28 meters then you would submit it as an integer of 4528. To format your scores, you must set the Score Formatter for your leaderboard in iTunes Connect.
@@ -134,8 +97,6 @@ typedef enum GameCenterAvailability {
 - (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete shouldDisplayNotification:(BOOL)displayNotification __attribute__((nonnull));
 
 
-
-
 /// Reports scores and achievements which could not be reported earlier.
 - (void)reportSavedScoresAndAchievements;
 
@@ -146,15 +107,11 @@ typedef enum GameCenterAvailability {
 - (void)saveAchievementToReportLater:(NSString *)identifier percentComplete:(double)percentComplete;
 
 
-
-
 /// Returns local player's high score for specified leaderboard.
 - (long long)highScoreForLeaderboard:(NSString *)identifier;
 
 /// Returns local player's high scores for multiple leaderboards.
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers;
-
-
 
 
 /// Returns local player's percent completed for specified achievement.
@@ -164,13 +121,9 @@ typedef enum GameCenterAvailability {
 - (NSDictionary *)progressForAchievements:(NSArray *)identifiers;
 
 
-
-
 /** Gets a list of challenges for the current player and game. If GameCenter is not available it will return nil and provide an error using the gameCenterManager:error: delegate method. Use the completion handler to get challenges.
  @param handler Completion handler with an NSArray containing challenges and an NSError. The NSError object will be nil if there is no error. */
 - (void)getChallengesWithCompletion:(void (^)(NSArray *challenges, NSError *error))handler __attribute__((nonnull));
-
-
 
 
 #if TARGET_OS_IPHONE
@@ -188,8 +141,6 @@ typedef enum GameCenterAvailability {
 #endif
 
 
-
-
 #if TARGET_OS_IPHONE
 /// Resets all of the local player's achievements and progress for the current game
 - (void)resetAchievementsWithCompletion:(void (^)(NSError *error))handler __attribute__((nonnull));
@@ -200,8 +151,6 @@ typedef enum GameCenterAvailability {
 /// DEPRECATED. Use resetAchievementsWithCompletion: instead.
 - (void)resetAchievements __deprecated __unavailable;
 #endif
-
-
 
 
 /// Returns currently authenticated local player ID. If no player is authenticated, "unknownPlayer" is returned.
@@ -222,8 +171,6 @@ typedef enum GameCenterAvailability {
 #endif
 
 
-
-
 /// Returns YES if an active internet connection is available.
 - (BOOL)isInternetAvailable;
 
@@ -241,8 +188,6 @@ typedef enum GameCenterAvailability {
 
 /// @b Readonly. The key used to encrypt and decrypt locally saved scores and achievements. To set the key, setup GameCenterManager using the \p setupManagerAndSetShouldCryptWithKey: method
 @property (nonatomic, strong, readonly) NSString *cryptKey;
-
-
 
 
 @end
