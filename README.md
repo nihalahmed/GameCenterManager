@@ -1,17 +1,16 @@
-<img width=725 src="https://raw.github.com/nihalahmed/GameCenterManager/master/Images/GameBanner.png"/>
+<img width=100% src="https://raw.github.com/nihalahmed/GameCenterManager/master/Images/GameBanner.png"/>
 
-GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and track high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. In future updates, GameCenter Manager will make it easy to setup and run live Game Center Multiplayer matches.
+GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and track high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. On iOS (and soon on other platforms) GameCenter Manager makes it easy to setup and run live peer-to-peer Game Center Multiplayer matches.
 
 If you like the project, please [star it](https://github.com/nihalahmed/iCloudDocumentSync) on GitHub! Watch the project on GitHub for updates. If you use GameCenter Manager in your app, send an email to contact@iraremedia.com or let us know on Twitter @iRareMedia.
 
 # Project Features
 GameCenter Manager is a great way to use Game Center in your iOS or OS X app. Below are a few key project features and highlights.
-* Sync, Submit, Save, Retrieve, and Track any Game Center leaderboards, achievements, or challenges in only one line of code.  
+* Sync, submit, save, retrieve, and track any Game Center leaderboards, achievements, or challenges in only one line of code.  
+* Setup and manage peer-to-peer multiplayer Game Center matches
 * Just drag and drop the files into your project - no complicated setup  
 * Useful delegate methods and properties let you access and manage advanced Game Center features
-* iOS / OS X Sample-apps illustrate how easy it is to use GameCenter Manager
-* Frequent updates to the project based on user issues and requests  
-* Easily contribute to the project
+* iOS / OS X sample apps illustrate how easy it is to use GameCenter Manager
 
 # Project Information
 Learn more about the project requirements, licensing, and contributions.
@@ -22,6 +21,23 @@ Learn more about the project requirements, licensing, and contributions.
 * Requires Xcode 5.0.1 for use in any iOS Project  
 * Uses Apple LLVM compiler 5.0  
 
+### Requirements
+- Requires iOS 7.0+ or OS X 10.9+. The sample project is optimized for iOS 8 and OS X 10.10.
+- Requires Automatic Reference Counting (ARC).
+- Optimized for ARM64 Architecture
+
+Requires Xcode 6 for use in any iOS or OS X project. Requires a minimum of iOS 7.0 or OS X 10.9 as the deployment target. 
+
+| Current Build Target 	| Earliest Supported Build Target 	| Earliest Compatible Build Target 	|
+|:--------------------:	|:-------------------------------:	|:--------------------------------:	|
+|       iOS 9.0        	|            iOS 7.0             	|             iOS 7.0              	|
+|       OS X 10.11        	|            OS X 10.9             	|             OS X 10.9             	|
+|     Xcode 7.1      	|          Xcode 6.1.1            	|           Xcode 6.0            	|
+|      LLVM 6.1        	|             LLVM 6.1            	|             LLVM 5.0             	|
+
+> REQUIREMENTS NOTE  
+*Supported* means that the library has been tested with this version. *Compatible* means that the library should work on this OS version (i.e. it doesn't rely on any unavailable SDK features) but is no longer being tested for compatibility and may require tweaking or bug fixes to run correctly.
+
 ## License 
 You are free to make changes and use this in either personal or commercial projects. Attribution is not required, but is appreciated. We have spent a lot of time, energy, and resources working on this project - so a little *Thanks!* (or something to that affect) would be much appreciated. If you use GameCenter Manager in your app, send an email to contact@iraremedia.com or let us know on Twitter @iRareMedia. See the [full GameCenter Manager license here](https://github.com/nihalahmed/GameCenterManager/blob/master/License.md).
 
@@ -31,7 +47,7 @@ Any contribution is more than welcome! You can contribute through pull requests 
 ## Sample App
 GameCenter Manager's demo app makes it easier to test Game Center integration with GameCenter Manager on both Mac and iOS. It also lays out how to use the `GameCenterManager` class. We recommend that you leave the Bundle ID provided with the Demo App as-is. This Bundle ID is already linked to a Game Center game in iTunes Connect with scores and achievements. You may, however, substitute your own Bundle ID and entitlements file.
 
-<img width=750 src="https://raw.github.com/nihalahmed/GameCenterManager/master/Images/Interface.png"/>
+<img width=100% src="https://raw.github.com/nihalahmed/GameCenterManager/master/Images/Interface.png"/>
 
 # Documentation
 All methods, properties, types, and delegate methods available on the GameCenterManager class are documented below. If you're using [Xcode 5](https://developer.apple.com/technologies/tools/whats-new.html) with GameCenter Manager, documentation is available directly within Xcode (just Option-Click any method for Quick Help).
