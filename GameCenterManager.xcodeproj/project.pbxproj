@@ -25,10 +25,13 @@
 		994E294C17838BF300EAACD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 994E294A17838BF300EAACD2 /* InfoPlist.strings */; };
 		994E294E17838BF300EAACD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E294D17838BF300EAACD2 /* main.m */; };
 		994E295217838BF300EAACD2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 994E295017838BF300EAACD2 /* Credits.rtf */; };
-		994E295D17838C1300EAACD2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994E295C17838C1300EAACD2 /* Cocoa.framework */; };
-		994E296117838C4100EAACD2 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994E296017838C4100EAACD2 /* GameKit.framework */; };
-		994E296317838C4F00EAACD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994E296217838C4F00EAACD2 /* Foundation.framework */; };
-		994E296517838C5A00EAACD2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994E296417838C5A00EAACD2 /* SystemConfiguration.framework */; };
+		999824371C1183DF00B2B1DD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 999824361C1183DF00B2B1DD /* SystemConfiguration.framework */; };
+		999824391C11841B00B2B1DD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 999824381C11841B00B2B1DD /* Foundation.framework */; };
+		9998243B1C11842100B2B1DD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9998243A1C11842100B2B1DD /* Cocoa.framework */; };
+		9998243D1C11842900B2B1DD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9998243C1C11842900B2B1DD /* GameKit.framework */; };
+		9998243F1C11845700B2B1DD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9998243E1C11845700B2B1DD /* AppKit.framework */; };
+		999824411C11846300B2B1DD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 999824401C11846300B2B1DD /* CoreData.framework */; };
+		999824431C11847700B2B1DD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 999824421C11847700B2B1DD /* CoreData.framework */; };
 		99B16C18172D46180091618D /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C16172D46180091618D /* Storyboard_iPhone.storyboard */; };
 		99B16C1E172D70AB0091618D /* License.md in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C1C172D70AB0091618D /* License.md */; };
 		99B16C1F172D70AB0091618D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 99B16C1D172D70AB0091618D /* README.md */; };
@@ -62,18 +65,18 @@
 		993EFA1A1847C54A0061C758 /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Changelog.md; sourceTree = "<group>"; };
 		994B764C17EE282F008DE309 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		994E294017838BF300EAACD2 /* GameCenterManager Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GameCenterManager Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		994E294417838BF300EAACD2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		994E294517838BF300EAACD2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		994E294617838BF300EAACD2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		994E294917838BF300EAACD2 /* GameCenterManager Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GameCenterManager Mac-Info.plist"; sourceTree = "<group>"; };
 		994E294B17838BF300EAACD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		994E294D17838BF300EAACD2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		994E294F17838BF300EAACD2 /* GameCenterManager Mac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GameCenterManager Mac-Prefix.pch"; sourceTree = "<group>"; };
 		994E295117838BF300EAACD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		994E295C17838C1300EAACD2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		994E296017838C4100EAACD2 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
-		994E296217838C4F00EAACD2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		994E296417838C5A00EAACD2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		999824361C1183DF00B2B1DD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		999824381C11841B00B2B1DD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		9998243A1C11842100B2B1DD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		9998243C1C11842900B2B1DD /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
+		9998243E1C11845700B2B1DD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
+		999824401C11846300B2B1DD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		999824421C11847700B2B1DD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		99B16C17172D46180091618D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
 		99B16C1C172D70AB0091618D /* License.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.md; sourceTree = "<group>"; };
 		99B16C1D172D70AB0091618D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				999824431C11847700B2B1DD /* CoreData.framework in Frameworks */,
 				65969A0B1515748900724EBE /* SystemConfiguration.framework in Frameworks */,
 				65969A06151572D800724EBE /* GameKit.framework in Frameworks */,
 				659699DB1515718800724EBE /* UIKit.framework in Frameworks */,
@@ -111,10 +115,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				994E296517838C5A00EAACD2 /* SystemConfiguration.framework in Frameworks */,
-				994E296317838C4F00EAACD2 /* Foundation.framework in Frameworks */,
-				994E296117838C4100EAACD2 /* GameKit.framework in Frameworks */,
-				994E295D17838C1300EAACD2 /* Cocoa.framework in Frameworks */,
+				999824411C11846300B2B1DD /* CoreData.framework in Frameworks */,
+				9998243F1C11845700B2B1DD /* AppKit.framework in Frameworks */,
+				9998243D1C11842900B2B1DD /* GameKit.framework in Frameworks */,
+				9998243B1C11842100B2B1DD /* Cocoa.framework in Frameworks */,
+				999824391C11841B00B2B1DD /* Foundation.framework in Frameworks */,
+				999824371C1183DF00B2B1DD /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +157,6 @@
 			children = (
 				994E295F17838C2D00EAACD2 /* OS X */,
 				994E295E17838C1900EAACD2 /* iOS */,
-				994E294317838BF300EAACD2 /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,16 +186,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		994E294317838BF300EAACD2 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				994E294417838BF300EAACD2 /* AppKit.framework */,
-				994E294517838BF300EAACD2 /* CoreData.framework */,
-				994E294617838BF300EAACD2 /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
 		994E294717838BF300EAACD2 /* GameCenterManager Mac */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +213,7 @@
 		994E295E17838C1900EAACD2 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				999824421C11847700B2B1DD /* CoreData.framework */,
 				659699DE1515718800724EBE /* CoreGraphics.framework */,
 				659699DC1515718800724EBE /* Foundation.framework */,
 				65969A05151572D800724EBE /* GameKit.framework */,
@@ -230,10 +226,12 @@
 		994E295F17838C2D00EAACD2 /* OS X */ = {
 			isa = PBXGroup;
 			children = (
-				994E296417838C5A00EAACD2 /* SystemConfiguration.framework */,
-				994E296217838C4F00EAACD2 /* Foundation.framework */,
-				994E296017838C4100EAACD2 /* GameKit.framework */,
-				994E295C17838C1300EAACD2 /* Cocoa.framework */,
+				999824401C11846300B2B1DD /* CoreData.framework */,
+				9998243E1C11845700B2B1DD /* AppKit.framework */,
+				9998243C1C11842900B2B1DD /* GameKit.framework */,
+				9998243A1C11842100B2B1DD /* Cocoa.framework */,
+				999824381C11841B00B2B1DD /* Foundation.framework */,
+				999824361C1183DF00B2B1DD /* SystemConfiguration.framework */,
 			);
 			name = "OS X";
 			sourceTree = "<group>";
