@@ -43,7 +43,7 @@
  Send messages only to the participants that need the information contained in the message. For example, if your game has two different teams, team-related messages should be sent only to the members of the same team. Sending data to all participants in the match uses up networking bandwidth for little gain.
  
  @param data The data to be sent to all of the players. This should not exceed 1000 bytes for quick sending, and should not exceed 87 kilobytes when sending reliably.
- @param sendQuickly Specify YES if the data should be sent without ensuring delivery (faster). NO if the data's delivery should be garunteed (slower).
+ @param sendQuickly Specify YES if the data should be sent without ensuring delivery (faster). NO if the data's delivery should be guaranteed (slower).
  @param handler Implement the completion handler to recieve information about the status of the data send. The error parameter may be nil if there was no error. */
 - (BOOL)sendAllPlayersMatchData:(NSData *)data shouldSendQuickly:(BOOL)sendQuickly completion:(void (^)(BOOL success, NSError *error))handler;
 
@@ -61,7 +61,7 @@
  
  @param data The data to be sent to all of the players. This should not exceed 1000 bytes for quick sending, and should not exceed 87 kilobytes when sending reliably.
  @param players An array of GKPlayer objects to which the data should be sent (can be more efficient if you are not implementing a peer-to-peer connection, or don't need to send to all players).
- @param sendQuickly Specify YES if the data should be sent without ensuring delivery (faster). NO if the data's delivery should be garunteed (slower).
+ @param sendQuickly Specify YES if the data should be sent without ensuring delivery (faster). NO if the data's delivery should be guaranteed (slower).
  @param handler Implement the completion handler to recieve information about the status of the data send. The error parameter may be nil if there was no error. */
 - (BOOL)sendMatchData:(NSData *)data toPlayers:(NSArray *)players shouldSendQuickly:(BOOL)sendQuickly completion:(void (^)(BOOL success, NSError *error))handler;
 
