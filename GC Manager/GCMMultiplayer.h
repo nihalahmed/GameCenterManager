@@ -13,7 +13,7 @@
 
 @protocol GameCenterMultiplayerManagerDelegate;
 
-@interface GCMMultiplayer : NSObject <GKMatchmakerViewControllerDelegate, GKMatchDelegate, GKLocalPlayerListener>
+GCM_FINAL @interface GCMMultiplayer : NSObject <GKMatchmakerViewControllerDelegate, GKMatchDelegate, GKLocalPlayerListener>
 
 /// Returns the default instance of the multiplayer manager
 + (GCMMultiplayer *)defaultMultiplayerManager;

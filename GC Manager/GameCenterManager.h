@@ -48,7 +48,7 @@
 /// GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and keep track of high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc.
 @class GameCenterManager;
 @protocol GameCenterManagerDelegate;
-@interface GameCenterManager : NSObject <GKGameCenterControllerDelegate>
+GCM_FINAL @interface GameCenterManager : NSObject <GKGameCenterControllerDelegate>
 
 
 /// Returns the shared instance of GameCenterManager.
