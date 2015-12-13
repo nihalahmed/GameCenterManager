@@ -42,6 +42,8 @@
 		99B3FA2018773CBE00539A7B /* GameBanner.psd in Resources */ = {isa = PBXBuildFile; fileRef = 99B3FA1D18773CBE00539A7B /* GameBanner.psd */; };
 		99B3FA2118773CBE00539A7B /* Interface.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B3FA1E18773CBE00539A7B /* Interface.png */; };
 		A61038E71C1DF21600C3CBD1 /* Multiplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61038E61C1DF21600C3CBD1 /* Multiplayer.swift */; };
+		A61038EA1C1E30CD00C3CBD1 /* Referee.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61038E91C1E30CD00C3CBD1 /* Referee.swift */; };
+		A61038EB1C1E30CD00C3CBD1 /* Referee.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61038E91C1E30CD00C3CBD1 /* Referee.swift */; };
 		A6BACC651A6AC45E00EAABCF /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */; };
 		A6BACC681A6ACB5100EAABCF /* MacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BACC671A6ACB5100EAABCF /* MacViewController.m */; };
 		A6D07E021C03E0ED00EDC417 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */; };
@@ -92,6 +94,8 @@
 		99B3FA1E18773CBE00539A7B /* Interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Interface.png; sourceTree = "<group>"; };
 		A61038E01C1DF1CE00C3CBD1 /* GameCenterManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GameCenterManager-Bridging-Header.h"; sourceTree = "<group>"; };
 		A61038E61C1DF21600C3CBD1 /* Multiplayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multiplayer.swift; sourceTree = "<group>"; };
+		A61038E81C1E30CD00C3CBD1 /* GameCenterManager Mac-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GameCenterManager Mac-Bridging-Header.h"; sourceTree = "<group>"; };
+		A61038E91C1E30CD00C3CBD1 /* Referee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Referee.swift; sourceTree = "<group>"; };
 		A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		A6BACC661A6ACB5100EAABCF /* MacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacViewController.h; sourceTree = "<group>"; };
 		A6BACC671A6ACB5100EAABCF /* MacViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacViewController.m; sourceTree = "<group>"; };
@@ -272,11 +276,13 @@
 				99B0162C1754FD7700F56A5C /* Dependencies */,
 				99B16C21172D71130091618D /* GameCenterManager.h */,
 				99B16C22172D71130091618D /* GameCenterManager.m */,
+				A61038E91C1E30CD00C3CBD1 /* Referee.swift */,
 				A6D07E001C03E0ED00EDC417 /* GCMMultiplayer.h */,
 				A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */,
 				A61038E61C1DF21600C3CBD1 /* Multiplayer.swift */,
 				A6D07E031C03E34700EDC417 /* GCMConstants.h */,
 				A61038E01C1DF1CE00C3CBD1 /* GameCenterManager-Bridging-Header.h */,
+				A61038E81C1E30CD00C3CBD1 /* GameCenterManager Mac-Bridging-Header.h */,
 			);
 			path = "GC Manager";
 			sourceTree = "<group>";
@@ -406,6 +412,7 @@
 				659699EE1515718800724EBE /* ViewController.m in Sources */,
 				99B16C27172D71130091618D /* GameCenterManager.m in Sources */,
 				A61038E71C1DF21600C3CBD1 /* Multiplayer.swift in Sources */,
+				A61038EA1C1E30CD00C3CBD1 /* Referee.swift in Sources */,
 				99B16C28172D71130091618D /* NSDataAES256.m in Sources */,
 				99B16C29172D71130091618D /* Reachability.m in Sources */,
 				A6D07E021C03E0ED00EDC417 /* GCMMultiplayer.m in Sources */,
@@ -418,6 +425,7 @@
 			files = (
 				A6BACC681A6ACB5100EAABCF /* MacViewController.m in Sources */,
 				994E294E17838BF300EAACD2 /* main.m in Sources */,
+				A61038EB1C1E30CD00C3CBD1 /* Referee.swift in Sources */,
 				993EFA181847C37A0061C758 /* NSDataAES256.m in Sources */,
 				993EFA171847C2E30061C758 /* GameCenterManager.m in Sources */,
 				993EFA191847C37E0061C758 /* Reachability.m in Sources */,
@@ -599,11 +607,14 @@
 				GCC_PREFIX_HEADER = "GameCenterManager Mac/GameCenterManager Mac-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "GameCenterManager Mac/GameCenterManager Mac-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamecentermanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "GC Manager/GameCenterManager Mac-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -629,10 +640,12 @@
 				GCC_PREFIX_HEADER = "GameCenterManager Mac/GameCenterManager Mac-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "GameCenterManager Mac/GameCenterManager Mac-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamecentermanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "GC Manager/GameCenterManager Mac-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
