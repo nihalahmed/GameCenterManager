@@ -1,3 +1,5 @@
+*This project is currently being rewritten in Swift. To contribute or check progress, please visit the [swift-refactor](https://github.com/nihalahmed/GameCenterManager/tree/swift-refactor) branch.*
+
 <img width=100% src="https://raw.github.com/nihalahmed/GameCenterManager/master/Images/GameBanner.png"/>
 
 GameCenter Manager helps to manage Game Center in iOS and Mac apps. Report and track high scores, achievements, and challenges for different players. GameCenter Manager also takes care of the heavy lifting - checking internet availability, saving data when offline and uploading it when online, etc. On iOS (and soon on other platforms) GameCenter Manager makes it easy to setup and run live peer-to-peer Game Center Multiplayer matches.
