@@ -91,7 +91,7 @@
 #pragma mark - GameCenter Scores
 
 - (IBAction)reportScore {
-    [[GameCenterManager sharedManager] saveAndReportScore:[[GameCenterManager sharedManager] highScoreForLeaderboard:@"grp.GameCenterManager.PlayerScores"] leaderboard:@"grp.GameCenterManager.PlayerScores" sortOrder:GameCenterSortOrderHighToLow];
+    [[GameCenterManager sharedManager] saveAndReportScore:[[GameCenterManager sharedManager] highScoreForLeaderboard:@"grp.GameCenterManager.PlayerScores"]+1 leaderboard:@"grp.GameCenterManager.PlayerScores" sortOrder:GameCenterSortOrderHighToLow];
     actionBarLabel.title = [NSString stringWithFormat:@"Score recorded."];
 }
 

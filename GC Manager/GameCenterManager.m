@@ -706,7 +706,7 @@
             #endif
             
             if (playerDict != nil) {
-                NSMutableDictionary *savedAchievements = [playerDict objectForKey:@"SavedAchievements"];
+                NSMutableDictionary *savedAchievements = [[playerDict objectForKey:@"SavedAchievements"] mutableCopy];
                 if (savedAchievements != nil) {
                     if (savedAchievements.count > 0) {
                         identifier = [[savedAchievements allKeys] objectAtIndex:0];
@@ -976,7 +976,7 @@
     #endif
     
     if (playerDict != nil) {
-        NSMutableDictionary *savedAchievements = [playerDict objectForKey:@"SavedAchievements"];
+        NSMutableDictionary *savedAchievements = [[playerDict objectForKey:@"SavedAchievements"] mutableCopy];
         if (savedAchievements != nil) {
             double savedPercentCompleteValue = 0;
             NSNumber *savedPercentComplete = [savedAchievements objectForKey:identifier];

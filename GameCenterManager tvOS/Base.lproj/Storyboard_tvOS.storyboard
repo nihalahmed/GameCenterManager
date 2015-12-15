@@ -68,7 +68,7 @@
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Report Achievement"/>
                                 <connections>
-                                    <action selector="resetAchievements" destination="4dM-DP-99T" eventType="primaryActionTriggered" id="bOr-V3-fWJ"/>
+                                    <action selector="reportAchievement" destination="4dM-DP-99T" eventType="primaryActionTriggered" id="UMl-vV-MQs"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4k-R6-L49">

@@ -25,9 +25,7 @@
     #define kGameCenterManagerDataFile @"GameCenterManager.plist"
     #define kGameCenterManagerDataPath [kApplicationAppSupportDirectory stringByAppendingPathComponent:kGameCenterManagerDataFile]
 #elif TARGET_OS_TV
-    #define kApplicationAppSupportDirectory [NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
-    #define kGameCenterManagerDataFile @"GameCenterManager.plist"
-    #define kGameCenterManagerDataPath [kApplicationAppSupportDirectory stringByAppendingPathComponent:kGameCenterManagerDataFile]
+    // tvOS uses NSUserDefaults
 #else
     #define kApplicationAppSupportDirectory [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]]
     #define kGameCenterManagerDataFile @"GameCenterManager.plist"
