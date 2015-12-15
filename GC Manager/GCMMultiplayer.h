@@ -74,7 +74,12 @@
 /// @b Readonly. Indicates whether or not the multiplayer match has started (if one has been created).
 @property (nonatomic, assign, readonly) BOOL multiplayerMatchStarted;
 
+#if TARGET_OS_IPHONE
 @property (nonatomic, strong, readonly) UIViewController *matchPresentingController;
+#else
+@property (nonatomic, strong, readonly) NSViewController *matchPresentingController;
+#endif
+
 
 @end
 
