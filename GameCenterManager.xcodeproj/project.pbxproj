@@ -16,12 +16,15 @@
 		659699EE1515718800724EBE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 659699ED1515718800724EBE /* ViewController.m */; };
 		65969A06151572D800724EBE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65969A05151572D800724EBE /* GameKit.framework */; };
 		65969A0B1515748900724EBE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65969A0A1515748900724EBE /* SystemConfiguration.framework */; };
+		99108E3F1C1E7A3200BDD25F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 99108E3E1C1E7A3200BDD25F /* main.m */; };
+		99108E4A1C1E7A3200BDD25F /* Storyboard_tvOS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99108E481C1E7A3200BDD25F /* Storyboard_tvOS.storyboard */; };
 		993EFA171847C2E30061C758 /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C22172D71130091618D /* GameCenterManager.m */; };
 		993EFA181847C37A0061C758 /* NSDataAES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C24172D71130091618D /* NSDataAES256.m */; };
 		993EFA191847C37E0061C758 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C26172D71130091618D /* Reachability.m */; };
 		993EFA1B1847C54A0061C758 /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = 993EFA1A1847C54A0061C758 /* Changelog.md */; };
-		994B764E17EE2F3D008DE309 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994B764C17EE282F008DE309 /* Images.xcassets */; };
-		994B764F17EE2F47008DE309 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994B764C17EE282F008DE309 /* Images.xcassets */; };
+		9940C4411C200795008F3618 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994B764C17EE282F008DE309 /* Images.xcassets */; };
+		9940C4421C2007A6008F3618 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994B764C17EE282F008DE309 /* Images.xcassets */; };
+		9940C4451C2007F8008F3618 /* tvOSImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9940C4441C2007F8008F3618 /* tvOSImages.xcassets */; };
 		994E294C17838BF300EAACD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 994E294A17838BF300EAACD2 /* InfoPlist.strings */; };
 		994E294E17838BF300EAACD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 994E294D17838BF300EAACD2 /* main.m */; };
 		994E295217838BF300EAACD2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 994E295017838BF300EAACD2 /* Credits.rtf */; };
@@ -41,6 +44,19 @@
 		99B3FA1F18773CBE00539A7B /* GameBanner.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B3FA1C18773CBE00539A7B /* GameBanner.png */; };
 		99B3FA2018773CBE00539A7B /* GameBanner.psd in Resources */ = {isa = PBXBuildFile; fileRef = 99B3FA1D18773CBE00539A7B /* GameBanner.psd */; };
 		99B3FA2118773CBE00539A7B /* Interface.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B3FA1E18773CBE00539A7B /* Interface.png */; };
+		99ED4CDB1C1E7BDC00B39320 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 99ED4CD81C1E7BDC00B39320 /* AppDelegate.m */; };
+		99ED4CDC1C1E7BDC00B39320 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99ED4CDA1C1E7BDC00B39320 /* ViewController.m */; };
+		99ED4CDD1C1E7D0400B39320 /* NSDataAES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C24172D71130091618D /* NSDataAES256.m */; };
+		99ED4CDE1C1E7D0600B39320 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C26172D71130091618D /* Reachability.m */; };
+		99ED4CDF1C1E7D0800B39320 /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C22172D71130091618D /* GameCenterManager.m */; };
+		99ED4CE01C1E7D0D00B39320 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */; };
+		99ED4CE11C1E7D0E00B39320 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */; };
+		99ED4CE31C1E869D00B39320 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CE21C1E869D00B39320 /* GameKit.framework */; };
+		99ED4CE61C1E882300B39320 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CE51C1E882300B39320 /* CoreData.framework */; };
+		99ED4CE81C1E882B00B39320 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CE71C1E882B00B39320 /* CoreGraphics.framework */; };
+		99ED4CEA1C1E883200B39320 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CE91C1E883200B39320 /* Foundation.framework */; };
+		99ED4CEC1C1E883C00B39320 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CEB1C1E883C00B39320 /* SystemConfiguration.framework */; };
+		99ED4CEE1C1E884200B39320 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CED1C1E884200B39320 /* UIKit.framework */; };
 		A6BACC651A6AC45E00EAABCF /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */; };
 		A6BACC681A6ACB5100EAABCF /* MacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BACC671A6ACB5100EAABCF /* MacViewController.m */; };
 		A6D07E021C03E0ED00EDC417 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */; };
@@ -61,8 +77,13 @@
 		659699ED1515718800724EBE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		65969A05151572D800724EBE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		65969A0A1515748900724EBE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		99108E3B1C1E7A3200BDD25F /* GameCenterManager tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GameCenterManager tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99108E3E1C1E7A3200BDD25F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		99108E491C1E7A3200BDD25F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard_tvOS.storyboard; sourceTree = "<group>"; };
+		99108E4D1C1E7A3200BDD25F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9914B19918711185003C30C2 /* GameCenterManager Mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "GameCenterManager Mac.entitlements"; sourceTree = "<group>"; };
 		993EFA1A1847C54A0061C758 /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Changelog.md; sourceTree = "<group>"; };
+		9940C4441C2007F8008F3618 /* tvOSImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = tvOSImages.xcassets; sourceTree = "<group>"; };
 		994B764C17EE282F008DE309 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		994E294017838BF300EAACD2 /* GameCenterManager Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GameCenterManager Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		994E294917838BF300EAACD2 /* GameCenterManager Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GameCenterManager Mac-Info.plist"; sourceTree = "<group>"; };
@@ -89,6 +110,16 @@
 		99B3FA1C18773CBE00539A7B /* GameBanner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GameBanner.png; sourceTree = "<group>"; };
 		99B3FA1D18773CBE00539A7B /* GameBanner.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameBanner.psd; sourceTree = "<group>"; };
 		99B3FA1E18773CBE00539A7B /* Interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Interface.png; sourceTree = "<group>"; };
+		99ED4CD71C1E7BDC00B39320 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		99ED4CD81C1E7BDC00B39320 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		99ED4CD91C1E7BDC00B39320 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		99ED4CDA1C1E7BDC00B39320 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		99ED4CE21C1E869D00B39320 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
+		99ED4CE51C1E882300B39320 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		99ED4CE71C1E882B00B39320 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		99ED4CE91C1E883200B39320 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		99ED4CEB1C1E883C00B39320 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		99ED4CED1C1E884200B39320 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		A6BACC661A6ACB5100EAABCF /* MacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacViewController.h; sourceTree = "<group>"; };
 		A6BACC671A6ACB5100EAABCF /* MacViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacViewController.m; sourceTree = "<group>"; };
@@ -108,6 +139,19 @@
 				659699DB1515718800724EBE /* UIKit.framework in Frameworks */,
 				659699DD1515718800724EBE /* Foundation.framework in Frameworks */,
 				659699DF1515718800724EBE /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99108E381C1E7A3200BDD25F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99ED4CEE1C1E884200B39320 /* UIKit.framework in Frameworks */,
+				99ED4CEC1C1E883C00B39320 /* SystemConfiguration.framework in Frameworks */,
+				99ED4CEA1C1E883200B39320 /* Foundation.framework in Frameworks */,
+				99ED4CE81C1E882B00B39320 /* CoreGraphics.framework in Frameworks */,
+				99ED4CE61C1E882300B39320 /* CoreData.framework in Frameworks */,
+				99ED4CE31C1E869D00B39320 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +182,7 @@
 				99B16C20172D71090091618D /* GC Manager */,
 				659699E01515718800724EBE /* GameCenterManager iOS */,
 				994E294717838BF300EAACD2 /* GameCenterManager Mac */,
+				99108E3C1C1E7A3200BDD25F /* GameCenterManager tvOS */,
 				659699D91515718800724EBE /* Frameworks */,
 				659699D71515718800724EBE /* Products */,
 			);
@@ -148,6 +193,7 @@
 			children = (
 				659699D61515718800724EBE /* GameCenterManager.app */,
 				994E294017838BF300EAACD2 /* GameCenterManager Mac.app */,
+				99108E3B1C1E7A3200BDD25F /* GameCenterManager tvOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +201,7 @@
 		659699D91515718800724EBE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99ED4CE41C1E881000B39320 /* tvOS */,
 				994E295F17838C2D00EAACD2 /* OS X */,
 				994E295E17838C1900EAACD2 /* iOS */,
 			);
@@ -168,7 +215,6 @@
 				659699EA1515718800724EBE /* AppDelegate.m */,
 				659699EC1515718800724EBE /* ViewController.h */,
 				659699ED1515718800724EBE /* ViewController.m */,
-				99B16C16172D46180091618D /* Storyboard_iPhone.storyboard */,
 				659699E11515718800724EBE /* Supporting Files */,
 			);
 			name = "GameCenterManager iOS";
@@ -178,6 +224,7 @@
 		659699E11515718800724EBE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				99B16C16172D46180091618D /* Storyboard_iPhone.storyboard */,
 				659699E21515718800724EBE /* GameCenterManager-Info.plist */,
 				659699E31515718800724EBE /* InfoPlist.strings */,
 				659699E81515718800724EBE /* GameCenterManager-Prefix.pch */,
@@ -186,13 +233,34 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		99108E3C1C1E7A3200BDD25F /* GameCenterManager tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				99ED4CD71C1E7BDC00B39320 /* AppDelegate.h */,
+				99ED4CD81C1E7BDC00B39320 /* AppDelegate.m */,
+				99ED4CD91C1E7BDC00B39320 /* ViewController.h */,
+				99ED4CDA1C1E7BDC00B39320 /* ViewController.m */,
+				99108E3D1C1E7A3200BDD25F /* Supporting Files */,
+			);
+			path = "GameCenterManager tvOS";
+			sourceTree = "<group>";
+		};
+		99108E3D1C1E7A3200BDD25F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9940C4441C2007F8008F3618 /* tvOSImages.xcassets */,
+				99108E481C1E7A3200BDD25F /* Storyboard_tvOS.storyboard */,
+				99108E4D1C1E7A3200BDD25F /* Info.plist */,
+				99108E3E1C1E7A3200BDD25F /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		994E294717838BF300EAACD2 /* GameCenterManager Mac */ = {
 			isa = PBXGroup;
 			children = (
-				9914B19918711185003C30C2 /* GameCenterManager Mac.entitlements */,
 				A6BACC661A6ACB5100EAABCF /* MacViewController.h */,
 				A6BACC671A6ACB5100EAABCF /* MacViewController.m */,
-				A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */,
 				994E294817838BF300EAACD2 /* Supporting Files */,
 			);
 			path = "GameCenterManager Mac";
@@ -201,6 +269,8 @@
 		994E294817838BF300EAACD2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */,
+				9914B19918711185003C30C2 /* GameCenterManager Mac.entitlements */,
 				994E294917838BF300EAACD2 /* GameCenterManager Mac-Info.plist */,
 				994E294A17838BF300EAACD2 /* InfoPlist.strings */,
 				994E295017838BF300EAACD2 /* Credits.rtf */,
@@ -286,6 +356,19 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		99ED4CE41C1E881000B39320 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				99ED4CE51C1E882300B39320 /* CoreData.framework */,
+				99ED4CE71C1E882B00B39320 /* CoreGraphics.framework */,
+				99ED4CE91C1E883200B39320 /* Foundation.framework */,
+				99ED4CE21C1E869D00B39320 /* GameKit.framework */,
+				99ED4CEB1C1E883C00B39320 /* SystemConfiguration.framework */,
+				99ED4CED1C1E884200B39320 /* UIKit.framework */,
+			);
+			name = tvOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -304,6 +387,23 @@
 			name = GameCenterManager;
 			productName = GameCenterManager;
 			productReference = 659699D61515718800724EBE /* GameCenterManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+		99108E3A1C1E7A3200BDD25F /* GameCenterManager tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99108E501C1E7A3200BDD25F /* Build configuration list for PBXNativeTarget "GameCenterManager tvOS" */;
+			buildPhases = (
+				99108E371C1E7A3200BDD25F /* Sources */,
+				99108E381C1E7A3200BDD25F /* Frameworks */,
+				99108E391C1E7A3200BDD25F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GameCenterManager tvOS";
+			productName = "GameCenterManager tvOS";
+			productReference = 99108E3B1C1E7A3200BDD25F /* GameCenterManager tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		994E293F17838BF300EAACD2 /* GameCenterManager Mac */ = {
@@ -329,9 +429,23 @@
 		659699CD1515718700724EBE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					"com.apple.gamecenter.Dashboard Image",
+					com.apple.gamecenter.Leaderboard,
+					com.apple.gamecenter.PlayerScores,
+				);
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "NABZ Software";
 				TargetAttributes = {
+					99108E3A1C1E7A3200BDD25F = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = KM34QPF66V;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
+					};
 					994E293F17838BF300EAACD2 = {
 						DevelopmentTeam = 243F4RK8Z3;
 						SystemCapabilities = {
@@ -348,6 +462,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 659699CB1515718700724EBE;
 			productRefGroup = 659699D71515718800724EBE /* Products */;
@@ -356,6 +471,7 @@
 			targets = (
 				659699D51515718800724EBE /* GameCenterManager */,
 				994E293F17838BF300EAACD2 /* GameCenterManager Mac */,
+				99108E3A1C1E7A3200BDD25F /* GameCenterManager tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -365,8 +481,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9940C4411C200795008F3618 /* Images.xcassets in Resources */,
 				659699E51515718800724EBE /* InfoPlist.strings in Resources */,
-				994B764F17EE2F47008DE309 /* Images.xcassets in Resources */,
 				99B16C18172D46180091618D /* Storyboard_iPhone.storyboard in Resources */,
 				99B3FA2118773CBE00539A7B /* Interface.png in Resources */,
 				99B3FA2018773CBE00539A7B /* GameBanner.psd in Resources */,
@@ -377,12 +493,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		99108E391C1E7A3200BDD25F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99108E4A1C1E7A3200BDD25F /* Storyboard_tvOS.storyboard in Resources */,
+				9940C4451C2007F8008F3618 /* tvOSImages.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		994E293E17838BF300EAACD2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				994E294C17838BF300EAACD2 /* InfoPlist.strings in Resources */,
-				994B764E17EE2F3D008DE309 /* Images.xcassets in Resources */,
+				9940C4421C2007A6008F3618 /* Images.xcassets in Resources */,
 				994E295217838BF300EAACD2 /* Credits.rtf in Resources */,
 				A6BACC651A6AC45E00EAABCF /* Storyboard.storyboard in Resources */,
 			);
@@ -405,6 +530,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		99108E371C1E7A3200BDD25F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99ED4CDC1C1E7BDC00B39320 /* ViewController.m in Sources */,
+				99ED4CDB1C1E7BDC00B39320 /* AppDelegate.m in Sources */,
+				99ED4CDF1C1E7D0800B39320 /* GameCenterManager.m in Sources */,
+				99ED4CDD1C1E7D0400B39320 /* NSDataAES256.m in Sources */,
+				99108E3F1C1E7A3200BDD25F /* main.m in Sources */,
+				99ED4CDE1C1E7D0600B39320 /* Reachability.m in Sources */,
+				99ED4CE01C1E7D0D00B39320 /* GCMMultiplayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		994E293C17838BF300EAACD2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -413,6 +552,7 @@
 				994E294E17838BF300EAACD2 /* main.m in Sources */,
 				993EFA181847C37A0061C758 /* NSDataAES256.m in Sources */,
 				993EFA171847C2E30061C758 /* GameCenterManager.m in Sources */,
+				99ED4CE11C1E7D0E00B39320 /* GCMMultiplayer.m in Sources */,
 				993EFA191847C37E0061C758 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +566,14 @@
 				659699E41515718800724EBE /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		99108E481C1E7A3200BDD25F /* Storyboard_tvOS.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99108E491C1E7A3200BDD25F /* Base */,
+			);
+			name = Storyboard_tvOS.storyboard;
 			sourceTree = "<group>";
 		};
 		994E294A17838BF300EAACD2 /* InfoPlist.strings */ = {
@@ -567,6 +715,64 @@
 			};
 			name = Release;
 		};
+		99108E4E1C1E7A3200BDD25F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "GameCenterManager tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.nihalahmed.GameCenterManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		99108E4F1C1E7A3200BDD25F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "GameCenterManager tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.nihalahmed.GameCenterManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
 		994E295917838BF300EAACD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -642,6 +848,15 @@
 			buildConfigurations = (
 				659699F81515718800724EBE /* Debug */,
 				659699F91515718800724EBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99108E501C1E7A3200BDD25F /* Build configuration list for PBXNativeTarget "GameCenterManager tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99108E4E1C1E7A3200BDD25F /* Debug */,
+				99108E4F1C1E7A3200BDD25F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
