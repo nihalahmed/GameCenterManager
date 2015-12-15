@@ -443,7 +443,7 @@
                             if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
                             else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
                             NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-                            NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+                            playerDict = [plistDict objectForKey:[self localPlayerId]];
                             #else 
                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                             playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
@@ -758,7 +758,7 @@
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+    playerDict = [plistDict objectForKey:[self localPlayerId]];
     #else
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
