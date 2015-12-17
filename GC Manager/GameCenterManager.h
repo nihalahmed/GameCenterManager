@@ -231,6 +231,10 @@
 /// Sent to the delegate when the Game Center is synced
 - (void)gameCenterManager:(GameCenterManager *)manager gameCenterSynced:(BOOL)synced;
 
+/// Sent to the delegate when the Game Center View Controller is On Screen
+- (void)gameCenterManager:(GameCenterManager *)manager gameCenterViewControllerPresented:(BOOL)finished;
+/// Sent to the delegate when the Game Center View Controller has been dismissed
+- (void)gameCenterManager:(GameCenterManager *)manager gameCenterViewControllerDidFinish:(BOOL)finished;
 
 //----------------------------------//
 //-- Deprecated Delegate Methods ---//

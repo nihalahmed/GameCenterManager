@@ -1195,7 +1195,12 @@
     achievementsViewController.viewState = GKGameCenterViewControllerStateAchievements;
     #endif
     achievementsViewController.gameCenterDelegate = self;
-    [viewController presentViewController:achievementsViewController animated:YES completion:nil];
+    [viewController presentViewController:achievementsViewController animated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerPresented:)])
+                [[self delegate] gameCenterManager:self gameCenterViewControllerPresented:YES];
+        });
+    }];
 }
 
 // left here for backwards compatibility
@@ -1227,7 +1232,12 @@
          5. You must have the image sizes 659 × 371 for the Leaderboard Images.*/
     #endif
     leaderboardViewController.gameCenterDelegate = self;
-    [viewController presentViewController:leaderboardViewController animated:YES completion:nil];
+    [viewController presentViewController:leaderboardViewController animated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerPresented:)])
+                [[self delegate] gameCenterManager:self gameCenterViewControllerPresented:YES];
+        });
+    }];
 }
 
 - (void)presentChallengesOnViewController:(UIViewController *)viewController {
@@ -1236,15 +1246,29 @@
     challengeViewController.viewState = GKGameCenterViewControllerStateChallenges;
     #endif
     challengeViewController.gameCenterDelegate = self;
-    [viewController presentViewController:challengeViewController animated:YES completion:nil];
+    [viewController presentViewController:challengeViewController animated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerPresented:)])
+                [[self delegate] gameCenterManager:self gameCenterViewControllerPresented:YES];
+        });
+    }];
 }
 #endif
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
 #if TARGET_OS_IPHONE
-	[gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerDidFinish:)])
+                [[self delegate] gameCenterManager:self gameCenterViewControllerDidFinish:YES];
+        });
+    }];
 #else
-	[gameCenterViewController dismissViewController:gameCenterViewController];
+    [gameCenterViewController dismissViewController:gameCenterViewController];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerDidFinish:)])
+            [[self delegate] gameCenterManager:self gameCenterViewControllerDidFinish:YES];
+    });
 #endif
 }
 
