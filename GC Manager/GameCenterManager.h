@@ -5,21 +5,27 @@
 //  Copyright (c) 2012 NABZ Software. All rights reserved.
 //
 
+#include <TargetConditionals.h>
+
 // As of version 5.3, GameCenterManager only runs on iOS 7.0+ and OS X 10.9+, check for compatibility before building. See the GitHub Releases page (https://github.com/nihalahmed/GameCenterManager/releases) for older versions which work with iOS 4.1 and higher and OS X 10.8 and higher. The last supported version for iOS < 7.0 is version 5.2. The last supported version for OS X < 10.9 is also version 5.2.
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
     #ifndef __IPHONE_7_0
         #warning GameCenterManager uses features only available in iOS SDK 7.0 and later. Running on an older version of iOS may result in a crash. Download an older release from GitHub for compatibility with iOS SDK < 7.0
     #endif
+#elif TARGET_OS_TV
+    //
 #else
     #ifndef __MAC_10_9
         #warning GameCenterManager uses features only available in OS X SDK 10.9 and later. Running on an older version of OS X may result in a crash. Download an older release from GitHub for compatibility with OS X SDK < 10.9
     #endif
 #endif
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
     #define kApplicationAppSupportDirectory [NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
     #define kGameCenterManagerDataFile @"GameCenterManager.plist"
     #define kGameCenterManagerDataPath [kApplicationAppSupportDirectory stringByAppendingPathComponent:kGameCenterManagerDataFile]
+#elif TARGET_OS_TV
+    // tvOS uses NSUserDefaults
 #else
     #define kApplicationAppSupportDirectory [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]]
     #define kGameCenterManagerDataFile @"GameCenterManager.plist"
@@ -225,6 +231,10 @@
 /// Sent to the delegate when the Game Center is synced
 - (void)gameCenterManager:(GameCenterManager *)manager gameCenterSynced:(BOOL)synced;
 
+/// Sent to the delegate when the Game Center View Controller is On Screen
+- (void)gameCenterManager:(GameCenterManager *)manager gameCenterViewControllerPresented:(BOOL)finished;
+/// Sent to the delegate when the Game Center View Controller has been dismissed
+- (void)gameCenterManager:(GameCenterManager *)manager gameCenterViewControllerDidFinish:(BOOL)finished;
 
 //----------------------------------//
 //-- Deprecated Delegate Methods ---//

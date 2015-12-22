@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7Vj-yV-t6O">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="6Bd-l4-Dqh">
+            <objects>
+                <navigationController id="7Vj-yV-t6O" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="h1q-7k-jK9">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="4dM-DP-99T" kind="relationship" relationship="rootViewController" id="IJc-zW-lq4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iBC-Wf-bnn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2322" y="264"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="AXR-3y-qKb">
+            <objects>
+                <viewController id="4dM-DP-99T" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Fez-gm-2Je"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZbT-hV-nFF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eob-nQ-f0u">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Player is not underage:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIb-Ua-VhA">
+                                <rect key="frame" x="600" y="346" width="720" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Game Center detailed status." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyZ-cp-DPl">
+                                <rect key="frame" x="600" y="153" width="720" height="46"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Player Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVx-P2-TKS">
+                                <rect key="frame" x="600" y="207" width="720" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lLa-zv-kyF">
+                                <rect key="frame" x="909" y="236" width="102" height="102"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1r9-MF-fto">
+                                <rect key="frame" x="730" y="440" width="461" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.75686274509803919" blue="0.011764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Report Score"/>
+                                <connections>
+                                    <action selector="reportScore" destination="4dM-DP-99T" eventType="primaryActionTriggered" id="Mjd-0c-dHC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gsR-R4-woF">
+                                <rect key="frame" x="730" y="524" width="461" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.75686274509999996" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Report Achievement"/>
+                                <connections>
+                                    <action selector="reportAchievement" destination="4dM-DP-99T" eventType="primaryActionTriggered" id="UMl-vV-MQs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4k-R6-L49">
+                                <rect key="frame" x="730" y="608" width="461" height="60"/>
+                                <color key="backgroundColor" red="0.0" green="0.64313725490196072" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Fetch Challenges"/>
+                                <connections>
+                                    <action selector="loadChallenges" destination="4dM-DP-99T" eventType="primaryActionTriggered" id="GKt-RM-9zL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBU-CY-ROV">
+                                <rect key="frame" x="730" y="692" width="461" height="60"/>
+                                <color key="backgroundColor" red="0.61568627450980395" green="0.33333333333333331" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Open Leaderboards"/>
+                                <connections>
+                                    <action selector="showLeaderboard" destination="4dM-DP-99T" eventType="primaryActionTriggered" id="tcz-FP-dIJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6re-IJ-y0h">
+                                <rect key="frame" x="730" y="776" width="461" height="60"/>
+                                <color key="backgroundColor" red="0.61568627450000002" green="0.33333333329999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Open Achievements"/>
+                                <connections>
+                                    <action selector="showAchievements" destination="4dM-DP-99T" eventType="primaryActionTriggered" id="2P3-rp-Vg8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08R-Md-rom">
+                                <rect key="frame" x="730" y="860" width="461" height="60"/>
+                                <color key="backgroundColor" red="0.88235294117647056" green="0.18431372549019609" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Reset Achievements"/>
+                                <connections>
+                                    <action selector="resetAchievements" destination="4dM-DP-99T" eventType="primaryActionTriggered" id="goV-BJ-uv9"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fyE-Wi-k0v">
+                                <rect key="frame" x="724" y="962" width="472" height="66"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </view>
+                    <navigationItem key="navigationItem" prompt="GameCenter Manager" id="lVs-V6-IYh"/>
+                    <connections>
+                        <outlet property="buttonFetchChallenges" destination="U4k-R6-L49" id="PL9-Ua-qLU"/>
+                        <outlet property="buttonOpenAchievements" destination="6re-IJ-y0h" id="2Ij-W7-T9D"/>
+                        <outlet property="buttonOpenLeaderboards" destination="cBU-CY-ROV" id="Mxi-b6-Mg0"/>
+                        <outlet property="buttonReportAchievement" destination="gsR-R4-woF" id="Paz-tX-NLW"/>
+                        <outlet property="buttonReportScore" destination="1r9-MF-fto" id="JF8-EW-arl"/>
+                        <outlet property="buttonResetAchievements" destination="08R-Md-rom" id="z2J-ZA-wXF"/>
+                        <outlet property="playerName" destination="lVx-P2-TKS" id="o8U-HS-UvN"/>
+                        <outlet property="playerPicture" destination="lLa-zv-kyF" id="B8b-Hn-BUU"/>
+                        <outlet property="playerStatus" destination="DIb-Ua-VhA" id="qsc-OD-vkM"/>
+                        <outlet property="statusDetailLabel" destination="YyZ-cp-DPl" id="lh8-mX-eqE"/>
+                        <outlet property="tvOSInfo" destination="fyE-Wi-k0v" id="E92-LL-XfL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FAb-aJ-2OM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-354" y="256"/>
+        </scene>
+    </scenes>
+</document>

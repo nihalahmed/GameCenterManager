@@ -103,10 +103,11 @@
 
 - (void)setupManager {
     // This code should only be called once, to avoid unhandled exceptions when parsing the PLIST data
+#if !TARGET_OS_TV
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [self setShouldCryptData:NO];
-        
+
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if(![fileManager fileExistsAtPath:kApplicationAppSupportDirectory]) {
             NSError *error = nil;
@@ -127,9 +128,14 @@
             [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
         }
     });
+#else 
+    // tvOS doesn't need to initialize any plist file as it must use NSUserDefaults
+#endif
+
 }
 
 - (void)setupManagerAndSetShouldCryptWithKey:(NSString *)cryptionKey {
+#if !TARGET_OS_TV
     // This code should only be called once, to avoid unhandled exceptions when parsing the PLIST data
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -157,6 +163,9 @@
             [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
         }
     });
+#else
+    // tvOS doesn't need to initialize any plist file as it must use NSUserDefaults
+#endif
 }
 
 - (BOOL)checkGameCenterAvailability {
@@ -316,7 +325,7 @@
 #pragma mark - GameCenter Syncing
 
 - (void)syncGameCenter {
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     // Begin Syncing with GameCenter
     
     // Ensure the task isn't interrupted even if the user exits the app
@@ -356,18 +365,27 @@
                     if(IS_IOS_8_OR_LATER) {
                         leaderboardRequest = [[GKLeaderboard alloc] initWithPlayers:[NSArray arrayWithObject:[GKLocalPlayer localPlayer]]];
                     } else {
+                        #if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
                         leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:[self localPlayerId]]];
+                        #endif
                     }
                     [leaderboardRequest setIdentifier:[(GKLeaderboard *)[GCMLeaderboards objectAtIndex:0] identifier]];
                     
                     [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                         if (error == nil) {
                             if (scores.count > 0) {
+                                NSMutableDictionary *playerDict;
+                                #if !TARGET_OS_TV
+                                NSMutableDictionary *plistDict;
                                 NSData *gameCenterManagerData;
                                 if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
                                 else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
-                                NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-                                NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+                                plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
+                                playerDict = [plistDict objectForKey:[self localPlayerId]];
+                                #else
+                                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+                                #endif
                                 
                                 if (playerDict == nil) {
                                     playerDict = [NSMutableDictionary dictionary];
@@ -381,11 +399,16 @@
                                 }
                                 
                                 [playerDict setObject:[NSNumber numberWithLongLong:MAX(leaderboardRequest.localPlayerScore.value, savedHighScoreValue)] forKey:leaderboardRequest.localPlayerScore.leaderboardIdentifier];
+                                #if !TARGET_OS_TV
                                 [plistDict setObject:playerDict forKey:[self localPlayerId]];
                                 NSData *saveData;
                                 if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
                                 else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
                                 [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+                                #else
+                                [defaults setObject:playerDict forKey:[self localPlayerId]];
+                                [defaults synchronize];
+                                #endif
                             }
                             
                             // Seeing an NSRangeException for an empty array when trying to remove the object
@@ -414,11 +437,17 @@
                     if (error == nil) {
                         NSLog(@"Number of Achievements: %@", achievements);
                         if (achievements.count > 0) {
+                            NSMutableDictionary *playerDict;
+                            #if !TARGET_OS_TV
                             NSData *gameCenterManagerData;
                             if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
                             else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
                             NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-                            NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+                            playerDict = [plistDict objectForKey:[self localPlayerId]];
+                            #else 
+                            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                            playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+                            #endif
                             
                             if (playerDict == nil) {
                                 playerDict = [NSMutableDictionary dictionary];
@@ -427,12 +456,16 @@
                             for (GKAchievement *achievement in achievements) {
                                 [playerDict setObject:[NSNumber numberWithDouble:achievement.percentComplete] forKey:achievement.identifier];
                             }
-                            
+                            #if !TARGET_OS_TV
                             [plistDict setObject:playerDict forKey:[self localPlayerId]];
                             NSData *saveData;
                             if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
                             else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
                             [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+                            #else 
+                            [defaults setObject:playerDict forKey:[self localPlayerId]];
+                            [defaults synchronize];
+                            #endif
                             
                         }
                         
@@ -613,12 +646,17 @@
     if ([self isInternetAvailable] == NO) return;
     
     GKScore *gkScore = nil;
-    
+    NSMutableArray *savedScores;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableArray *savedScores = [plistDict objectForKey:@"SavedScores"];
+    savedScores = [plistDict objectForKey:@"SavedScores"];
+    #else 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    savedScores = [[defaults objectForKey:@"SavedScores"] mutableCopy];
+    #endif
     
     if (savedScores != nil) {
         if (savedScores.count > 0) {
@@ -626,12 +664,18 @@
             
             
             [savedScores removeObjectAtIndex:0];
+            
+            #if !TARGET_OS_TV
             [plistDict setObject:savedScores forKey:@"SavedScores"];
             
             NSData *saveData;
             if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
             else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
             [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+            #else
+            [defaults setObject:savedScores forKey:@"SavedScores"];
+            [defaults synchronize];
+            #endif
         }
     }
     
@@ -648,14 +692,21 @@
             NSString *identifier = nil;
             double percentComplete = 0;
             
+            NSMutableDictionary *playerDict;
+            
+            #if !TARGET_OS_TV
             NSData *gameCenterManagerData;
             if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
             else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
             NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-            NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+            playerDict = [plistDict objectForKey:[self localPlayerId]];
+            #else
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+            #endif
             
             if (playerDict != nil) {
-                NSMutableDictionary *savedAchievements = [playerDict objectForKey:@"SavedAchievements"];
+                NSMutableDictionary *savedAchievements = [[playerDict objectForKey:@"SavedAchievements"] mutableCopy];
                 if (savedAchievements != nil) {
                     if (savedAchievements.count > 0) {
                         identifier = [[savedAchievements allKeys] objectAtIndex:0];
@@ -663,12 +714,17 @@
                         
                         [savedAchievements removeObjectForKey:identifier];
                         [playerDict setObject:savedAchievements forKey:@"SavedAchievements"];
-                        [plistDict setObject:playerDict forKey:[self localPlayerId]];
                         
+                        #if !TARGET_OS_TV
+                        [plistDict setObject:playerDict forKey:[self localPlayerId]];
                         NSData *saveData;
                         if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
                         else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
                         [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+                        #else
+                        [defaults setObject:playerDict forKey:[self localPlayerId]];
+                        [defaults synchronize];
+                        #endif
                     }
                 }
             }
@@ -695,11 +751,18 @@
 #pragma mark - Score and Achievement Reporting
 
 - (void)saveAndReportScore:(long long)score leaderboard:(NSString *)identifier sortOrder:(GameCenterSortOrder)order  {
+    
+    NSMutableDictionary *playerDict;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+    playerDict = [plistDict objectForKey:[self localPlayerId]];
+    #else
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+    #endif
     
     if (playerDict == nil) playerDict = [NSMutableDictionary dictionary];
     
@@ -723,11 +786,16 @@
     
     if (isScoreBetter) {
         [playerDict setObject:[NSNumber numberWithLongLong:score] forKey:identifier];
+        #if !TARGET_OS_TV
         [plistDict setObject:playerDict forKey:[self localPlayerId]];
         NSData *saveData;
         if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
         else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
         [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+        #else
+        [defaults setObject:playerDict forKey:[self localPlayerId]];
+        [defaults synchronize];
+        #endif
     }
     
     if ([self checkGameCenterAvailability:NO] == YES) {
@@ -778,11 +846,17 @@
 }
 
 - (void)saveAndReportAchievement:(NSString *)identifier percentComplete:(double)percentComplete shouldDisplayNotification:(BOOL)displayNotification {
+    NSMutableDictionary *playerDict;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+    playerDict = [plistDict objectForKey:[self localPlayerId]];
+    #else
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+    #endif
     
     if (playerDict == nil)
         playerDict = [NSMutableDictionary dictionary];
@@ -794,11 +868,16 @@
     double savedPercentCompleteValue = [savedPercentComplete doubleValue];
     if (percentComplete > savedPercentCompleteValue) {
         [playerDict setObject:[NSNumber numberWithDouble:percentComplete] forKey:identifier];
+        #if !TARGET_OS_TV
         [plistDict setObject:playerDict forKey:[self localPlayerId]];
         NSData *saveData;
         if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
         else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
         [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+        #else
+        [defaults setObject:playerDict forKey:[self localPlayerId]];
+        [defaults synchronize];
+        #endif
     }
     
     if ([self checkGameCenterAvailability:NO] == YES) {
@@ -841,12 +920,18 @@
         return;
     }
     NSData *scoreData = [NSKeyedArchiver archivedDataWithRootObject:score];
+    NSMutableArray *savedScores;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableArray *savedScores = [plistDict objectForKey:@"SavedScores"];
+    savedScores = [plistDict objectForKey:@"SavedScores"];
+    #else
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    savedScores = [[defaults objectForKey:@"SavedScores"] mutableCopy];
+    #endif
     
     if (savedScores != nil) {
         [savedScores addObject:scoreData];
@@ -854,11 +939,16 @@
         savedScores = [NSMutableArray arrayWithObject:scoreData];
     }
     
+    #if !TARGET_OS_TV
     [plistDict setObject:savedScores forKey:@"SavedScores"];
     NSData *saveData;
     if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
     else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
     [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+    #else
+    [defaults setObject:savedScores forKey:@"SavedScores"];
+    [defaults synchronize];
+    #endif
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([[self delegate] respondsToSelector:@selector(gameCenterManager:didSaveScore:)]) {
@@ -873,14 +963,20 @@
 }
 
 - (void)saveAchievementToReportLater:(NSString *)identifier percentComplete:(double)percentComplete {
+    NSMutableDictionary *playerDict;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+    playerDict = [plistDict objectForKey:[self localPlayerId]];
+    #else
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+    #endif
     
     if (playerDict != nil) {
-        NSMutableDictionary *savedAchievements = [playerDict objectForKey:@"SavedAchievements"];
+        NSMutableDictionary *savedAchievements = [[playerDict objectForKey:@"SavedAchievements"] mutableCopy];
         if (savedAchievements != nil) {
             double savedPercentCompleteValue = 0;
             NSNumber *savedPercentComplete = [savedAchievements objectForKey:identifier];
@@ -903,11 +999,16 @@
         playerDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:savedAchievements, @"SavedAchievements", nil];
     }
     
+    #if !TARGET_OS_TV
     [plistDict setObject:playerDict forKey:[self localPlayerId]];
     NSData *saveData;
     if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
     else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
     [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+    #else
+    [defaults setObject:playerDict forKey:[self localPlayerId]];
+    [defaults synchronize];
+    #endif
     
     GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
     NSNumber *percentNumber = [NSNumber numberWithDouble:percentComplete];
@@ -939,11 +1040,18 @@
 #pragma mark - Score, Achievement, and Challenge Retrieval
 
 - (long long)highScoreForLeaderboard:(NSString *)identifier {
+    
+    NSMutableDictionary *playerDict;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+    playerDict = [plistDict objectForKey:[self localPlayerId]];
+    #else
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+    #endif
     
     if (playerDict != nil) {
         NSNumber *savedHighScore = [playerDict objectForKey:identifier];
@@ -958,11 +1066,18 @@
 }
 
 - (NSDictionary *)highScoreForLeaderboards:(NSArray *)identifiers {
+    NSMutableDictionary *playerDict;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+    playerDict = [plistDict objectForKey:[self localPlayerId]];
+    #else
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+    #endif
+    
     NSMutableDictionary *highScores = [[NSMutableDictionary alloc] initWithCapacity:identifiers.count];
     
     for (NSString *identifier in identifiers) {
@@ -984,11 +1099,18 @@
 }
 
 - (double)progressForAchievement:(NSString *)identifier {
+    
+    NSMutableDictionary *playerDict;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+    playerDict = [plistDict objectForKey:[self localPlayerId]];
+    #else
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+    #endif
     
     if (playerDict != nil) {
         NSNumber *savedPercentComplete = [playerDict objectForKey:identifier];
@@ -1001,11 +1123,18 @@
 }
 
 - (NSDictionary *)progressForAchievements:(NSArray *)identifiers {
+    NSMutableDictionary *playerDict;
+    #if !TARGET_OS_TV
     NSData *gameCenterManagerData;
     if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-    NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+    playerDict = [plistDict objectForKey:[self localPlayerId]];
+    #else
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+    #endif
+    
     NSMutableDictionary *percent = [[NSMutableDictionary alloc] initWithCapacity:identifiers.count];
     
     for (NSString *identifier in identifiers) {
@@ -1062,9 +1191,16 @@
 
 - (void)presentAchievementsOnViewController:(UIViewController *)viewController {
     GKGameCenterViewController *achievementsViewController = [[GKGameCenterViewController alloc] init];
+    #if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
     achievementsViewController.viewState = GKGameCenterViewControllerStateAchievements;
+    #endif
     achievementsViewController.gameCenterDelegate = self;
-    [viewController presentViewController:achievementsViewController animated:YES completion:nil];
+    [viewController presentViewController:achievementsViewController animated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerPresented:)])
+                [[self delegate] gameCenterManager:self gameCenterViewControllerPresented:YES];
+        });
+    }];
 }
 
 // left here for backwards compatibility
@@ -1075,6 +1211,7 @@
 
 - (void)presentLeaderboardsOnViewController:(UIViewController *)viewController withLeaderboard:(NSString *)leaderboard {
     GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+    #if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
     leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
     /*
      Passing nil to leaderboardViewController.leaderboardIdentifier works fine,
@@ -1083,23 +1220,55 @@
     if (leaderboard != nil) {
         leaderboardViewController.leaderboardIdentifier = leaderboard;
     }
+    #elif TARGET_OS_TV
+         #warning For tvOS you must set leaderboard ID's in the Assets catalogue - Click on this warning for more info.
+        /**
+         To get the Leaderboards to show up:
+         1. Achievements and Leaderboards are merged into a single GameCenter view, with the Leaderboards shown above the achievements.
+         2. For tvOS adding the Leaderboards to the GameViewController is all about the Image Assets.
+         3. You must add a "+ -> GameCenter -> New Apple TV Leaderboard (or Set)." to your Image Asset.
+         4. You must set the "Identifier" for this Leaderboard asset to exactly what your identifier is for each of your leaderboards. Example:
+         grp.GameCenterManager.PlayerScores
+         5. You must have the image sizes 659 × 371 for the Leaderboard Images.*/
+    #endif
     leaderboardViewController.gameCenterDelegate = self;
-    [viewController presentViewController:leaderboardViewController animated:YES completion:nil];
+    [viewController presentViewController:leaderboardViewController animated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerPresented:)])
+                [[self delegate] gameCenterManager:self gameCenterViewControllerPresented:YES];
+        });
+    }];
 }
 
 - (void)presentChallengesOnViewController:(UIViewController *)viewController {
     GKGameCenterViewController *challengeViewController = [[GKGameCenterViewController alloc] init];
+    #if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
     challengeViewController.viewState = GKGameCenterViewControllerStateChallenges;
+    #endif
     challengeViewController.gameCenterDelegate = self;
-    [viewController presentViewController:challengeViewController animated:YES completion:nil];
+    [viewController presentViewController:challengeViewController animated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerPresented:)])
+                [[self delegate] gameCenterManager:self gameCenterViewControllerPresented:YES];
+        });
+    }];
 }
 #endif
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
 #if TARGET_OS_IPHONE
-	[gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerDidFinish:)])
+                [[self delegate] gameCenterManager:self gameCenterViewControllerDidFinish:YES];
+        });
+    }];
 #else
-	[gameCenterViewController dismissViewController:gameCenterViewController];
+    [gameCenterViewController dismissViewController:gameCenterViewController];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerDidFinish:)])
+            [[self delegate] gameCenterManager:self gameCenterViewControllerDidFinish:YES];
+    });
 #endif
 }
 
@@ -1112,11 +1281,18 @@
     if ([self isGameCenterAvailable]) {
         [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
             if (error == nil) {
+                NSMutableDictionary *playerDict;
+                
+                #if !TARGET_OS_TV
                 NSData *gameCenterManagerData;
                 if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
                 else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
                 NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchiveObjectWithData:gameCenterManagerData];
-                NSMutableDictionary *playerDict = [plistDict objectForKey:[self localPlayerId]];
+                playerDict = [plistDict objectForKey:[self localPlayerId]];
+                #else
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                playerDict = [[defaults objectForKey:[self localPlayerId]] mutableCopy];
+                #endif
                 
                 if (playerDict == nil) {
                     playerDict = [NSMutableDictionary dictionary];
@@ -1126,11 +1302,16 @@
                     [playerDict removeObjectForKey:achievement.identifier];
                 }
                 
+                #if !TARGET_OS_TV
                 [plistDict setObject:playerDict forKey:[self localPlayerId]];
                 NSData *saveData;
                 if (self.shouldCryptData == YES) saveData = [[NSKeyedArchiver archivedDataWithRootObject:plistDict] encryptedWithKey:self.cryptKeyData];
                 else saveData = [NSKeyedArchiver archivedDataWithRootObject:plistDict];
                 [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
+                #else
+                [defaults setObject:playerDict forKey:[self localPlayerId]];
+                [defaults synchronize];
+                #endif
                 
                 [GKAchievement resetAchievementsWithCompletionHandler:^(NSError *error) {
                     if (error == nil) {
