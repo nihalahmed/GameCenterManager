@@ -779,7 +779,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = MacAppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CODE_SIGN_ENTITLEMENTS = "GameCenterManager Mac/GameCenterManager Mac.entitlements";
@@ -808,7 +807,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = MacAppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CODE_SIGN_ENTITLEMENTS = "GameCenterManager Mac/GameCenterManager Mac.entitlements";
