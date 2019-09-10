@@ -74,7 +74,7 @@ Setting up GameCenter Manager is very straightforward. These instructions do not
 ## Methods
 There are many methods available on iCloud Document Sync. The most important / highlight methods are documented below. All other methods are documented in the docset and with in-code comments.
 
-###Initialize GameCenterManager
+### Initialize GameCenterManager
 You should setup GameCenterManager when your app is launched. This should only be done once and can be done in the `application: didFinishLaunchingWithOptions:` method of your AppDelegate.
 
     [[GameCenterManager sharedManager] setupManager];
@@ -85,7 +85,7 @@ This initializes GameCenter Manager, checks if Game Center is supported on the c
     
 These methods are not interchangable. If you decide to setup with encryption then you should never revert to setting up without encryption, and vice versa. Doing so will cause issues with archiving and unarchiving the saved data - which results in a crash. Pick one and stick with it forever. If you do change it, you'll need to delete the `GameCenterManager.plist` file from your app's library (inside the bundle).
 
-###Check Game Center Support
+### Check Game Center Support
 GameCenter Manager automatically checks if Game Center is available before performing any Game Center-related operations. You can also check for Game Center availability by using the following method, which returns a `BOOL` value (YES / NO).
 
     // Will not call delegate if status has not changed from the previous time it was called
@@ -102,21 +102,21 @@ This method will perform the following checks in the following order:
 
 This method may return **NO** in many cases. Use the `gameCenterManager:availabilityChanged:` delegate method to get an `NSDictionary` containing information about why Game Center is or isn't available. Refer to the section on delegate methods below.
 
-###Report Score
+### Report Score
 Report a score to Game Center using a Game Center Leaderboard ID. The score is saved locally then uploaded to Game Center (if Game Center is available). 
 
     [[GameCenterManager sharedManager] saveAndReportScore:1000 leaderboard:@"Leaderboard ID"  sortOrder:GameCenterSortOrder];
 
 Set the Game Center Sort Order (either `GameCenterSortOrderHighToLow` or `GameCenterSortOrderLowToHigh`)  to report a score to Game Center only if the new score is better than the best one (depending on the sort order). There is no need for you to find out if a user has beat their highscore before submitting it - GameCenterManager will determine if the score should be submitted based on the parameters provided.
 
-###Report Achievement
+### Report Achievement
 Report an achievement to Game Center using a Game Center Achievement ID. The achievement and its percent complete are saved locally then uploaded to Game Center (if Game Center is available). 
 
     [[GameCenterManager sharedManager] saveAndReportAchievement:@"Achievement ID" percentComplete:50];
 
 The `percentComplete` parameter specifies how much progress the user has made on an achievement. Specifiying a value of 100 will mark the achievement as completed. Values submitted between 1-99 will display in Game Center and show the user that they need to make more progress to earn an achievement. if you specify an achievement percent complete lower than the current percent complete, it will be ignored by Game Center.
 
-###Get High Scores
+### Get High Scores
 You can get high scores from multiple leaderboards or just one leaderboard. In both cases you'll need to provide Leaderboard IDs. GameCenterManager will return either an NSDictionary with integer scores, or one integer score. To get the high scores for the current player from multiple leaderboards:
 
     // Array of leaderboard ID's to get high scores for
@@ -130,7 +130,7 @@ To get the high score for the current player for a single leaderboard:
     // Returns an integer value (long long integer) as a high scores
    long long highScore = [[GameCenterManager sharedManager] highScoreForLeaderboard:@"LeaderboardID"];  
 
-###Get Achievement Progress
+### Get Achievement Progress
 You can get achievement progress for multiple achievements or just one achievement. In both cases you'll need to provide Achievement IDs. GameCenterManager will return either an NSDictionary with double values, or one double value. To get the achievement progress for the current player from multiple achievements:
 
     // Array of achievement ID's to get progress for
@@ -144,7 +144,7 @@ To get the achievement progress for the current player for a single achievement:
     // Returns a double value as achievement progress
     double progress = [[GameCenterManager sharedManager] highScoreForLeaderboard:@"LeaderboardID"];  
 
-###Reset Achievements
+### Reset Achievements
 Erase and reset all achievement progress from Game Center. Be warned though, the `resetAchievements:` method does not prompt the user before resetting - you must do this on your own.  Currently, achievements are properly removed from Game Center, however a caching issue causes them to remain locally. Please submit a pull request if you can fix this issue.
 
     [[GameCenterManager sharedManager] resetAchievementsWithCompletionHandler:^(NSError *error) {
@@ -153,7 +153,7 @@ Erase and reset all achievement progress from Game Center. Be warned though, the
 
 When the `resetAchievements:` method is called and resets all achievements, the completion handler is fired. Use the completion handler for retrieving errors or updating user interface elements (ex. updating a table view listing completed achievements). 
 
-###Get Challenges
+### Get Challenges
 Get challenges for the current game and player on iOS 6 and higher (GameCenterManager will check if challenges are supported on the current device). This method uses a completion handler to pass data (either an `NSError` or `NSArray` with the challenges. If the `GKChallenge` class or GameCenter is not available, the `gameCenterManager: error:` delegate method is called.
 
     // Gets an array with challenges and passes the value to a completion handler.
@@ -163,7 +163,7 @@ Get challenges for the current game and player on iOS 6 and higher (GameCenterMa
 
  If there is an error retrieving the challenges, the `NSArray` will be `nil` and the `NSError` will contain an error. The `NSError` passed here is an error generated by Game Center, not GameCenterMananger
  
-###Presenting GameKit ViewControllers
+### Presenting GameKit ViewControllers
  GameCenter Manager makes the presentation of GameKit ViewControllers easy one-liners.
 
   To present the leaderboards view controller, call the following method:
@@ -183,7 +183,7 @@ Get challenges for the current game and player on iOS 6 and higher (GameCenterMa
  
      [[GameCenterManager sharedManager] presentChallengesOnViewController:self];
      
-##Player Data
+## Player Data
 GameCenterManager provides four different methods to retrieve various bits of data about the current local player. Retrieve a player ID using the following method, but **never** display a player ID in your interface or expose the ID in any way at all - it should only be used to identify a player. If you display a player ID in your app, it will be rejected from the AppStore.
 
     NSString *playerID = [[GameCenterManager sharedManager] localPlayerId];  
@@ -205,12 +205,12 @@ To get any other data about a player use this method:
 ## Delegates
 GameCenter Manager delegate methods notify you of the status of Game Center and various other tasks. There is only one required delegate method for iOS, none for OS X.
 
-###Authenticate User (Required, iOS only)
+### Authenticate User (Required, iOS only)
 If the user is not logged into Game Center, you'll need to present the Game Center login view controller. This method is required because the user must be logged in for Game Center to work. If the user does not login, an error will be returned.  
 
      - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController
      
-###Availability Changed
+### Availability Changed
 When the availability status of Game Center changes, this delegate method is called. The availability of Game Center depends on multiple factors including:
     * Internet Connection
     * iOS Version (4.1+ required)
@@ -221,50 +221,50 @@ The NSDictionary object, `availabilityInformation`, contains two objects, a `mes
 
     - (void)gameCenterManager:(GameCenterManager *)manager availabilityChanged:(NSDictionary *)availabilityInformation
 
-###Game Center Error
+### Game Center Error
 When there is an error performing a Game Center task this delegate method is executed.
 
 The `error` NSError object contains an error code (refer to the section on Constants below), a description (error domain) and sometimes user information.
 
     - (void)gameCenterManager:(GameCenterManager *)manager error:(NSError *)error
 
-###Reported Score
+### Reported Score
 Called after the submitted score is successfully saved, uploaded, and posted to Game Center. 
 
 The GKScore object, `score`, is the final score that was saved. The error object may contain an error if one occured, or it may be nil.
 
     - (void)gameCenterManager:(GameCenterManager *)manager reportedScore:(GKScore *)score withError:(NSError *)error;
 
-###Saved Score
+### Saved Score
 Called after the submitted score is successfully saved, but not posted or uploaded to Game Center. The saved score will be uploaded the next time GC Manager can successfully connect to Game Center. 
 
 The GKScore object, `score` contains information about the submitted score.
 
     - (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score
 
-###Reported Achievement
+### Reported Achievement
 Called after the submitted achievement and its percent complete is successfully saved, uploaded, and posted to Game Center. 
 
 The GKAchievement object, `achievement`, is the final achievement that was saved. The error object may contain an error if one occured, or it may be nil.
 
     - (void)gameCenterManager:(GameCenterManager *)manager reportedAchievement:(GKAchievement *)achievement withError:(NSError *)error
 
-###Saved Achievement
+### Saved Achievement
 Called after the submitted achievement is successfully saved, but not posted or uploaded to Game Center. The saved achievement and its percent completed will be uploaded the next time GC Manager can successfully connect to Game Center. 
 
 The GKAchievement object, `achievement`, is the final achievement that was saved.
 
     - (void)gameCenterManager:(GameCenterManager *)manager didSaveAchievement:(GKAchievement *)achievement
 
-##Constants
+## Constants
 Constants are used throughout GameCenter Manager in error messages and method parameters.
 
-###Score Sort Order
+### Score Sort Order
 The order in which your leaderboard scores are sorted. This helps GameCenterManager decide how to submit a score to a leaderboard (and determine if it is a highscore).  
     - `GameCenterSortOrderHighToLow` sorts scores from highest to lowest  
     - `GameCenterSortOrderLowToHigh` sorts scores from lowest to highest  
 
-###Error Codes
+### Error Codes
 When the `gameCenterManager: error:` delegate is called, one of the following error codes are passed.  
     -  `GCMErrorUnknown` (0) an unknown error occured  
     -  `GCMErrorNotAvailable` (1) the feature is not available or GameCenter is not available  
