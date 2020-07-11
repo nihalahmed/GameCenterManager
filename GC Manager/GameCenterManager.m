@@ -704,8 +704,9 @@
     if (playerDict == nil) playerDict = [NSMutableDictionary dictionary];
     
     NSNumber *savedHighScore = [playerDict objectForKey:identifier];
+    //MARK:- issue arises here
     if (savedHighScore == nil)
-        savedHighScore = [NSNumber numberWithLongLong:0];
+        savedHighScore = [NSNumber numberWithLongLong:-INFINITY];
     
     long long savedHighScoreValue = [savedHighScore longLongValue];
     
