@@ -137,12 +137,12 @@
 
 - (BOOL)sendMatchData:(NSData *)data toPlayers:(NSArray *)players shouldSendQuickly:(BOOL)sendQuickly completion:(void (^)(BOOL success, NSError *error))handler {
     // Create the error object
-    NSError *error;
     
+#if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
     // Check if data should be sent reliably or unreliably
     // Reliable: ensures that the data is sent and arrives, can take a long time. Best used for critical game updates.
     // Unreliable: data is sent quickly, data can be lost or fragmented. Best used for frequent game updates.
-    
+    NSError *error;
     if (sendQuickly == YES) {
         // The data should be sent unreliably
         if (data.length > 1000) {
@@ -183,6 +183,10 @@
             return YES;
         }
     }
+#else
+    #warning GCMMultiplayer::sendMatchData not implemented
+    return NO;
+#endif
 }
 
 - (void)disconnectLocalPlayerFromMatch {
@@ -270,9 +274,11 @@
                 NSLog(@"The didChangeState: connection is being called. You need to determine if this should be handled. For now it will not be handled.");
                 
                 if ([self.multiplayerDelegate respondsToSelector:@selector(gameCenterManager:match:didConnectAllPlayers:)]) {
+                    #if TARGET_OS_IOS || (TARGET_OS_IPHONE && !TARGET_OS_TV)
                     [GKPlayer loadPlayersForIdentifiers:theMatch.playerIDs withCompletionHandler:^(NSArray *players, NSError *error) {
                         [self.multiplayerDelegate gameCenterManager:self match:theMatch didConnectAllPlayers:players];
                     }];
+                    #endif
                 }
             }
             

@@ -9,6 +9,16 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>GameCenterManager TV.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>GameCenterManager tvOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>GameCenterManager.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +28,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>659699D51515718800724EBE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>99108E3A1C1E7A3200BDD25F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
