@@ -9,6 +9,13 @@
 #ifndef GCMConstants_h
 #define GCMConstants_h
 
+#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
+    #define GCM_FINAL __attribute__((objc_subclassing_restricted))
+#else
+    #define GCM_FINAL
+#endif
+
+
 /// Leaderboard sort order. Use this value when submitting new leaderboard scores. This value should match the value set in iTunes Connect for the speicifed leaderboard.
 typedef enum GameCenterSortOrder {
     /// Scores are sorted highest to lowest. Higher scores are on the top of the leaderboard

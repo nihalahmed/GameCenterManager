@@ -44,19 +44,7 @@
 		99B3FA1F18773CBE00539A7B /* GameBanner.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B3FA1C18773CBE00539A7B /* GameBanner.png */; };
 		99B3FA2018773CBE00539A7B /* GameBanner.psd in Resources */ = {isa = PBXBuildFile; fileRef = 99B3FA1D18773CBE00539A7B /* GameBanner.psd */; };
 		99B3FA2118773CBE00539A7B /* Interface.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B3FA1E18773CBE00539A7B /* Interface.png */; };
-		99ED4CDB1C1E7BDC00B39320 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 99ED4CD81C1E7BDC00B39320 /* AppDelegate.m */; };
-		99ED4CDC1C1E7BDC00B39320 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99ED4CDA1C1E7BDC00B39320 /* ViewController.m */; };
-		99ED4CDD1C1E7D0400B39320 /* NSDataAES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C24172D71130091618D /* NSDataAES256.m */; };
-		99ED4CDE1C1E7D0600B39320 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C26172D71130091618D /* Reachability.m */; };
-		99ED4CDF1C1E7D0800B39320 /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B16C22172D71130091618D /* GameCenterManager.m */; };
-		99ED4CE01C1E7D0D00B39320 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */; };
-		99ED4CE11C1E7D0E00B39320 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */; };
-		99ED4CE31C1E869D00B39320 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CE21C1E869D00B39320 /* GameKit.framework */; };
-		99ED4CE61C1E882300B39320 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CE51C1E882300B39320 /* CoreData.framework */; };
-		99ED4CE81C1E882B00B39320 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CE71C1E882B00B39320 /* CoreGraphics.framework */; };
-		99ED4CEA1C1E883200B39320 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CE91C1E883200B39320 /* Foundation.framework */; };
-		99ED4CEC1C1E883C00B39320 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CEB1C1E883C00B39320 /* SystemConfiguration.framework */; };
-		99ED4CEE1C1E884200B39320 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99ED4CED1C1E884200B39320 /* UIKit.framework */; };
+
 		A6BACC651A6AC45E00EAABCF /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */; };
 		A6BACC681A6ACB5100EAABCF /* MacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BACC671A6ACB5100EAABCF /* MacViewController.m */; };
 		A6D07E021C03E0ED00EDC417 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */; };
@@ -110,16 +98,7 @@
 		99B3FA1C18773CBE00539A7B /* GameBanner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GameBanner.png; sourceTree = "<group>"; };
 		99B3FA1D18773CBE00539A7B /* GameBanner.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameBanner.psd; sourceTree = "<group>"; };
 		99B3FA1E18773CBE00539A7B /* Interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Interface.png; sourceTree = "<group>"; };
-		99ED4CD71C1E7BDC00B39320 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		99ED4CD81C1E7BDC00B39320 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		99ED4CD91C1E7BDC00B39320 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		99ED4CDA1C1E7BDC00B39320 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		99ED4CE21C1E869D00B39320 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
-		99ED4CE51C1E882300B39320 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
-		99ED4CE71C1E882B00B39320 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		99ED4CE91C1E883200B39320 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		99ED4CEB1C1E883C00B39320 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		99ED4CED1C1E884200B39320 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+
 		A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		A6BACC661A6ACB5100EAABCF /* MacViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacViewController.h; sourceTree = "<group>"; };
 		A6BACC671A6ACB5100EAABCF /* MacViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacViewController.m; sourceTree = "<group>"; };
@@ -339,9 +318,13 @@
 				99B0162C1754FD7700F56A5C /* Dependencies */,
 				99B16C21172D71130091618D /* GameCenterManager.h */,
 				99B16C22172D71130091618D /* GameCenterManager.m */,
+				A61038E91C1E30CD00C3CBD1 /* Referee.swift */,
 				A6D07E001C03E0ED00EDC417 /* GCMMultiplayer.h */,
 				A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */,
+				A61038E61C1DF21600C3CBD1 /* Multiplayer.swift */,
 				A6D07E031C03E34700EDC417 /* GCMConstants.h */,
+				A61038E01C1DF1CE00C3CBD1 /* GameCenterManager-Bridging-Header.h */,
+				A61038E81C1E30CD00C3CBD1 /* GameCenterManager Mac-Bridging-Header.h */,
 			);
 			path = "GC Manager";
 			sourceTree = "<group>";
@@ -429,11 +412,7 @@
 		659699CD1515718700724EBE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				KnownAssetTags = (
-					"com.apple.gamecenter.Dashboard Image",
-					com.apple.gamecenter.Leaderboard,
-					com.apple.gamecenter.PlayerScores,
-				);
+
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "NABZ Software";
 				TargetAttributes = {
@@ -524,6 +503,8 @@
 				659699EB1515718800724EBE /* AppDelegate.m in Sources */,
 				659699EE1515718800724EBE /* ViewController.m in Sources */,
 				99B16C27172D71130091618D /* GameCenterManager.m in Sources */,
+				A61038E71C1DF21600C3CBD1 /* Multiplayer.swift in Sources */,
+				A61038EA1C1E30CD00C3CBD1 /* Referee.swift in Sources */,
 				99B16C28172D71130091618D /* NSDataAES256.m in Sources */,
 				99B16C29172D71130091618D /* Reachability.m in Sources */,
 				A6D07E021C03E0ED00EDC417 /* GCMMultiplayer.m in Sources */,
@@ -550,6 +531,7 @@
 			files = (
 				A6BACC681A6ACB5100EAABCF /* MacViewController.m in Sources */,
 				994E294E17838BF300EAACD2 /* main.m in Sources */,
+				A61038EB1C1E30CD00C3CBD1 /* Referee.swift in Sources */,
 				993EFA181847C37A0061C758 /* NSDataAES256.m in Sources */,
 				993EFA171847C2E30061C758 /* GameCenterManager.m in Sources */,
 				99ED4CE11C1E7D0E00B39320 /* GCMMultiplayer.m in Sources */,
@@ -690,8 +672,11 @@
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GC Manager/GameCenterManager-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -709,7 +694,9 @@
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "GameCenterManager/GameCenterManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GC Manager/GameCenterManager-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -793,11 +780,14 @@
 				GCC_PREFIX_HEADER = "GameCenterManager Mac/GameCenterManager Mac-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "GameCenterManager Mac/GameCenterManager Mac-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamecentermanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "GC Manager/GameCenterManager Mac-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -823,10 +813,12 @@
 				GCC_PREFIX_HEADER = "GameCenterManager Mac/GameCenterManager Mac-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "GameCenterManager Mac/GameCenterManager Mac-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamecentermanager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "GC Manager/GameCenterManager Mac-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

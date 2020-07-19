@@ -1,4 +1,6 @@
-*This project is currently being rewritten in Swift. To contribute or check progress, please visit the [swift-refactor](https://github.com/nihalahmed/GameCenterManager/tree/swift-refactor) branch.*
+
+### A Note on Swift Conversion
+*This branch of the project is currently being refactored and rewritten in Swift. Please contibute to help finish the conversion and improve the project. Once completed, the projct will switch over to Swift from Objective-C. Until that time, this branch is not ready for production use.*
 
 <img width=100% src="https://raw.github.com/nihalahmed/GameCenterManager/master/Images/GameBanner.png"/>
 
