@@ -6,8 +6,8 @@
 //  Copyright © 2015 NABZ Software. All rights reserved.
 //
 
-@import Foundation;
-@import GameKit;
+#import <Foundation/Foundation.h>
+#import <GameKit/GameKit.h>
 
 #import "GCMConstants.h"
 

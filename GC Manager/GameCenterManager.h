@@ -33,13 +33,13 @@
 #endif
 
 
-@import Foundation;
-@import GameKit;
+#import <Foundation/Foundation.h>
+#import <GameKit/GameKit.h>
 
 #if TARGET_OS_IPHONE
-    @import UIKit;
+    #import <UIKit/UIKit.h>
 #else
-    @import Cocoa;
+    #import <Cocoa/Cocoa.h>
 #endif
 
 #import "Reachability.h"
