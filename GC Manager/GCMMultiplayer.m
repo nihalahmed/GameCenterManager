@@ -11,6 +11,7 @@
 
 @interface GCMMultiplayer ()
 @property (nonatomic, strong, readwrite) GKMatch *multiplayerMatch;
+@property (nonatomic, assign, readwrite) GKMatchSendDataMode matchSendDataMode;
 @property (nonatomic, assign, readwrite) BOOL multiplayerMatchStarted;
 @property (nonatomic, strong, readwrite) UIViewController *matchPresentingController;
 @end
@@ -53,6 +54,7 @@
     self.multiplayerMatchStarted = NO;
     self.multiplayerMatch = nil;
     self.matchPresentingController = viewController;
+    self.matchSendDataMode = GKMatchSendDataReliable;
     
     // [matchPresentingController dismissViewControllerAnimated:YES completion:nil];
     
@@ -152,7 +154,9 @@
         }
         
         // Send the data unreliably to the specified players
-        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players withDataMode:GKMatchSendDataUnreliable error:&error];
+//        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players withDataMode:GKMatchSendDataUnreliable error:&error];
+    
+        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players dataMode:GKMatchSendDataUnreliable error:&error];
         if (!success) {
             // There was an error while sending the data
             if (handler != nil) handler(NO, error);
@@ -171,7 +175,7 @@
         }
         
         // Send the data reliably to the specified players
-        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players withDataMode:GKMatchSendDataReliable error:&error];
+        BOOL success = [self.multiplayerMatch sendData:data toPlayers:players dataMode:GKMatchSendDataReliable error:&error];
         if (!success) {
             // There was an error while sending the data
             if (handler != nil) handler(NO, error);

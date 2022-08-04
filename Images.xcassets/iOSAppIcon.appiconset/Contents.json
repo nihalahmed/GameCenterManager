@@ -1,17 +1,10 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
       "filename" : "Icon.png",
       "idiom" : "universal",
-      "scale" : "3x"
+      "platform" : "ios",
+      "size" : "1024x1024"
     }
   ],
   "info" : {
