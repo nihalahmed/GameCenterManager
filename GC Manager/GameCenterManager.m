@@ -138,7 +138,7 @@
             [saveData writeToFile:kGameCenterManagerDataPath atomically:YES];
         }
     });
-#else 
+#else
     // tvOS doesn't need to initialize any plist file as it must use NSUserDefaults
 #endif
     if (self) {
@@ -275,50 +275,54 @@
             // The internet is available and the current device is connected. Now check if the player is authenticated
             GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
 #if TARGET_OS_IPHONE
-            localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
-                if (viewController != nil) {
-                    if ([self previousGameCenterAvailability] != GameCenterAvailabilityNoPlayer) {
-                        [self setPreviousGameCenterAvailability:GameCenterAvailabilityNoPlayer];
-                        NSDictionary *errorDictionary = @{@"message": @"Player is not yet signed into GameCenter. Please prompt the player using the authenticateUser delegate method.", @"title": @"No Player"};
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
-                                [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
-                            
-                            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
-                                [[self delegate] gameCenterManager:self authenticateUser:viewController];
-                            } else {
-                                NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
-                            }
-                        });
+            if(!localPlayer.isAuthenticated) {
+                localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
+                    if (viewController != nil) {
+                        if ([self previousGameCenterAvailability] != GameCenterAvailabilityNoPlayer) {
+                            [self setPreviousGameCenterAvailability:GameCenterAvailabilityNoPlayer];
+                            NSDictionary *errorDictionary = @{@"message": @"Player is not yet signed into GameCenter. Please prompt the player using the authenticateUser delegate method.", @"title": @"No Player"};
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
+                                    [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+                                
+                                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
+                                    [[self delegate] gameCenterManager:self authenticateUser:viewController];
+                                } else {
+                                    NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
+                                }
+                            });
+                        }
+                    } else if (!error) {
+                        // Authentication handler completed successfully. Re-check availability
+                        [self checkGameCenterAvailability:ignorePreviousStatus];
                     }
-                } else if (!error) {
-                    // Authentication handler completed successfully. Re-check availability
-                    [self checkGameCenterAvailability:ignorePreviousStatus];
-                }
-            };
+                };
+            }
 #else
-            localPlayer.authenticateHandler = ^(NSViewController *viewController, NSError *error) {
-                if (viewController != nil) {
-                    if ([self previousGameCenterAvailability] != GameCenterAvailabilityNoPlayer) {
-                        [self setPreviousGameCenterAvailability:GameCenterAvailabilityNoPlayer];
-                        NSDictionary *errorDictionary = @{@"message": @"Player is not yet signed into GameCenter. Please prompt the player using the authenticateUser delegate method.", @"title": @"No Player"};
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
-                                [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+            if(!localPlayer.isAuthenticated) {
+                localPlayer.authenticateHandler = ^(NSViewController *viewController, NSError *error) {
+                    if (viewController != nil) {
+                        if ([self previousGameCenterAvailability] != GameCenterAvailabilityNoPlayer) {
+                            [self setPreviousGameCenterAvailability:GameCenterAvailabilityNoPlayer];
+                            NSDictionary *errorDictionary = @{@"message": @"Player is not yet signed into GameCenter. Please prompt the player using the authenticateUser delegate method.", @"title": @"No Player"};
                             
-                            if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
-                                [[self delegate] gameCenterManager:self authenticateUser:viewController];
-                            } else {
-                                NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
-                            }
-                        });
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:availabilityChanged:)])
+                                    [[self delegate] gameCenterManager:self availabilityChanged:errorDictionary];
+                                
+                                if ([[self delegate] respondsToSelector:@selector(gameCenterManager:authenticateUser:)]) {
+                                    [[self delegate] gameCenterManager:self authenticateUser:viewController];
+                                } else {
+                                    NSLog(@"[ERROR] %@ Fails to Respond to the required delegate method gameCenterManager:authenticateUser:. This delegate method must be properly implemented to use GC Manager", [self delegate]);
+                                }
+                            });
+                        }
+                    } else if (!error) {
+                        // Authentication handler completed successfully. Re-check availability
+                        [self checkGameCenterAvailability:ignorePreviousStatus];
                     }
-                } else if (!error) {
-                    // Authentication handler completed successfully. Re-check availability
-                    [self checkGameCenterAvailability:ignorePreviousStatus];
-                }
-            };
+                };
+            }
 #endif
             
             if (![[GKLocalPlayer localPlayer] isAuthenticated]) {
@@ -1225,7 +1229,9 @@
         if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
         else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
         
-    NSMutableDictionary *plistDict = [NSKeyedArchiver archivedDataWithRootObject:gameCenterManagerData requiringSecureCoding:self.cryptKeyData error:&error];
+        NSMutableDictionary *plistDict;
+        
+        plistDict = [NSKeyedUnarchiver unarchivedObjectOfClass:NSData.class fromData:gameCenterManagerData error:&error];
     
     
     
@@ -1275,12 +1281,10 @@
         if (self.shouldCryptData == YES) gameCenterManagerData = [[NSData dataWithContentsOfFile:kGameCenterManagerDataPath] decryptedWithKey:self.cryptKeyData];
         else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
         
-    NSMutableDictionary *plistDict = [NSKeyedArchiver archivedDataWithRootObject:gameCenterManagerData requiringSecureCoding:self.cryptKeyData error:&error];
+    NSMutableDictionary *plistDict;
     
-    
-    
-    
-    
+    plistDict = [NSKeyedUnarchiver unarchivedObjectOfClass:NSData.class fromData:gameCenterManagerData error:&error];
+  
         savedScores = [plistDict objectForKey:@"SavedScores"];
     #else
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1398,6 +1402,8 @@
     else gameCenterManagerData = [NSData dataWithContentsOfFile:kGameCenterManagerDataPath];
 
     NSMutableDictionary *plistDict = [NSKeyedUnarchiver unarchivedObjectOfClass:NSData.class fromData:gameCenterManagerData error:&error];
+    
+    
     playerDict = [plistDict objectForKey:[self localPlayerId]];
     #else
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1607,14 +1613,14 @@
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
 #if TARGET_OS_IPHONE
-	[gameCenterViewController dismissViewControllerAnimated:YES completion:^{
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerDidFinish:)])
                 [[self delegate] gameCenterManager:self gameCenterViewControllerDidFinish:YES];
         });
     }];
 #else
-	[gameCenterViewController dismissViewController:gameCenterViewController];
+    [gameCenterViewController dismissViewController:gameCenterViewController];
      dispatch_async(dispatch_get_main_queue(), ^{
         if ([[self delegate] respondsToSelector:@selector(gameCenterManager:gameCenterViewControllerDidFinish:)])
             [[self delegate] gameCenterManager:self gameCenterViewControllerDidFinish:YES];
