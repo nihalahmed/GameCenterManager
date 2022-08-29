@@ -4,7 +4,7 @@
 
 //  Created by Nihal Ahmed on 12-03-16. Updated by iRare Media on 7/2/13.
 //  Copyright (c) 2012 NABZ Software. All rights reserved.
-//  Updated by Daniel Rosser 19/7/22 <https://danoli3.com>
+//  Updated by Daniel Rosser for Super Hexagon on 19/7/22 <https://danoli3.com>
 
 #include <TargetConditionals.h>
 
@@ -24,6 +24,8 @@
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
+#import "NSUserDefaults+MPSecureUserDefaults.h"
+#import "GKLeaderboardScore+NSCoder.h"
 
 #if TARGET_OS_IPHONE
     #import <UIKit/UIKit.h>
@@ -74,6 +76,12 @@
 /// Synchronizes local player data with Game Center data.
 - (void)syncGameCenter;
 
+- (void)forceSyncGameCenter;
+
+- (void)settingReportScores:(BOOL)sendAll;
+
+- (void)clearTopScores;
+
 - (void)logout;
 
 
@@ -100,7 +108,9 @@
 - (void)reportSavedLeaderboardScoresAndAchievements API_AVAILABLE(ios(14.0));; 
 
 /// Saves score to be submitted later.
-- (void)saveScoreToReportLater:(GKScore *)score;
+- (void)saveScoreToReportLater:(GKScore *)score __deprecated; // use saveLeaderboardScoreToReportLater
+
+- (void)saveLeaderboardScoreToReportLater:(GKLeaderboardScore *)score  API_AVAILABLE(ios(14.0));
 
 /// Saves achievement to be submitted later.
 - (void)saveAchievementToReportLater:(NSString *)identifier percentComplete:(double)percentComplete;
@@ -162,6 +172,8 @@
 /// Returns YES if an active internet connection is available.
 - (BOOL)isInternetAvailable;
 
+- (BOOL)authenticateUser;
+
 /// Check if Game Center is supported
 - (BOOL)checkGameCenterAvailability:(BOOL)ignorePreviousStatus;
 
@@ -170,6 +182,8 @@
 
 /// @b Readonly. Indicates whether or not locally saved scores and achievements should be encrypted. To turn ON this feature, initialize GameCenterManager using the \p setupManagerAndSetShouldCryptWithKey: method (instead of just \p setupManager)
 @property (nonatomic, assign, readonly) BOOL shouldCryptData;
+
+@property (nonatomic, assign, readonly) BOOL shouldCryptNSData;
 
 /// @b Readonly. The key used to encrypt and decrypt locally saved scores and achievements. To set the key, setup GameCenterManager using the \p setupManagerAndSetShouldCryptWithKey: method
 @property (nonatomic, strong, readonly) NSString *cryptKey;
@@ -185,6 +199,9 @@
 @required
 /// Required Delegate Method called when the user needs to be authenticated using the GameCenter Login View Controller
 - (void)gameCenterManager:(GameCenterManager *)manager authenticateUser:(UIViewController *)gameCenterLoginController;
+
+- (void)gameCenterManager:(GameCenterManager *)manager failedToAuthenticateUser:(BOOL)failed;
+
 #else
 @required
 /// Required Delegate Method called when the user needs to be authenticated using the Game Center Login View Controller

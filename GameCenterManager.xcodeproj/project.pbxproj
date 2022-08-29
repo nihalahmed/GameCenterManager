@@ -47,6 +47,12 @@
 		A6BACC651A6AC45E00EAABCF /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6BACC641A6AC45E00EAABCF /* Storyboard.storyboard */; };
 		A6BACC681A6ACB5100EAABCF /* MacViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BACC671A6ACB5100EAABCF /* MacViewController.m */; };
 		A6D07E021C03E0ED00EDC417 /* GCMMultiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */; };
+		BF5FE64C28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5FE64A28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m */; };
+		BF5FE64D28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5FE64A28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m */; };
+		BF5FE64E28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5FE64A28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m */; };
+		BF5FE64F28BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5FE64B28BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m */; };
+		BF5FE65028BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5FE64B28BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m */; };
+		BF5FE65128BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5FE64B28BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m */; };
 		BFC81A34289B66750093DC25 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFC81A33289B66750093DC25 /* Launch Screen.storyboard */; };
 		BFC81A35289B66750093DC25 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFC81A33289B66750093DC25 /* Launch Screen.storyboard */; };
 		BFC81A36289B66750093DC25 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFC81A33289B66750093DC25 /* Launch Screen.storyboard */; };
@@ -106,6 +112,10 @@
 		A6D07E001C03E0ED00EDC417 /* GCMMultiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCMMultiplayer.h; sourceTree = "<group>"; };
 		A6D07E011C03E0ED00EDC417 /* GCMMultiplayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCMMultiplayer.m; sourceTree = "<group>"; };
 		A6D07E031C03E34700EDC417 /* GCMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCMConstants.h; sourceTree = "<group>"; };
+		BF5FE64828BD293B004A4392 /* GKLeaderboardScore+NSCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GKLeaderboardScore+NSCoder.h"; sourceTree = "<group>"; };
+		BF5FE64928BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+MPSecureUserDefaults.h"; sourceTree = "<group>"; };
+		BF5FE64A28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GKLeaderboardScore+NSCoder.m"; sourceTree = "<group>"; };
+		BF5FE64B28BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+MPSecureUserDefaults.m"; sourceTree = "<group>"; };
 		BFC81A33289B66750093DC25 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -290,6 +300,10 @@
 		99B0162D1754FD8800F56A5C /* Security */ = {
 			isa = PBXGroup;
 			children = (
+				BF5FE64828BD293B004A4392 /* GKLeaderboardScore+NSCoder.h */,
+				BF5FE64A28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m */,
+				BF5FE64928BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.h */,
+				BF5FE64B28BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m */,
 				99B16C23172D71130091618D /* NSDataAES256.h */,
 				99B16C24172D71130091618D /* NSDataAES256.m */,
 			);
@@ -494,7 +508,9 @@
 				659699E71515718800724EBE /* main.m in Sources */,
 				659699EB1515718800724EBE /* AppDelegate.m in Sources */,
 				659699EE1515718800724EBE /* ViewController.m in Sources */,
+				BF5FE64C28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m in Sources */,
 				99B16C27172D71130091618D /* GameCenterManager.m in Sources */,
+				BF5FE64F28BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m in Sources */,
 				99B16C28172D71130091618D /* NSDataAES256.m in Sources */,
 				99B16C29172D71130091618D /* Reachability.m in Sources */,
 				A6D07E021C03E0ED00EDC417 /* GCMMultiplayer.m in Sources */,
@@ -506,6 +522,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				99108E3F1C1E7A3200BDD25F /* main.m in Sources */,
+				BF5FE64E28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m in Sources */,
+				BF5FE65128BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,10 +532,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6BACC681A6ACB5100EAABCF /* MacViewController.m in Sources */,
+				BF5FE64D28BD293B004A4392 /* GKLeaderboardScore+NSCoder.m in Sources */,
 				994E294E17838BF300EAACD2 /* main.m in Sources */,
 				993EFA181847C37A0061C758 /* NSDataAES256.m in Sources */,
 				993EFA171847C2E30061C758 /* GameCenterManager.m in Sources */,
 				993EFA191847C37E0061C758 /* Reachability.m in Sources */,
+				BF5FE65028BD293B004A4392 /* NSUserDefaults+MPSecureUserDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
