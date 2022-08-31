@@ -4,18 +4,43 @@
 //
 //  Created by iRare Media on Sepetmber 21, 2013.
 //  Copyright (c) 2013 iRare Media. All rights reserved.
-//
+//  Updated by Daniel Rosser 19/7/22 <https://danoli3.com>
 
 #import "ViewController.h"
+
+
+@interface ViewController() <UIActionSheetDelegate, GameCenterManagerDelegate>{
+    NSArray<NSString *>*gameleaderboardIDs;
+}
+@end
 
 @implementation ViewController
 @synthesize scrollView;
 @synthesize statusDetailLabel, actionLabel, actionBarLabel;
 @synthesize playerPicture, playerName, playerStatus;
 
+
+
 //------------------------------------------------------------------------------------------------------------//
 //------- View Lifecycle -------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------//
+
+
+- (UIRectEdge)preferredScreenEdgesDeferringSystemGestures {
+    return UIRectEdgeAll;
+}
+
+- (BOOL) prefersHomeIndicatorAutoHidden
+{
+    return YES;
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
@@ -29,6 +54,11 @@
     
     // Set GameCenter Manager Delegate
     [[GameCenterManager sharedManager] setDelegate:self];
+    
+    gameleaderboardIDs = [NSArray arrayWithObjects:[NSString stringWithUTF8String:@"grp.PlayerScores"], nil];
+    
+    [[GameCenterManager sharedManager] setupManagerWithLeaderboardIDs:gameleaderboardIDs];
+    [[GameCenterManager sharedManager] setupManagerAndSetShouldCryptWithKey:@"ChangeThisPass369"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -48,7 +78,7 @@
             playerName.text = player.displayName;
             playerStatus.text = @"Player is not underage";
             [[GameCenterManager sharedManager] localPlayerPhoto:^(UIImage *playerPhoto) {
-                playerPicture.image = playerPhoto;
+                self->playerPicture.image = playerPhoto;
             }];
         } else {
             playerName.text = player.displayName;
@@ -60,17 +90,15 @@
     }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-
 //------------------------------------------------------------------------------------------------------------//
 //------- GameCenter Scores ----------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark - GameCenter Scores
 
 - (IBAction)reportScore {
-    [[GameCenterManager sharedManager] saveAndReportScore:[[GameCenterManager sharedManager] highScoreForLeaderboard:@"grp.PlayerScores"]+1 leaderboard:@"grp.PlayerScores" sortOrder:GameCenterSortOrderHighToLow];
+    [[GameCenterManager sharedManager] saveAndReportScore:[[GameCenterManager sharedManager] highScoreForLeaderboard:@"grp.PlayerScores"]+1
+                                                  context:0
+                                              leaderboard:@"grp.PlayerScores" sortOrder:GameCenterSortOrderHighToLow];
     actionBarLabel.title = [NSString stringWithFormat:@"Score recorded."];
 }
 
@@ -165,7 +193,7 @@
             playerName.text = player.displayName;
             playerStatus.text = @"Player is not underage and is signed-in";
             [[GameCenterManager sharedManager] localPlayerPhoto:^(UIImage *playerPhoto) {
-                playerPicture.image = playerPhoto;
+                self->playerPicture.image = playerPhoto;
             }];
         } else {
             playerName.text = player.displayName;
@@ -174,6 +202,19 @@
         }
     } else {
         actionBarLabel.title = [NSString stringWithFormat:@"No GameCenter player found."];
+    }
+    
+    if([manager isGameCenterAvailable] == YES) {
+        NSLog(@"Game Center - SYNC");
+        if(gameleaderboardIDs == NULL){
+            gameleaderboardIDs = [NSArray arrayWithObjects:[NSString stringWithUTF8String:@"grp.PlayerScores"], nil];
+            
+        }
+        
+        [[GameCenterManager sharedManager] setupManagerWithLeaderboardIDs:gameleaderboardIDs];
+        [[GameCenterManager sharedManager] setupManagerAndSetShouldCryptWithKey:@"ChangeThisPass369"];
+        
+        [[GameCenterManager sharedManager] syncGameCenter];
     }
 }
 
@@ -200,6 +241,16 @@
     }
 }
 
+- (void)gameCenterManager:(GameCenterManager *)manager reportedLeaderboardScore:(GKLeaderboardScore *)score withError:(NSError *)error API_AVAILABLE(ios(14.0)) {
+    
+    if(error == nil)
+        NSLog(@"GCM -reportedLeaderboardScore to Game Center");
+    else
+        NSLog(@"GCM -reportedLeaderboardScore to Game Center WITH ERROR: %@", error);
+    
+    
+}
+
 - (void)gameCenterManager:(GameCenterManager *)manager didSaveScore:(GKScore *)score {
     NSLog(@"Saved GCM Score with value: %lld", score.value);
     actionBarLabel.title = [NSString stringWithFormat:@"Score saved for upload to GameCenter."];
@@ -209,6 +260,27 @@
     NSLog(@"Saved GCM Achievement: %@", achievement);
     actionBarLabel.title = [NSString stringWithFormat:@"Achievement saved for upload to GameCenter."];
 }
+
+
+
+
+
+
+
+- (void)gameCenterManager:(GameCenterManager *)manager didSaveLeaderboardScore:(GKLeaderboardScore *)score API_AVAILABLE(ios(14.0)) {
+    
+    NSLog(@"Saved GCM Score with value: %ld", (long)score.value);
+    actionBarLabel.title = [NSString stringWithFormat:@"Score saved for upload to GameCenter."];
+    
+}
+
+
+-(void)gameCenterLogout {
+    [[GameCenterManager sharedManager] logout];
+}
+
+
+
 
 //------------------------------------------------------------------------------------------------------------//
 //------- UIActionSheet Delegate -----------------------------------------------------------------------------//
